@@ -102,7 +102,7 @@ class FlappyTranslator {
   }
 
   String _addField(String fields, String key) {
-    return """static String $key(BuildContext context) => _text("$key", context);""".trim();
+    return """static String $key(BuildContext context) => _text("$key", context);\n""".trim();
   }
 
   static String replaceSupportedLanguages(String template, List<String> supportedLanguages) {
