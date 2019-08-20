@@ -39,12 +39,15 @@ class FlappyTranslator {
       final words = wordsOfLine.sublist(1, wordsOfLine.length);
       fields += _addField(fields, key);
 
-      for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
-        if (wordIndex == 0 && words[wordIndex].isEmpty) {
-          FlappyLogger.logError("$key has no translation for default language");
-          return;
-        }
-        maps[wordIndex][key] = words[wordIndex];
+      final String defaultWord = words[0];
+      if (defaultWord.isEmpty) {
+        FlappyLogger.logError("$key has no translation for default language");
+        return;
+      }
+
+      maps[0][key] = defaultWord;
+      for (var wordIndex = 1; wordIndex < words.length; wordIndex++) {
+        maps[wordIndex][key] = words[wordIndex].isEmpty ? defaultWord : words[wordIndex];
       }
     }
 
