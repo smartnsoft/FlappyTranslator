@@ -40,6 +40,10 @@ class FlappyTranslator {
       fields += _addField(fields, key);
 
       for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
+        if (wordIndex == 0 && words[wordIndex].isEmpty) {
+          FlappyLogger.logError("$key has no translation for default language");
+          return;
+        }
         maps[wordIndex][key] = words[wordIndex];
       }
     }
