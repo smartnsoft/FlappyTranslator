@@ -1,0 +1,48 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+
+class I18n {
+  /// Fields area
+
+  static String _text(String key, BuildContext context) => Localizations.of<I18n>(context, I18n).text(key);
+
+  I18n(Locale locale) {
+    this.locale = locale;
+    _localizedValues = null;
+  }
+
+  Locale locale;
+
+  static Map<String, String> _localizedValues;
+
+  /// Values area
+
+  static I18n of(BuildContext context) {
+    return Localizations.of<I18n>(context, I18n);
+  }
+
+  String text(String key) {
+    return _localizedValues[key] ?? '** $key not found';
+  }
+
+  static Future<I18n> load(Locale locale) async {
+    I18n translations = new I18n(locale);
+    _localizedValues = _allValues[locale.languageCode];
+    return translations;
+  }
+
+  get currentLanguage => locale.languageCode;
+}
+
+class TranslationsDelegate extends LocalizationsDelegate<I18n> {
+  const TranslationsDelegate();
+
+  /// SupportedLanguages area
+
+  @override
+  Future<I18n> load(Locale locale) => I18n.load(locale);
+
+  @override
+  bool shouldReload(TranslationsDelegate old) => false;
+}
