@@ -79,7 +79,7 @@ class FlappyTranslator {
 
       map.forEach((key, value) {
         result += """
-        "$key": "$value",
+        "$key": "${value.replaceAll('"', '\\"')}",
         """;
       });
 
