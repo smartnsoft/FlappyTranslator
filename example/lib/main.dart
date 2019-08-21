@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       localizationsDelegates: [
-        const TranslationsDelegate(),
+        const I18nDelegate(),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
@@ -32,12 +32,9 @@ class Home extends StatelessWidget {
         child: Center(
           child: Column(
             children: <Widget>[
-              Text(
-                I18n.appTitle(context),
-              ),
-              Text(
-                I18n.description(context, "toto", 12),
-              ),
+              Text(I18n.of(context).appTitle),
+              Text(I18n.of(context).description(var1: 2)),
+              Text(I18n.of(context).littleTest(age: 32)),
             ],
           ),
         ),

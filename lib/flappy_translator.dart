@@ -9,7 +9,7 @@ import 'parsing/file_parser.dart';
 const String VALUES_AREA_TEMPLATE_KEY = "/// Values area";
 const String FIELDS_AREA_TEMPLATE_KEY = "/// Fields area";
 const String SUPPORTED_LANGUAGES_AREA_TEMPLATE_KEY = "/// SupportedLanguages area";
-const String PARAMETERS_REGEX = r"(\%[0-9]*\$(d|s))";
+const String PARAMETERS_REGEX = r"(\%[[0-9a-zA-Z]+]*\$(d|s))";
 const String TEMPLATE_FILE = "../lib/i18n.txt";
 
 class FlappyTranslator {
@@ -136,19 +136,20 @@ class FlappyTranslator {
       final List<RegExpMatch> matches = regex.allMatches(defaultWord).toList();
       for (RegExpMatch match in matches) {
         final String parameterType = match.group(2) == "d" ? "int" : "String";
-        parameters += "$parameterType var${getParameterNameFromPlaceholder(match.group(0))}, ";
+        parameters += "$parameterType ${getParameterNameFromPlaceholder(match.group(0))}, ";
       }
 
-      String result = """static String $key(BuildContext context, $parameters) {
-      String text = _text("$key", context);
+      String result = """String $key({$parameters}) {
+      String text = _getText("$key");
       """;
 
       for (RegExpMatch match in matches) {
         final String placeholderName = _formatString(match.group(1));
-        String varName = "var${getParameterNameFromPlaceholder(match.group(0))}";
-        varName += match.group(2) == "d" ? ".toString()" : "";
+        String varName = getParameterNameFromPlaceholder(match.group(0));
         result += """
-        text = text.replaceAll("$placeholderName", $varName);
+        if ($varName != null) {
+          text = text.replaceAll("$placeholderName", ${varName += match.group(2) == "d" ? ".toString()" : ""});
+        }
         """;
       }
 
@@ -159,11 +160,15 @@ class FlappyTranslator {
       }
       """;
     }
-    return """static String $key(BuildContext context) => _text("$key", context);\n\n""";
+    return """String get $key => _getText("$key");\n\n""";
   }
 
   String getParameterNameFromPlaceholder(String placeholder) {
-    return placeholder.substring(1, placeholder.length - 2);
+    String givenName = placeholder.substring(1, placeholder.length - 2);
+    if (int.tryParse(givenName[0]) != null) {
+      givenName = "var$givenName";
+    }
+    return givenName;
   }
 
   String _replaceSupportedLanguages(String template, List<String> supportedLanguages) {

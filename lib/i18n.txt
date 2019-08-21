@@ -7,14 +7,12 @@ import 'package:flutter/material.dart';
 class I18n {
   /// Fields area
 
-  static String _text(String key, BuildContext context) => Localizations.of<I18n>(context, I18n).text(key);
-
   I18n(Locale locale) {
-    this.locale = locale;
-    _localizedValues = null;
+    this._locale = locale;
+     _localizedValues = null;
   }
 
-  Locale locale;
+  Locale _locale;
 
   static Map<String, String> _localizedValues;
 
@@ -24,7 +22,7 @@ class I18n {
     return Localizations.of<I18n>(context, I18n);
   }
 
-  String text(String key) {
+  String _getText(String key) {
     return _localizedValues[key] ?? '** $key not found';
   }
 
@@ -34,11 +32,11 @@ class I18n {
     return translations;
   }
 
-  get currentLanguage => locale.languageCode;
+  get currentLanguage => _locale.languageCode;
 }
 
-class TranslationsDelegate extends LocalizationsDelegate<I18n> {
-  const TranslationsDelegate();
+class I18nDelegate extends LocalizationsDelegate<I18n> {
+  const I18nDelegate();
 
   /// SupportedLanguages area
 
@@ -46,5 +44,5 @@ class TranslationsDelegate extends LocalizationsDelegate<I18n> {
   Future<I18n> load(Locale locale) => I18n.load(locale);
 
   @override
-  bool shouldReload(TranslationsDelegate old) => false;
+  bool shouldReload(I18nDelegate old) => false;
 }
