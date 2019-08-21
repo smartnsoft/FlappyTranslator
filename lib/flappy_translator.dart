@@ -87,7 +87,7 @@ class FlappyTranslator {
 
       if (_isKeyAReservedWord(key)) {
         FlappyLogger.logError(
-            "$key is a reserved word in Dart and cannot be used as key (line ${linesIndex + 1})\nAll reserved words are : $RESERVED_WORDS");
+            "$key is a reserved keyword in Dart and cannot be used as key (line ${linesIndex + 1})\nAll reserved words in Dart are : $RESERVED_WORDS");
         return;
       }
       fields += _addField(key, defaultWord);
