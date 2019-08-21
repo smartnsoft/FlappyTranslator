@@ -26,14 +26,18 @@ littleTest,"Voici, pour l'exemple, ""un test"" avec la variable %age$d","Here is
 
 ### Add dependency
 ```
+dependencies:
+  flutter_localizations:
+    sdk: flutter
+    
 dev_dependencies: 
-  flapply_translator: 
+  flappy_translator: 
 ```
 
 ### Run package
 ```
 flutter pub get
-flutter pub pub run flapply_translator:main myFile.csv path/to/destination
+flutter pub pub run flappy_translator:main myFile.csv path/to/destination
 ```
 
 ### Use the i18n generated file

@@ -10,7 +10,7 @@ const String VALUES_AREA_TEMPLATE_KEY = "/// Values area";
 const String FIELDS_AREA_TEMPLATE_KEY = "/// Fields area";
 const String SUPPORTED_LANGUAGES_AREA_TEMPLATE_KEY = "/// SupportedLanguages area";
 const String PARAMETERS_REGEX = r"(\%[[0-9a-zA-Z]+]*\$(d|s))";
-const String TEMPLATE_FILE = "../lib/i18n.txt";
+const String TEMPLATE_FILE = "i18n.txt";
 
 class FlappyTranslator {
   void generate(String filePath, {String targetPath = ""}) async {
