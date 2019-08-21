@@ -37,7 +37,7 @@ dev_dependencies:
 ### Run package
 ```
 flutter pub get
-flutter pub pub run flappy_translator:main myFile.csv path/to/destination
+flutter pub run flappy_translator test.csv path/to/destination
 ```
 
 ### Use the i18n generated file
