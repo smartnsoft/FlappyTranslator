@@ -1,2 +1,5 @@
 keys,fr,en,es
-app_title,Un titre,A title, A titlo
+appTitle,Un titre,A title,Una Titro
+subtitle,Un sous titre,Un sous-titre,Una SouTitra
+description,Un texte avec une variable dont &1 est la valeur,,
+littleTest,"Voici, pour vous,    ""un test""",ok,test 'hello'
