@@ -1,5 +1,0 @@
-keys,fr,en,es
-appTitle,Un titre,A title,Una Titro
-subtitle,Un sous titre,,Una SouTitra
-description,Un texte avec une variable dont %1$d est la valeur,,
-littleTest,"Voici, pour vous,    ""un test"" avec la variable %age$d",ok,test 'hello' %1$d
