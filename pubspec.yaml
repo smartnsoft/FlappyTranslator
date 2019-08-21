@@ -1,6 +1,6 @@
 name: flappy_translator
 description: A Flutter internationalized strings generator.
-version: 1.0.1
+version: 1.0.2
 author: Equinoa<register@smartnsoft.com>
 homepage: https://github.com/smartnsoft/FlappyTranslator
 
@@ -23,8 +23,8 @@ dev_dependencies:
 flutter:
 
   # To add assets to your package, add an assets section, like this:
-  # assets:
-  #  - images/a_dot_burr.jpeg
+  assets:
+    - assets/template.txt
   #  - images/a_dot_ham.jpeg
   #
   # For details regarding assets in packages, see

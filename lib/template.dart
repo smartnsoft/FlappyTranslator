@@ -1,3 +1,4 @@
+const String templateString = """
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class I18n {
   }
 
   String _getText(String key) {
-    return _localizedValues[key] ?? '** $key not found';
+    return _localizedValues[key] ?? '** \$key not found';
   }
 
   static Future<I18n> load(Locale locale) async {
@@ -46,3 +47,5 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
   @override
   bool shouldReload(I18nDelegate old) => false;
 }
+
+""";

@@ -5,12 +5,12 @@ import 'dart:io';
 import 'flappy_logger.dart';
 import 'parsing/csv_parser.dart';
 import 'parsing/file_parser.dart';
+import 'template.dart';
 
 const String VALUES_AREA_TEMPLATE_KEY = "/// Values area";
 const String FIELDS_AREA_TEMPLATE_KEY = "/// Fields area";
 const String SUPPORTED_LANGUAGES_AREA_TEMPLATE_KEY = "/// SupportedLanguages area";
 const String PARAMETERS_REGEX = r"(\%[[0-9a-zA-Z]+]*\$(d|s))";
-const String TEMPLATE_FILE = "i18n.txt";
 
 class FlappyTranslator {
   void generate(String filePath, {String targetPath = ""}) async {
@@ -21,8 +21,7 @@ class FlappyTranslator {
       return;
     }
 
-    final File templateFile = File(TEMPLATE_FILE);
-    String template = templateFile.readAsStringSync();
+    String template = templateString;
 
     final FileParser fileParser = CSVParser();
 
