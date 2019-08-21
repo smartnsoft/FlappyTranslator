@@ -15,12 +15,13 @@ Here is our CSV example :
 ![alt text](https://github.com/smartnsoft/FlappyTranslator/blob/master/documentation/csv_example.png "Example of CSV")
 
 *exported file myFile.csv*
+
 ```
 keys,fr,en,es
-appTitle,Un titre,A title,Una Titro
-subtitle,Un sous titre,,Una SouTitra
-description,Un texte avec une variable dont %1$d est la valeur,,
-littleTest,"Voici, pour vous,    ""un test"" avec la variable %age$d",ok,test 'hello' %1$d
+appTitle,Ma super application,My awesome application,Mi gran application
+subtitle,Un sous titre,A subtitle,Un subtitulò
+description,Un texte avec une variable : %1$s,A text with a variable : %1$s,Un texto con una variable : %1$s
+littleTest,"Voici, pour l'exemple, ""un test"" avec la variable %age$d","Here is, for the example, ""a test"" with variable %age$d","Aqui esta, por ejemplo, ""una prueba"" con la variable %age$d"
 ```
 
 ### Add dependency
