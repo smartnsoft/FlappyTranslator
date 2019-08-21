@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-
 import 'i18n.dart';
 
 void main() => runApp(MyApp());
@@ -20,7 +19,6 @@ class MyApp extends StatelessWidget {
         const Locale('en', ''),
         const Locale('fr', ''),
       ],
-
       home: Home(),
     );
   }
@@ -32,8 +30,15 @@ class Home extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child: Text(
-            I18n.app_title(context),
+          child: Column(
+            children: <Widget>[
+              Text(
+                I18n.appTitle(context),
+              ),
+              Text(
+                I18n.description(context, "toto", "tata", "titi"),
+              ),
+            ],
           ),
         ),
       ),
