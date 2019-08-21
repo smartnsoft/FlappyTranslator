@@ -13,7 +13,7 @@ const String PARAMETERS_REGEX = r"\&([0-9])";
 const String TEMPLATE_FILE = "../lib/i18n.txt";
 
 class FlappyTranslator {
-  void generate(String filePath) async {
+  void generate(String filePath, {String targetPath = ""}) async {
     final File file = File(filePath);
 
     if (!file.existsSync()) {
@@ -57,13 +57,18 @@ class FlappyTranslator {
     template = template.replaceAll(FIELDS_AREA_TEMPLATE_KEY, fields);
     template = template.replaceAll(VALUES_AREA_TEMPLATE_KEY, _generateStringValuesFromList(maps, supportedLanguages));
 
-    _writeInFile(template);
+    _writeInFile(template, targetPath);
 
     FlappyLogger.logProgress("End of work !");
   }
 
-  void _writeInFile(String template) {
-    final File generatedFile = File("i18n.dart");
+  void _writeInFile(String template, String targetPath) {
+    if (targetPath != null) {
+      if (!Directory(targetPath).existsSync()) {
+        Directory(targetPath).createSync(recursive: true);
+      }
+    }
+    final File generatedFile = File(targetPath != null ? "$targetPath/i18n.dart" : "i18n.dart");
     generatedFile.createSync();
 
     generatedFile.writeAsStringSync(template, mode: FileMode.write);
