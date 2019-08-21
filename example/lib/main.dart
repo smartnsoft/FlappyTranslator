@@ -36,7 +36,7 @@ class Home extends StatelessWidget {
                 I18n.appTitle(context),
               ),
               Text(
-                I18n.description(context, "toto", "tata", "titi"),
+                I18n.description(context, "toto", 12),
               ),
             ],
           ),

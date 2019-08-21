@@ -9,7 +9,7 @@ import 'parsing/file_parser.dart';
 const String VALUES_AREA_TEMPLATE_KEY = "/// Values area";
 const String FIELDS_AREA_TEMPLATE_KEY = "/// Fields area";
 const String SUPPORTED_LANGUAGES_AREA_TEMPLATE_KEY = "/// SupportedLanguages area";
-const String PARAMETERS_REGEX = r"\&([0-9])";
+const String PARAMETERS_REGEX = r"(\%[0-9]*\$(d|s))";
 const String TEMPLATE_FILE = "../lib/i18n.txt";
 
 class FlappyTranslator {
@@ -91,7 +91,7 @@ class FlappyTranslator {
 
       map.forEach((key, value) {
         result += """
-        "$key": "${value.replaceAll('"', '\\"')}",
+        "$key": "${_formatString(value)}",
         """;
       });
 
@@ -115,6 +115,13 @@ class FlappyTranslator {
     return result;
   }
 
+  String _formatString(String text) {
+    text = text.replaceAll('"', '\\"');
+    text = text.replaceAll('\$', '\\\$');
+
+    return text;
+  }
+
   List<Map<String, String>> _generateValuesMaps(List<String> supportedLanguages) {
     final List<Map<String, String>> maps = [];
     supportedLanguages.forEach((supportedLanguage) => maps.add(Map()));
@@ -128,17 +135,20 @@ class FlappyTranslator {
       String parameters = "";
       final List<RegExpMatch> matches = regex.allMatches(defaultWord).toList();
       for (RegExpMatch match in matches) {
-        parameters += "String var${getParameterNameFromPlaceholder(match.group(0))}, ";
+        final String parameterType = match.group(2) == "d" ? "int" : "String";
+        parameters += "$parameterType var${getParameterNameFromPlaceholder(match.group(0))}, ";
       }
 
       String result = """static String $key(BuildContext context, $parameters) {
       String text = _text("$key", context);
       """;
 
-      for (int index = 0; index < matches.length; index++) {
-        final String placeholderName = getParameterNameFromPlaceholder(matches[index].group(0));
+      for (RegExpMatch match in matches) {
+        final String placeholderName = _formatString(match.group(1));
+        String varName = "var${getParameterNameFromPlaceholder(match.group(0))}";
+        varName += match.group(2) == "d" ? ".toString()" : "";
         result += """
-        text = text.replaceAll("&$placeholderName", var$placeholderName);
+        text = text.replaceAll("$placeholderName", $varName);
         """;
       }
 
@@ -153,7 +163,7 @@ class FlappyTranslator {
   }
 
   String getParameterNameFromPlaceholder(String placeholder) {
-    return placeholder.substring(1, placeholder.length);
+    return placeholder.substring(1, placeholder.length - 2);
   }
 
   String _replaceSupportedLanguages(String template, List<String> supportedLanguages) {

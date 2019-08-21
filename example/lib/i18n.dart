@@ -7,17 +7,20 @@ import 'package:flutter/material.dart';
 class I18n {
   static String appTitle(BuildContext context) => _text("appTitle", context);
 
-static String subtitle(BuildContext context) => _text("subtitle", context);
+  static String subtitle(BuildContext context) => _text("subtitle", context);
 
-static String description(BuildContext context, String var1, String var2, String var3, ) {      String text = _text("description", context);
+  static String description(
+    BuildContext context,
+    String var1,
+    int var2,
+  ) {
+    String text = _text("description", context);
+    text = text.replaceAll("%1\$s", var1);
+    text = text.replaceAll("%2\$d", var2.toString());
+    return text;
+  }
 
-              text = text.replaceAll("&1", var1);
-                text = text.replaceAll("&2", var2);
-                text = text.replaceAll("&3", var3);
-              return text;
-      
-      }
-      
+  static String littleTest(BuildContext context) => _text("littleTest", context);
 
   static String _text(String key, BuildContext context) => Localizations.of<I18n>(context, I18n).text(key);
 
@@ -31,27 +34,30 @@ static String description(BuildContext context, String var1, String var2, String
   static Map<String, String> _localizedValues;
 
   static Map<String, String> _frValues = {
-              "appTitle": "Un titre",
-                "subtitle": "Un sous titre",
-                "description": " 1 texte avec des variables &1 &2 et &3",
-        };
-      
-static Map<String, String> _enValues = {
-              "appTitle": "A title",
-                "subtitle": "Un sous-titre",
-                "description": " 1 texte avec des variables &1 &2 et &3",
-        };
-      
-static Map<String, String> _esValues = {
-              "appTitle": "Una Titro",
-                "subtitle": "Una SouTitra",
-                "description": " 1 texte avec des variables &1 &2 et &3",
-        };
-    static Map<String, Map<String, String>> _allValues = {
-            "fr": _frValues,
-              "en": _enValues,
-              "es": _esValues,
-      };
+    "appTitle": "Un titre",
+    "subtitle": "Un sous titre",
+    "description": "Un texte avec deux variables %1\$s et %2\$d",
+    "littleTest": "Voici, pour vous,    \"un test\"",
+  };
+
+  static Map<String, String> _enValues = {
+    "appTitle": "A title",
+    "subtitle": "Un sous-titre",
+    "description": "Un texte avec deux variables %1\$s et %2\$d",
+    "littleTest": "ok",
+  };
+
+  static Map<String, String> _esValues = {
+    "appTitle": "Una Titro",
+    "subtitle": "Una SouTitra",
+    "description": "Un texte avec deux variables %1\$s et %2\$d",
+    "littleTest": "test 'hello'",
+  };
+  static Map<String, Map<String, String>> _allValues = {
+    "fr": _frValues,
+    "en": _enValues,
+    "es": _esValues,
+  };
 
   static I18n of(BuildContext context) {
     return Localizations.of<I18n>(context, I18n);
@@ -74,7 +80,7 @@ class TranslationsDelegate extends LocalizationsDelegate<I18n> {
   const TranslationsDelegate();
 
   @override
-      bool isSupported(Locale locale) => ['fr', 'en', 'es'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => ['fr', 'en', 'es'].contains(locale.languageCode);
 
   @override
   Future<I18n> load(Locale locale) => I18n.load(locale);
