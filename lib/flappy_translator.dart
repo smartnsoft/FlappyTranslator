@@ -38,6 +38,11 @@ class FlappyTranslator {
       final List<String> wordsOfLine = fileParser.getWordsOfLine(lines[linesIndex]);
       final String key = wordsOfLine.first;
       final words = wordsOfLine.sublist(1, wordsOfLine.length);
+      if (words.length > supportedLanguages.length) {
+        FlappyLogger.logError(
+            "The line number ${linesIndex + 1} seems to be not well formatted (${words.length} words for ${supportedLanguages.length} columns)");
+        return;
+      }
       final String defaultWord = words[0];
 
       if (defaultWord.isEmpty) {

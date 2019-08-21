@@ -1,0 +1,5 @@
+keys,fr,en,es
+appTitle,Ma super application,My awesome application,Mi gran application
+subtitle,Un sous titre,A subtitle,Un subtitulò
+description,Un texte avec une variable : %1$s,A text with a variable : %1$s,Un texto con una variable : %1$s
+littleTest,"Voici, pour l'exemple, ""un test"" avec la variable %age$d","Here is, for the example, ""a test"" with variable %age$d","Aqui esta, por ejemplo, ""una prueba"" con la variable %age$d",
