@@ -11,6 +11,41 @@ const String VALUES_AREA_TEMPLATE_KEY = "/// Values area";
 const String FIELDS_AREA_TEMPLATE_KEY = "/// Fields area";
 const String SUPPORTED_LANGUAGES_AREA_TEMPLATE_KEY = "/// SupportedLanguages area";
 const String PARAMETERS_REGEX = r"(\%[[0-9a-zA-Z]+]*\$(d|s))";
+const List<String> RESERVED_WORDS = [
+  "assert",
+  "default",
+  "finally",
+  "rethrow",
+  "try",
+  "break",
+  "do",
+  "for",
+  "return",
+  "var",
+  "case",
+  "else",
+  "if",
+  "super",
+  "void",
+  "catch",
+  "enum",
+  "in",
+  "switch",
+  "while",
+  "class",
+  "extends",
+  "is",
+  "this",
+  "with",
+  "const",
+  "false",
+  "new",
+  "throw",
+  "continue",
+  "final",
+  "null",
+  "true",
+];
 
 class FlappyTranslator {
   void generate(String filePath, {String targetPath = ""}) async {
@@ -50,6 +85,11 @@ class FlappyTranslator {
         return;
       }
 
+      if (_isKeyAReservedWord(key)) {
+        FlappyLogger.logError(
+            "$key is a reserved word in Dart and cannot be used as key (line ${linesIndex + 1})\nAll reserved words are : $RESERVED_WORDS");
+        return;
+      }
       fields += _addField(key, defaultWord);
 
       maps[0][key] = defaultWord;
@@ -184,5 +224,9 @@ class FlappyTranslator {
       """
           .trim(),
     );
+  }
+
+  bool _isKeyAReservedWord(String key) {
+    return RESERVED_WORDS.contains(key);
   }
 }
