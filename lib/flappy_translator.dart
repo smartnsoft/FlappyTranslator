@@ -216,14 +216,33 @@ class FlappyTranslator {
   }
 
   String _replaceSupportedLanguages(String template, List<String> supportedLanguages) {
+    final StringBuffer languageLocals = StringBuffer();
+
+    for (var lang in supportedLanguages) {
+      languageLocals.write(createLocalConstructorFromLanguage(lang) + ',');
+    }
+
+    final supportedLocals =
+    """
+    static final Set<Locale> supportedLocals = { $languageLocals };
+    """.trim();
+
     return template.replaceAll(
       SUPPORTED_LANGUAGES_AREA_TEMPLATE_KEY,
       """
+      $supportedLocals
+      
       @override
-      bool isSupported(Locale locale) => ${supportedLanguages.map((e) => "'$e'").toList()}.contains(locale.languageCode);
-      """
-          .trim(),
+      bool isSupported(Locale locale) => supportedLocals.contains(locale);
+      """.trim(),
     );
+  }
+
+  String createLocalConstructorFromLanguage(String language) {
+    final parts = language.split('_');
+    return (parts.length == 1)
+        ? """Locale('${parts[0]}')"""
+        : """Locale('${parts[0]}', '${parts[1]}')""";
   }
 
   bool _isKeyAReservedWord(String key) {
