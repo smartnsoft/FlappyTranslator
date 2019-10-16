@@ -15,10 +15,7 @@ class MyApp extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: [
-        const Locale('en', ''),
-        const Locale('fr', ''),
-      ],
+      supportedLocales: I18nDelegate.supportedLocals,
       home: Home(),
     );
   }
@@ -33,7 +30,7 @@ class Home extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Text(I18n.of(context).appTitle),
-              Text(I18n.of(context).description(var1: 2)),
+              Text(I18n.of(context).description(var1: "2")),
               Text(I18n.of(context).littleTest(age: 32)),
             ],
           ),
