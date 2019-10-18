@@ -29,7 +29,7 @@ class I18n {
 
   static Future<I18n> load(Locale locale) async {
     I18n translations = new I18n(locale);
-    _localizedValues = _allValues[locale.languageCode];
+    _localizedValues = _allValues[locale.toString()];
     return translations;
   }
 
