@@ -58,11 +58,7 @@ class MyApp extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: [
-        const Locale('en', ''),
-        const Locale('fr', ''),
-        const Locale('es', ''),
-      ],
+      supportedLocales: I18nDelegate.supportedLocals,
       home: Home(),
     );
   }
@@ -102,6 +98,11 @@ That means :
 * If other languages does not have translation for specific words, it will take the corrresponding one in the default language.
 
 * The first column must be totally filled ! It will not work otherwise.
+
+### Handling different languages for one country
+
+You have the possibility, since version 1.4 to write something like `de_CH`.
+It will take the Swiss's German language.
 
 ### Add variables in Strings
 
