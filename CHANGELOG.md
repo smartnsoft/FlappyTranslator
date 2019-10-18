@@ -15,3 +15,7 @@
 
 * Fix error on CSV not well formed
 * Fix error when using Dart reserved keywords
+
+## [1.0.4] - 18/10/2019
+
+* Handle possibility to have multiple languages for one country
