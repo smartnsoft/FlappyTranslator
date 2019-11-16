@@ -55,6 +55,7 @@ class FlappyTranslator {
     String outputDir = defaultOutputDirectory,
     String fileName = defaultFileName,
     String className = defaultClassName,
+    String delimiter = defaultDelimiter,
   }) async {
     final File file = File(inputFilePath);
     if (!file.existsSync()) {
@@ -66,14 +67,15 @@ class FlappyTranslator {
     outputDir ??= defaultOutputDirectory;
     fileName ??= defaultFileName;
     className ??= defaultClassName;
+    delimiter ??= defaultDelimiter;
 
     String template = templateString.replaceAll(CLASS_NAME_TEMPLATE_KEY, className);
 
-    final FileParser fileParser = CSVParser();
+    final csvParser = CSVParser(fieldDelimiter: delimiter);
 
     final lines = file.readAsLinesSync();
 
-    final List<String> supportedLanguages = fileParser.getSupportedLanguages(lines);
+    final supportedLanguages = csvParser.getSupportedLanguages(lines);
     final List<Map<String, String>> maps = _generateValuesMaps(supportedLanguages);
     template = _replaceSupportedLanguages(template, supportedLanguages);
 
@@ -81,7 +83,7 @@ class FlappyTranslator {
     FlappyLogger.logProgress("${lines.length - 1} words recognized");
 
     for (var linesIndex = 1; linesIndex < lines.length; linesIndex++) {
-      final List<String> wordsOfLine = fileParser.getWordsOfLine(lines[linesIndex]);
+      final wordsOfLine = csvParser.getWordsOfLine(lines[linesIndex]);
       final String key = wordsOfLine.first;
       final words = wordsOfLine.sublist(1, wordsOfLine.length);
       if (words.length > supportedLanguages.length) {

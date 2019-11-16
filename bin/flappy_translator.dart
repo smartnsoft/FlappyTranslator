@@ -17,6 +17,7 @@ class YamlArguments {
   static const outputDir = 'output_dir';
   static const className = 'class_name';
   static const fileName = 'file_name';
+  static const delimiter = 'delimiter';
 }
 
 void main(List<String> arguments) {
@@ -55,6 +56,7 @@ void main(List<String> arguments) {
     outputDir: outputDir,
     fileName: settings[YamlArguments.fileName],
     className: settings[YamlArguments.className],
+    delimiter: settings[YamlArguments.delimiter],
   );
 }
 

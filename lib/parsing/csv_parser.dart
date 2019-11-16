@@ -1,9 +1,12 @@
 import 'package:csv/csv.dart';
+import 'package:meta/meta.dart';
 
 import 'file_parser.dart';
 
 class CSVParser with FileParser {
-  static const String DELIMITER = ",";
+  final String fieldDelimiter;
+
+  const CSVParser({@required this.fieldDelimiter});
 
   @override
   List<String> getSupportedLanguages(List<String> fileLines) {
@@ -13,6 +16,10 @@ class CSVParser with FileParser {
 
   @override
   List<String> getWordsOfLine(String line) {
-    return CsvToListConverter().convert(line).first.map((element) => element.toString()).toList();
+    return CsvToListConverter()
+        .convert(line, fieldDelimiter: fieldDelimiter)
+        .first
+        .map((element) => element.toString())
+        .toList();
   }
 }
