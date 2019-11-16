@@ -1,13 +1,11 @@
 # flappy_translator
 
-A Flutter internationalized strings generator.
-The idea is to automate the static Strings generation from a CSV file.
+A Flutter internationalized strings generator which automatically generates a dart file with loca Strings from a CSV file.
 This way, anybody could make a CSV file with all the translations and automatically generate corresponding Dart code.
-
 
 ## Getting Started
 
-In order to use the flappy_translator package, you will have to provide your translatinos in a CSV file (formatted with comma separator).
+In order to use the *flappy_translator* package, please provide your translations in a CSV file (formatted with comma separator).
 
 ### Create a CSV and export it in "comma separated" format
 
@@ -25,6 +23,7 @@ littleTest,"Voici, pour l'exemple, ""un test"" avec la variable %age$d","Here is
 ```
 
 ### Add dependency
+
 ```
 dependencies:
   flutter_localizations:
@@ -35,10 +34,32 @@ dev_dependencies:
 ```
 
 ### Run package
+
+Make sure that your current working directory is the project root.
+
+A file path to the csv file must be supplied, for instance as a command line argument (CLA), while the output directory can be optionally supplied (defaults to *lib/*).
+
 ```
 flutter pub get
 flutter pub run flappy_translator test.csv path/to/destination
 ```
+
+Alternatively, these settings can be defined in your project's *pubspec.yaml*:
+
+```yaml
+flappy_translator:
+  input_file_path: "test.csv"
+  output_dir: "lib"
+```
+
+in which case no CLAs need to supplied:
+
+```
+flutter pub get
+flutter pub run flappy_translator
+```
+
+Note that CLAs will overwrite any defaults set in *pubspec*.
 
 ### Use the i18n generated file
 
@@ -88,14 +109,14 @@ class Home extends StatelessWidget {
 }
 ```
 
-## Rules and functionnalities
+## Rules and functionalities
 
 ### Default language
 
 The `first` language's column of your CSV file will be considered as the `default`one.
 That means : 
 
-* If other languages does not have translation for specific words, it will take the corrresponding one in the default language.
+* If other languages does not have translation for specific words, it will take the corresponding one in the default language.
 
 * The first column must be totally filled ! It will not work otherwise.
 
