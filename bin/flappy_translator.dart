@@ -11,17 +11,16 @@ const pubspecFilePath = 'pubspec.yaml';
 /// The section id for flappy-translator in the yaml file
 const yamlSectionId = 'flappy_translator';
 
-/// The default output directory
-const defaultOutputDirectory = 'lib';
-
 /// A class of arguments which the user can specify in pubspec.yaml
 class YamlArguments {
   static const inputFilePath = 'input_file_path';
   static const outputDir = 'output_dir';
+  static const className = 'class_name';
+  static const fileName = 'file_name';
 }
 
 void main(List<String> arguments) {
-  String inputFilePath, outputPath;
+  String inputFilePath, outputDir;
 
   // try to load settings from the project's pubspec.yaml
   final settings = loadSettings();
@@ -30,7 +29,7 @@ void main(List<String> arguments) {
       inputFilePath = settings[YamlArguments.inputFilePath];
     }
     if (settings.containsKey(YamlArguments.outputDir)) {
-      outputPath = settings[YamlArguments.outputDir];
+      outputDir = settings[YamlArguments.outputDir];
     }
   }
 
@@ -39,7 +38,7 @@ void main(List<String> arguments) {
     inputFilePath = arguments.first;
   }
   if (arguments.length >= 1 && arguments[1] != null) {
-    outputPath = arguments[1];
+    outputDir = arguments[1];
   }
 
   // display an error and quit if the input file hasn't been specified
@@ -53,7 +52,9 @@ void main(List<String> arguments) {
   final flappyTranslator = FlappyTranslator();
   flappyTranslator.generate(
     inputFilePath,
-    targetPath: outputPath ?? defaultOutputDirectory,
+    outputDir: outputDir,
+    fileName: settings[YamlArguments.fileName],
+    className: settings[YamlArguments.className],
   );
 }
 

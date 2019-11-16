@@ -2,11 +2,13 @@ library flappy_translator;
 
 import 'dart:io';
 
+import 'default_settings.dart';
 import 'flappy_logger.dart';
 import 'parsing/csv_parser.dart';
 import 'parsing/file_parser.dart';
 import 'template.dart';
 
+const String CLASS_NAME_TEMPLATE_KEY = "#CLASS_NAME#";
 const String VALUES_AREA_TEMPLATE_KEY = "/// Values area";
 const String FIELDS_AREA_TEMPLATE_KEY = "/// Fields area";
 const String SUPPORTED_LANGUAGES_AREA_TEMPLATE_KEY = "/// SupportedLanguages area";
@@ -48,15 +50,24 @@ const List<String> RESERVED_WORDS = [
 ];
 
 class FlappyTranslator {
-  void generate(String filePath, {String targetPath = ""}) async {
-    final File file = File(filePath);
-
+  void generate(
+    String inputFilePath, {
+    String outputDir = defaultOutputDirectory,
+    String fileName = defaultFileName,
+    String className = defaultClassName,
+  }) async {
+    final File file = File(inputFilePath);
     if (!file.existsSync()) {
-      FlappyLogger.logError("File $filePath does not exist");
+      FlappyLogger.logError("File $inputFilePath does not exist");
       return;
     }
 
-    String template = templateString;
+    // if null has been passed in, ensure that vars are given default values
+    outputDir ??= defaultOutputDirectory;
+    fileName ??= defaultFileName;
+    className ??= defaultClassName;
+
+    String template = templateString.replaceAll(CLASS_NAME_TEMPLATE_KEY, className);
 
     final FileParser fileParser = CSVParser();
 
@@ -101,21 +112,21 @@ class FlappyTranslator {
     template = template.replaceAll(FIELDS_AREA_TEMPLATE_KEY, fields);
     template = template.replaceAll(VALUES_AREA_TEMPLATE_KEY, _generateStringValuesFromList(maps, supportedLanguages));
 
-    _writeInFile(template, targetPath);
+    _writeInFile(template, outputDir, fileName);
 
     FlappyLogger.logProgress("End of work !");
   }
 
-  void _writeInFile(String template, String targetPath) {
-    if (targetPath != null) {
-      if (!Directory(targetPath).existsSync()) {
-        Directory(targetPath).createSync(recursive: true);
+  void _writeInFile(String contents, String outputDir, String fileName) {
+    if (outputDir != null) {
+      if (!Directory(outputDir).existsSync()) {
+        Directory(outputDir).createSync(recursive: true);
       }
     }
-    final File generatedFile = File(targetPath != null ? "$targetPath/i18n.dart" : "i18n.dart");
-    generatedFile.createSync();
 
-    generatedFile.writeAsStringSync(template, mode: FileMode.write);
+    final File generatedFile = File(outputDir == null || outputDir.isEmpty ? 'i18n.dart' : '$outputDir/$fileName.dart');
+    generatedFile.createSync();
+    generatedFile.writeAsStringSync(contents, mode: FileMode.write);
   }
 
   String _generateStringValuesFromList(List<Map<String, String>> maps, List<String> supportedLanguages) {
@@ -222,10 +233,10 @@ class FlappyTranslator {
       languageLocals.write(createLocalConstructorFromLanguage(lang) + ',');
     }
 
-    final supportedLocals =
-    """
+    final supportedLocals = """
     static final Set<Locale> supportedLocals = { $languageLocals };
-    """.trim();
+    """
+        .trim();
 
     return template.replaceAll(
       SUPPORTED_LANGUAGES_AREA_TEMPLATE_KEY,
@@ -234,15 +245,14 @@ class FlappyTranslator {
       
       @override
       bool isSupported(Locale locale) => supportedLocals.contains(locale);
-      """.trim(),
+      """
+          .trim(),
     );
   }
 
   String createLocalConstructorFromLanguage(String language) {
     final parts = language.split('_');
-    return (parts.length == 1)
-        ? """Locale('${parts[0]}')"""
-        : """Locale('${parts[0]}', '${parts[1]}')""";
+    return (parts.length == 1) ? """Locale('${parts[0]}')""" : """Locale('${parts[0]}', '${parts[1]}')""";
   }
 
   bool _isKeyAReservedWord(String key) {

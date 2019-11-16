@@ -80,7 +80,7 @@ static Map<String, String> _de_CHValues = {
   }
 
   static Future<I18n> load(Locale locale) async {
-    I18n translations = new I18n(locale);
+    I18n translations = I18n(locale);
     _localizedValues = _allValues[locale.toString()];
     return translations;
   }
