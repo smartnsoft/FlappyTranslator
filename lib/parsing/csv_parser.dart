@@ -9,9 +9,9 @@ class CSVParser with FileParser {
   const CSVParser({@required this.fieldDelimiter});
 
   @override
-  List<String> getSupportedLanguages(List<String> fileLines) {
+  List<String> getSupportedLanguages(List<String> fileLines, {@required startIndex}) {
     final List<String> words = getWordsOfLine(fileLines.first);
-    return words.sublist(1, words.length);
+    return words.sublist(startIndex, words.length);
   }
 
   @override

@@ -77,7 +77,7 @@ class FlappyTranslator {
 
     final lines = file.readAsLinesSync();
 
-    final supportedLanguages = csvParser.getSupportedLanguages(lines);
+    final supportedLanguages = csvParser.getSupportedLanguages(lines, startIndex: startIndex);
     final List<Map<String, String>> maps = _generateValuesMaps(supportedLanguages);
     template = _replaceSupportedLanguages(template, supportedLanguages);
 
