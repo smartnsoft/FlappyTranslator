@@ -1,4 +1,4 @@
-const String templateString = """
+const String templateBegining = """
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -19,6 +19,9 @@ class #CLASS_NAME# {
 
   /// Values area
 
+""";
+
+const String templateDependContext = """
   static #CLASS_NAME# of(BuildContext context) {
     return Localizations.of<#CLASS_NAME#>(context, #CLASS_NAME#);
   }
@@ -26,6 +29,15 @@ class #CLASS_NAME# {
   String _getText(String key) {
     return _localizedValues[key] ?? '** \$key not found';
   }
+""";
+
+const String templateDontDependContext = """
+  static String _getText(String key) {
+    return _localizedValues[key] ?? '** \$key not found';
+  }
+""";
+
+const String templateEnding = """
 
   static Future<#CLASS_NAME#> load(Locale locale) async {
     #CLASS_NAME# translations = #CLASS_NAME#(locale);

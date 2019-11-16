@@ -5,7 +5,6 @@ import 'dart:io';
 import 'default_settings.dart';
 import 'flappy_logger.dart';
 import 'parsing/csv_parser.dart';
-import 'parsing/file_parser.dart';
 import 'template.dart';
 
 const String CLASS_NAME_TEMPLATE_KEY = "#CLASS_NAME#";
@@ -52,11 +51,12 @@ const List<String> RESERVED_WORDS = [
 class FlappyTranslator {
   void generate(
     String inputFilePath, {
-    String outputDir = defaultOutputDirectory,
-    String fileName = defaultFileName,
-    String className = defaultClassName,
-    String delimiter = defaultDelimiter,
-    int startIndex = defaultStartIndex,
+    String outputDir,
+    String fileName,
+    String className,
+    String delimiter,
+    int startIndex,
+    bool dependOnContext,
   }) async {
     final File file = File(inputFilePath);
     if (!file.existsSync()) {
@@ -70,8 +70,12 @@ class FlappyTranslator {
     className ??= defaultClassName;
     delimiter ??= defaultDelimiter;
     startIndex ??= defaultStartIndex;
+    dependOnContext ??= defaultDependOnContext;
 
-    String template = templateString.replaceAll(CLASS_NAME_TEMPLATE_KEY, className);
+    // construct the template
+    var template =
+        templateBegining + (dependOnContext ? templateDependContext : templateDontDependContext) + templateEnding;
+    template = template.replaceAll(CLASS_NAME_TEMPLATE_KEY, className);
 
     final csvParser = CSVParser(fieldDelimiter: delimiter);
 
@@ -105,7 +109,7 @@ class FlappyTranslator {
             "$key is a reserved keyword in Dart and cannot be used as key (line ${linesIndex + 1})\nAll reserved words in Dart are : $RESERVED_WORDS");
         return;
       }
-      fields += _addField(key, defaultWord);
+      fields += _addField(key, defaultWord, dependsOnContext: dependOnContext);
 
       maps[0][key] = defaultWord;
       for (var wordIndex = 1; wordIndex < words.length; wordIndex++) {
@@ -187,7 +191,7 @@ class FlappyTranslator {
     return maps;
   }
 
-  String _addField(String key, String defaultWord) {
+  String _addField(String key, String defaultWord, {bool dependsOnContext = false}) {
     final RegExp regex = new RegExp(PARAMETERS_REGEX);
     final bool hasParameters = regex.hasMatch(defaultWord);
     if (hasParameters) {
@@ -198,7 +202,8 @@ class FlappyTranslator {
         parameters += "$parameterType ${getParameterNameFromPlaceholder(match.group(0))}, ";
       }
 
-      String result = """String $key({$parameters}) {
+      String result = (!dependsOnContext ? "static " : "") +
+          """String $key({$parameters}) {
       String text = _getText("$key");
       """;
 
@@ -219,7 +224,7 @@ class FlappyTranslator {
       }
       """;
     }
-    return """String get $key => _getText("$key");\n\n""";
+    return (!dependsOnContext ? "static " : "") + """String get $key => _getText("$key");\n\n""";
   }
 
   String getParameterNameFromPlaceholder(String placeholder) {

@@ -19,6 +19,7 @@ class YamlArguments {
   static const fileName = 'file_name';
   static const delimiter = 'delimiter';
   static const startIndex = 'start_index';
+  static const dependOnContext = 'depend_on_context';
 }
 
 void main(List<String> arguments) {
@@ -59,6 +60,7 @@ void main(List<String> arguments) {
     className: settings[YamlArguments.className],
     delimiter: settings[YamlArguments.delimiter],
     startIndex: settings[YamlArguments.startIndex],
+    dependOnContext: settings[YamlArguments.dependOnContext],
   );
 }
 
