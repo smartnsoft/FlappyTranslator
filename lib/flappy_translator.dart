@@ -56,6 +56,7 @@ class FlappyTranslator {
     String fileName = defaultFileName,
     String className = defaultClassName,
     String delimiter = defaultDelimiter,
+    int startIndex = defaultStartIndex,
   }) async {
     final File file = File(inputFilePath);
     if (!file.existsSync()) {
@@ -68,6 +69,7 @@ class FlappyTranslator {
     fileName ??= defaultFileName;
     className ??= defaultClassName;
     delimiter ??= defaultDelimiter;
+    startIndex ??= defaultStartIndex;
 
     String template = templateString.replaceAll(CLASS_NAME_TEMPLATE_KEY, className);
 
@@ -85,7 +87,7 @@ class FlappyTranslator {
     for (var linesIndex = 1; linesIndex < lines.length; linesIndex++) {
       final wordsOfLine = csvParser.getWordsOfLine(lines[linesIndex]);
       final String key = wordsOfLine.first;
-      final words = wordsOfLine.sublist(1, wordsOfLine.length);
+      final words = wordsOfLine.sublist(startIndex, wordsOfLine.length);
       if (words.length > supportedLanguages.length) {
         FlappyLogger.logError(
             "The line number ${linesIndex + 1} seems to be not well formatted (${words.length} words for ${supportedLanguages.length} columns)");
