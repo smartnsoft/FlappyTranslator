@@ -47,8 +47,8 @@ static Map<String, String> _frValues = {
 static Map<String, String> _enValues = {
               "appTitle": "My awesome application",
                 "subtitle": "A subtitle",
-                "description": "A text with a variable : %1\$s",
-                "littleTest": "Here is, for the example, \"a test\" with variable %age\$d",
+                "description": "Text with a variable: %1\$s",
+                "littleTest": "Here is, for the example, \"a test\" with the variable %age\$d",
         };
       
 static Map<String, String> _esValues = {
@@ -59,10 +59,10 @@ static Map<String, String> _esValues = {
         };
       
 static Map<String, String> _de_CHValues = {
-              "appTitle": " Meine super Applikation",
-                "subtitle": " Ein Untertitle",
-                "description": "Ein Text mit einer Variablen: %1\$s",
-                "littleTest": "Hier ist, zum Beispiel, \"ein Test\" mit der Variablen %age\$d",
+              "appTitle": "Meine tolle App",
+                "subtitle": "Ein Untertitle",
+                "description": "Text mit einer Variable: %1\$s",
+                "littleTest": "Hier ist, zum Beispiel, \"ein Test\" mit der Variable %age\$d",
         };
     static Map<String, Map<String, String>> _allValues = {
             "fr": _frValues,

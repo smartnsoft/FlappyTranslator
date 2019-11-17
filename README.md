@@ -10,17 +10,23 @@ In order to use the *flappy_translator* package, please provide your translation
 
 ### Create a CSV file
 
-Here is our CSV example :
-![alt text](https://github.com/smartnsoft/FlappyTranslator/blob/master/documentation/csv_example.png "Example of CSV")
+Consider that we have a table of localizations for the following languages:
 
-*exported file myFile.csv*
+| keys | fr | en | es | de_CH |
+| ---- | -- | -- | -- | ----- |
+| appTitle | Ma super application | My awesome application | Mi gran application | Meine tolle App |
+| subtitle | Un sous titre | A subtitle | Un subtitulò | Ein Untertitle |
+| description | Un texte avec une variable : %1$s | Text with a variable: %1$s | Un texto con una variable : %1$s | Text mit einer Variable: %1$s |
+| littleTest | "Voici, pour l'exemple, ""un test"" avec la variable %age$d" | "Here is, for the example, ""a test"" with the variable %age$d" | "Aqui esta, por ejemplo, ""una prueba"" con la variable %age$d" | "Hier ist, zum Beispiel, ""ein Test"" mit der Variable %age$d" |
+
+This spreadsheet would be exported as the following CSV file:
 
 ```
-keys,fr,en,es
-appTitle,Ma super application,My awesome application,Mi gran application
-subtitle,Un sous titre,A subtitle,Un subtitulò
-description,Un texte avec une variable : %1$s,A text with a variable : %1$s,Un texto con una variable : %1$s
-littleTest,"Voici, pour l'exemple, ""un test"" avec la variable %age$d","Here is, for the example, ""a test"" with variable %age$d","Aqui esta, por ejemplo, ""una prueba"" con la variable %age$d"
+keys,fr,en,es,de_CH
+appTitle,Ma super application,My awesome application,Mi gran application,Meine tolle App
+subtitle,Un sous titre,A subtitle,Un subtitulò,Ein Untertitle
+description,Un texte avec une variable : %1$s,Text with a variable: %1$s,Un texto con una variable : %1$s,Text mit einer Variable: %1$s
+littleTest,"Voici, pour l'exemple, ""un test"" avec la variable %age$d","Here is, for the example, ""a test"" with the variable %age$d","Aqui esta, por ejemplo, ""una prueba"" con la variable %age$d","Hier ist, zum Beispiel, ""ein Test"" mit der Variable %age$d"
 ```
 
 ### Add dependency
