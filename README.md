@@ -2,7 +2,7 @@
 
 A Flutter internationalized strings generator which automatically imports localization strings from a CSV file. 
 
-This is especially useful as any team member can work on a CSV file, with the translations imported into the project with the use of a simple terminal command. This contracts starkly to the default i18n approach in which dart files need to be manually for new keys and languages.
+This is especially useful as any team member can work on a CSV file, with the translations imported into the project with the use of a simple terminal command. This contrasts starkly to the default i18n approach in which dart files need to be manually for new keys and languages.
 
 ## Getting Started
 
