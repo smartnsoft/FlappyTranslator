@@ -2,6 +2,8 @@ library flappy_translator;
 
 import 'dart:io';
 
+import 'package:dart_style/dart_style.dart';
+
 import 'default_settings.dart';
 import 'flappy_logger.dart';
 import 'parsing/csv_parser.dart';
@@ -132,14 +134,13 @@ class FlappyTranslator {
   }
 
   void _writeInFile(String contents, String outputDir, String fileName) {
-    if (outputDir != null) {
-      if (!Directory(outputDir).existsSync()) {
-        Directory(outputDir).createSync(recursive: true);
-      }
-    }
+    // format the contents according to dart defaults
+    contents = DartFormatter().format(contents);
 
-    final File generatedFile = File(outputDir == null || outputDir.isEmpty ? 'i18n.dart' : '$outputDir/$fileName.dart');
-    generatedFile.createSync();
+    final generatedFile = File(outputDir == null || outputDir.isEmpty ? 'i18n.dart' : '$outputDir/$fileName.dart');
+    if (!generatedFile.existsSync()) {
+      generatedFile.createSync(recursive: true);
+    }
     generatedFile.writeAsStringSync(contents, mode: FileMode.write);
   }
 
@@ -156,7 +157,7 @@ class FlappyTranslator {
       mapsNames.add(mapName);
 
       result += """
-      \nstatic Map<String, String> $mapName = {
+      static Map<String, String> $mapName = {
       """;
 
       map.forEach((key, value) {
@@ -165,7 +166,7 @@ class FlappyTranslator {
         """;
       });
 
-      result += "};\n";
+      result += "};\n\n";
 
       allValuesMap[lang] = map;
     }

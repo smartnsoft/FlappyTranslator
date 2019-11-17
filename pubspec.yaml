@@ -5,13 +5,14 @@ author: Equinoa<register@smartnsoft.com>
 homepage: https://github.com/smartnsoft/FlappyTranslator
 
 environment:
-  sdk: ">=2.2.0 <3.0.0"
+  sdk: ">=2.3.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   csv: ^4.0.3
   yaml: ^2.2.0
+  dart_style: ^1.3.3
 
 dev_dependencies:
   flutter_test:
