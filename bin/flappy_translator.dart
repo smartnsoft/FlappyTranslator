@@ -20,6 +20,7 @@ class YamlArguments {
   static const delimiter = 'delimiter';
   static const startIndex = 'start_index';
   static const dependOnContext = 'depend_on_context';
+  static const useSingleQuotes = 'use_single_quotes';
 }
 
 void main(List<String> arguments) {
@@ -61,6 +62,7 @@ void main(List<String> arguments) {
     delimiter: settings[YamlArguments.delimiter],
     startIndex: settings[YamlArguments.startIndex],
     dependOnContext: settings[YamlArguments.dependOnContext],
+    useSingleQuotes: settings[YamlArguments.useSingleQuotes],
   );
 }
 

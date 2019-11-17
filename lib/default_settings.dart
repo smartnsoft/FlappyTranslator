@@ -16,3 +16,7 @@ const defaultStartIndex = 1;
 
 /// The default value for whether the generated code should depend on context
 const defaultDependOnContext = true;
+
+/// The default value for whether the generated code should use single or double quotes for strings.
+/// Single is default for Dart but user may wish to use double to avoid needing to escape \' etc.
+const defaultUseSingleQuotes = false;

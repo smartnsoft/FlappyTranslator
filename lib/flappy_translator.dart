@@ -57,6 +57,7 @@ class FlappyTranslator {
     String delimiter,
     int startIndex,
     bool dependOnContext,
+    bool useSingleQuotes,
   }) async {
     final File file = File(inputFilePath);
     if (!file.existsSync()) {
@@ -71,6 +72,7 @@ class FlappyTranslator {
     delimiter ??= defaultDelimiter;
     startIndex ??= defaultStartIndex;
     dependOnContext ??= defaultDependOnContext;
+    useSingleQuotes ??= defaultUseSingleQuotes;
 
     // construct the template
     var template =
@@ -85,6 +87,7 @@ class FlappyTranslator {
     final List<Map<String, String>> maps = _generateValuesMaps(supportedLanguages);
     template = _replaceSupportedLanguages(template, supportedLanguages);
 
+    final quoteString = useSingleQuotes ? '\'' : '"';
     String fields = "";
     FlappyLogger.logProgress("${lines.length - 1} words recognized");
 
@@ -109,7 +112,7 @@ class FlappyTranslator {
             "$key is a reserved keyword in Dart and cannot be used as key (line ${linesIndex + 1})\nAll reserved words in Dart are : $RESERVED_WORDS");
         return;
       }
-      fields += _addField(key, defaultWord, dependsOnContext: dependOnContext);
+      fields += _addField(key, defaultWord, dependsOnContext: dependOnContext, quoteString: quoteString);
 
       maps[0][key] = defaultWord;
       for (var wordIndex = 1; wordIndex < words.length; wordIndex++) {
@@ -118,7 +121,10 @@ class FlappyTranslator {
     }
 
     template = template.replaceAll(FIELDS_AREA_TEMPLATE_KEY, fields);
-    template = template.replaceAll(VALUES_AREA_TEMPLATE_KEY, _generateStringValuesFromList(maps, supportedLanguages));
+    template = template.replaceAll(
+      VALUES_AREA_TEMPLATE_KEY,
+      _generateStringValuesFromList(maps, supportedLanguages, quoteString: quoteString),
+    );
 
     _writeInFile(template, outputDir, fileName);
 
@@ -137,7 +143,8 @@ class FlappyTranslator {
     generatedFile.writeAsStringSync(contents, mode: FileMode.write);
   }
 
-  String _generateStringValuesFromList(List<Map<String, String>> maps, List<String> supportedLanguages) {
+  String _generateStringValuesFromList(List<Map<String, String>> maps, List<String> supportedLanguages,
+      {String quoteString = '"'}) {
     final Map<String, Map<String, String>> allValuesMap = Map();
     final List<String> mapsNames = [];
     String result = "";
@@ -154,7 +161,7 @@ class FlappyTranslator {
 
       map.forEach((key, value) {
         result += """
-        "$key": "${_formatString(value)}",
+        $quoteString$key$quoteString: $quoteString${_formatString(value)}$quoteString,
         """;
       });
 
@@ -169,7 +176,7 @@ class FlappyTranslator {
 
     supportedLanguages.asMap().forEach((index, lang) {
       result += """
-        "$lang": ${mapsNames[index]},
+        $quoteString$lang$quoteString: ${mapsNames[index]},
       """;
     });
 
@@ -191,7 +198,7 @@ class FlappyTranslator {
     return maps;
   }
 
-  String _addField(String key, String defaultWord, {bool dependsOnContext = false}) {
+  String _addField(String key, String defaultWord, {bool dependsOnContext = false, String quoteString = '"'}) {
     final RegExp regex = new RegExp(PARAMETERS_REGEX);
     final bool hasParameters = regex.hasMatch(defaultWord);
     if (hasParameters) {
@@ -204,7 +211,7 @@ class FlappyTranslator {
 
       String result = (!dependsOnContext ? "static " : "") +
           """String $key({$parameters}) {
-      String text = _getText("$key");
+      String text = _getText($quoteString$key$quoteString);
       """;
 
       for (RegExpMatch match in matches) {
@@ -224,7 +231,7 @@ class FlappyTranslator {
       }
       """;
     }
-    return (!dependsOnContext ? "static " : "") + """String get $key => _getText("$key");\n\n""";
+    return (!dependsOnContext ? "static " : "") + """String get $key => _getText($quoteString$key$quoteString);\n\n""";
   }
 
   String getParameterNameFromPlaceholder(String placeholder) {

@@ -26,6 +26,7 @@ flappy_translator:
   delimiter: ","
   start_index: 1
   depend_on_context: true
+  use_single_quotes: false
 
 flutter:
   uses-material-design: true

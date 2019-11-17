@@ -53,6 +53,7 @@ flappy_translator:
   delimiter: ","
   start_index: 1
   depend_on_context: true
+  use_single_quotes: false
 ```
 
 | Setting           | Default | Description                                                                     |
@@ -64,6 +65,7 @@ flappy_translator:
 | delimiter         | ,       | A delimited to separate columns in the input CSV file.                          |
 | start_index       | 1       | The column index where translations begin (i.e. column index of main language.) |
 | depend_on_context | true    | Whether the generated localizations should depend on *BuildContext*             |
+| use_single_quotes | false   | Whether the generated file should use single or double quotes for strings.      |
 
 ### Run package
 
