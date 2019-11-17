@@ -1,13 +1,14 @@
 # flappy_translator
 
-A Flutter internationalized strings generator which automatically generates a dart file with loca Strings from a CSV file.
-This way, anybody could make a CSV file with all the translations and automatically generate corresponding Dart code.
+A Flutter internationalized strings generator which automatically imports localization strings from a CSV file. 
+
+This is especially useful as any team member can work on a CSV file, with the translations imported into the project with the use of a simple terminal command. This contracts starkly to the default i18n approach in which dart files need to be manually for new keys and languages.
 
 ## Getting Started
 
-In order to use the *flappy_translator* package, please provide your translations in a CSV file (formatted with comma separator).
+In order to use the *flappy_translator* package, please provide your translations in a CSV file - separators `,` and `;` have been tested to work.
 
-### Create a CSV and export it in "comma separated" format
+### Create a CSV file
 
 Here is our CSV example :
 ![alt text](https://github.com/smartnsoft/FlappyTranslator/blob/master/documentation/csv_example.png "Example of CSV")
@@ -33,39 +34,45 @@ dev_dependencies:
   flappy_translator: 
 ```
 
-### Run package
+### Define Settings
 
-Make sure that your current working directory is the project root.
-
-A file path to the csv file must be supplied, for instance as a command line argument (CLA), while the output directory can be optionally supplied (defaults to *lib/*).
-
-```
-flutter pub get
-flutter pub run flappy_translator test.csv path/to/destination
-```
-
-Alternatively, these settings can be defined in your project's *pubspec.yaml*:
+Settings for *flappy_translator* can be optionally set in your project's *pubspec.yaml* file:
 
 ```yaml
 flappy_translator:
   input_file_path: "test.csv"
   output_dir: "lib"
+  file_name: "i18n"
+  class_name: "I18n"
+  delimiter: ","
+  start_index: 1
+  depend_on_context: true
 ```
 
-in which case no CLAs need to supplied:
+| Setting           | Default | Description                                                                     |
+| ----------------- | ------- | ------------------------------------------------------------------------------- |
+| input_file_path   | N/A     | A path to the input CSV file.                                                   |
+| output_dir        | lib     | A directory to generate the output file.                                        |
+| file_name         | i18n    | A filename for the generated file.                                              |
+| class_name        | I18n    | A class name for the generated file.                                            |
+| delimiter         | ,       | A delimited to separate columns in the input CSV file.                          |
+| start_index       | 1       | The column index where translations begin (i.e. column index of main language.) |
+| depend_on_context | true    | Whether the generated localizations should depend on *BuildContext*             |
+
+### Run package
+
+Make sure that your current working directory is the project root.
+
+A file path to the CSV file must be supplied, either as a setting in *pubspec.yaml* or as a command line argument (CLA), while the output directory can also be optionally supplied as a CLA.
 
 ```
 flutter pub get
-flutter pub run flappy_translator
+flutter pub run flappy_translator <test.csv> <output dir>
 ```
-
-Note that CLAs will overwrite any defaults set in *pubspec*.
 
 ### Use the i18n generated file
 
-The package used your CV file in order to generate a file named `i18n.dart` in `path/to/destination` you provided.
-
-Once you have this file in your project, all you have to do is :
+The package used your CV file in order to generate a file named *file_name* in *output_dir* you provided. The following example uses the default *class_name* I18n with a dependency on *BuildContext*:
 
 1. Add the I18nDelegate to your delegates
 
@@ -113,7 +120,7 @@ class Home extends StatelessWidget {
 
 ### Default language
 
-The `first` language's column of your CSV file will be considered as the `default`one.
+The `first` language's column of your CSV file will be considered as the `default` one.
 That means : 
 
 * If other languages does not have translation for specific words, it will take the corresponding one in the default language.
@@ -152,5 +159,3 @@ String description({String var1,})
 ```
 
 If the variables are not provided, the String will be given without replacing the variables placeholders.
-
-
