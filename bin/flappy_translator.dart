@@ -40,7 +40,7 @@ void main(List<String> arguments) {
   if (arguments.length > 0 && arguments.first != null) {
     inputFilePath = arguments.first;
   }
-  if (arguments.length >= 1 && arguments[1] != null) {
+  if (arguments.length > 1 && arguments[1] != null) {
     outputDir = arguments[1];
   }
 
@@ -72,8 +72,10 @@ Map<String, dynamic> loadSettings() {
 
   // determine <String, dynamic> map from <dynamic, dynamic> yaml
   final settings = <String, dynamic>{};
-  for (final kvp in yamlMap[yamlSectionId].entries) {
-    settings[kvp.key] = kvp.value;
+  if (yamlMap.containsKey(yamlSectionId)) {
+    for (final kvp in yamlMap[yamlSectionId].entries) {
+      settings[kvp.key] = kvp.value;
+    }
   }
 
   return settings;
