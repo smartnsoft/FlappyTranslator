@@ -21,6 +21,11 @@ dev_dependencies:
 flappy_translator:
   input_file_path: "test.csv"
   output_dir: "lib"
+  file_name: "i18n"
+  class_name: "I18n"
+  delimiter: ","
+  start_index: 1
+  depend_on_context: true
 
 flutter:
   uses-material-design: true
