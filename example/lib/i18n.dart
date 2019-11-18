@@ -63,7 +63,7 @@ class I18n {
 
   static Map<String, String> _de_CHValues = {
     "appTitle": "Meine tolle App",
-    "subtitle": "Ein Untertitle",
+    "subtitle": "Ein Untertitel",
     "description": "Text mit einer Variable: %1\$s",
     "littleTest":
         "Hier ist, zum Beispiel, \"ein Test\" mit der Variable %age\$d",
