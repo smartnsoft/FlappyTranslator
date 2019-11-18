@@ -9,7 +9,7 @@ class I18n {
 
 String get subtitle => _getText("subtitle");
 
-String description({String var1, }) {
+String description({@required String var1, }) {
       String text = _getText("description");
               if (var1 != null) {
           text = text.replaceAll("%1\$s", var1);
@@ -17,7 +17,7 @@ String description({String var1, }) {
               return text;
       
       }
-      String littleTest({int age, }) {
+      String littleTest({@required int age, }) {
       String text = _getText("littleTest");
               if (age != null) {
           text = text.replaceAll("%age\$d", age.toString());
