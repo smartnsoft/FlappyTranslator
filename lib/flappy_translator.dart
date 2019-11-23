@@ -161,8 +161,12 @@ class FlappyTranslator {
       """;
 
       map.forEach((key, value) {
+        String formattedString = _formatString(value);
+        if (quoteString == '\'') {
+          formattedString = formattedString.replaceAll('\'', '\\\'');
+        }
         result += """
-        $quoteString$key$quoteString: $quoteString${_formatString(value)}$quoteString,
+        $quoteString$key$quoteString: $quoteString$formattedString$quoteString,
         """;
       });
 
