@@ -77,26 +77,26 @@ class FlappyTranslator {
     useSingleQuotes ??= defaultUseSingleQuotes;
 
     // construct the template
-    var template =
+    String template =
         templateBegining + (dependOnContext ? templateDependContext : templateDontDependContext) + templateEnding;
     template = template.replaceAll(CLASS_NAME_TEMPLATE_KEY, className);
 
-    final csvParser = CSVParser(fieldDelimiter: delimiter);
+    final CSVParser csvParser = CSVParser(fieldDelimiter: delimiter);
 
-    final lines = file.readAsLinesSync();
+    final List<String> lines = file.readAsLinesSync();
 
-    final supportedLanguages = csvParser.getSupportedLanguages(lines, startIndex: startIndex);
+    final List<String> supportedLanguages = csvParser.getSupportedLanguages(lines, startIndex: startIndex);
     final List<Map<String, String>> maps = _generateValuesMaps(supportedLanguages);
     template = _replaceSupportedLanguages(template, supportedLanguages);
 
-    final quoteString = useSingleQuotes ? '\'' : '"';
+    final String quoteString = useSingleQuotes ? '\'' : '"';
     String fields = "";
     FlappyLogger.logProgress("${lines.length - 1} words recognized");
 
-    for (var linesIndex = 1; linesIndex < lines.length; linesIndex++) {
-      final wordsOfLine = csvParser.getWordsOfLine(lines[linesIndex]);
+    for (int linesIndex = 1; linesIndex < lines.length; linesIndex++) {
+      final List<String> wordsOfLine = csvParser.getWordsOfLine(lines[linesIndex]);
       final String key = wordsOfLine.first;
-      final words = wordsOfLine.sublist(startIndex, wordsOfLine.length);
+      final List<String> words = wordsOfLine.sublist(startIndex, wordsOfLine.length);
       if (words.length > supportedLanguages.length) {
         FlappyLogger.logError(
             "The line number ${linesIndex + 1} seems to be not well formatted (${words.length} words for ${supportedLanguages.length} columns)");
@@ -117,7 +117,7 @@ class FlappyTranslator {
       fields += _addField(key, defaultWord, dependsOnContext: dependOnContext, quoteString: quoteString);
 
       maps[0][key] = defaultWord;
-      for (var wordIndex = 1; wordIndex < words.length; wordIndex++) {
+      for (int wordIndex = 1; wordIndex < words.length; wordIndex++) {
         maps[wordIndex][key] = words[wordIndex].isEmpty ? defaultWord : words[wordIndex];
       }
     }
@@ -137,7 +137,7 @@ class FlappyTranslator {
     // format the contents according to dart defaults
     contents = DartFormatter().format(contents);
 
-    final generatedFile = File(outputDir == null || outputDir.isEmpty ? 'i18n.dart' : '$outputDir/$fileName.dart');
+    final File generatedFile = File(outputDir == null || outputDir.isEmpty ? 'i18n.dart' : '$outputDir/$fileName.dart');
     if (!generatedFile.existsSync()) {
       generatedFile.createSync(recursive: true);
     }
@@ -150,7 +150,7 @@ class FlappyTranslator {
     final List<String> mapsNames = [];
     String result = "";
 
-    for (var mapIndex = 0; mapIndex < maps.length; mapIndex++) {
+    for (int mapIndex = 0; mapIndex < maps.length; mapIndex++) {
       final String lang = supportedLanguages[mapIndex];
       final Map<String, String> map = maps[mapIndex];
       final String mapName = "_${lang}Values";
@@ -246,11 +246,11 @@ class FlappyTranslator {
   String _replaceSupportedLanguages(String template, List<String> supportedLanguages) {
     final StringBuffer languageLocals = StringBuffer();
 
-    for (var lang in supportedLanguages) {
+    for (String lang in supportedLanguages) {
       languageLocals.write(createLocalConstructorFromLanguage(lang) + ',');
     }
 
-    final supportedLocals = """
+    final String supportedLocals = """
     static final Set<Locale> supportedLocals = { $languageLocals };
     """
         .trim();
@@ -268,7 +268,7 @@ class FlappyTranslator {
   }
 
   String createLocalConstructorFromLanguage(String language) {
-    final parts = language.split('_');
+    final List<String> parts = language.split('_');
     return (parts.length == 1) ? """Locale('${parts[0]}')""" : """Locale('${parts[0]}', '${parts[1]}')""";
   }
 
