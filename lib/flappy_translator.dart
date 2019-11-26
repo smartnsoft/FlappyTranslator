@@ -68,13 +68,13 @@ class FlappyTranslator {
     }
 
     // if null has been passed in, ensure that vars are given default values
-    outputDir ??= defaultOutputDirectory;
-    fileName ??= defaultFileName;
-    className ??= defaultClassName;
-    delimiter ??= defaultDelimiter;
-    startIndex ??= defaultStartIndex;
-    dependOnContext ??= defaultDependOnContext;
-    useSingleQuotes ??= defaultUseSingleQuotes;
+    outputDir ??= DefaultSettings.outputDirectory;
+    fileName ??= DefaultSettings.fileName;
+    className ??= DefaultSettings.className;
+    delimiter ??= DefaultSettings.delimiter;
+    startIndex ??= DefaultSettings.startIndex;
+    dependOnContext ??= DefaultSettings.dependOnContext;
+    useSingleQuotes ??= DefaultSettings.useSingleQuotes;
 
     // construct the template
     String template =
