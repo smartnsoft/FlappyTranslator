@@ -164,6 +164,8 @@ class FlappyTranslator {
         String formattedString = _formatString(value);
         if (quoteString == '\'') {
           formattedString = formattedString.replaceAll('\'', '\\\'');
+          // incase the string already had \' then it will become \\\\\', replace this with \\\'
+          formattedString = formattedString.replaceAll('\\\\\'', '\\\'');
         }
         result += """
         $quoteString$key$quoteString: $quoteString$formattedString$quoteString,
