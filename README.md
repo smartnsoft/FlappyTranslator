@@ -124,6 +124,22 @@ class Home extends StatelessWidget {
 }
 ```
 
+### Update iOS Info.plist
+
+For iOS, *ios/Runner/Info.plist* needs to be updated with an array of the languages that the app supports:
+
+```plist
+<key>CFBundleLocalizations</key>
+<array>
+  <string>fr</string>
+  <string>en</string>
+  <string>es</string>
+  <string>de</string>
+</array>
+```
+
+For more information, see [Internationalizing Flutter apps](https://flutter.dev/docs/development/accessibility-and-localization/internationalization#appendix-updating-the-ios-app-bundle).
+
 ## Rules and functionalities
 
 ### Default language
