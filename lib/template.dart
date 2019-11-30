@@ -30,7 +30,9 @@ const String templateDependContext = """
     return _localizedValues[key] ?? '** \$key not found';
   }
 
-  get currentLanguage => _locale.languageCode;
+  Locale get currentLocale => _locale;
+
+  String get currentLanguage => _locale.languageCode;
 """;
 
 const String templateDontDependContext = """
@@ -45,7 +47,9 @@ const String templateDontDependContext = """
     return _localizedValues[key] ?? '** \$key not found';
   }
 
-  static get currentLanguage => _locale.languageCode;
+  static Locale get currentLocale => _locale;
+
+  static String get currentLanguage => _locale.languageCode;
 """;
 
 const String templateEnding = """

@@ -84,7 +84,9 @@ class I18n {
     return _localizedValues[key] ?? '** $key not found';
   }
 
-  get currentLanguage => _locale.languageCode;
+  Locale get currentLocale => _locale;
+
+  String get currentLanguage => _locale.languageCode;
 
   static Future<I18n> load(Locale locale) async {
     final translations = I18n(locale);
