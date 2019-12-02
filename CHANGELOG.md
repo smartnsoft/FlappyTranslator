@@ -19,3 +19,16 @@
 ## [1.0.4] - 18/10/2019
 
 * Handle possibility to have multiple languages for one country
+
+## [1.1.0] - 02/12/2019  
+  
+* Add lot of configurations in pubspec.yaml :  
+	* Ability to define generated filename and classname
+	* Ability to use other delimiter than ","
+	* Ability to have other columns between keys and values (one for description for example)
+	* No need for BuildContext
+	* Ability to use double or simple quotes on generated file
+* Additionally :
+	* All generated parameters are now *@required*
+	* Added * currentLocale* to generated file
+	* Better Readme.md
