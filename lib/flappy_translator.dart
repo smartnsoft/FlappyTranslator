@@ -213,7 +213,7 @@ class FlappyTranslator {
       final List<RegExpMatch> matches = regex.allMatches(defaultWord).toList();
       for (RegExpMatch match in matches) {
         final String parameterType = match.group(2) == "d" ? "int" : "String";
-        parameters += "$parameterType ${getParameterNameFromPlaceholder(match.group(0))}, ";
+        parameters += "@required $parameterType ${getParameterNameFromPlaceholder(match.group(0))}, ";
       }
 
       String result = (!dependsOnContext ? "static " : "") +
