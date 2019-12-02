@@ -30,5 +30,5 @@
 	* Ability to use double or simple quotes on generated file
 * Additionally :
 	* All generated parameters are now *@required*
-	* Added * currentLocale* to generated file
+	* Added *currentLocale* to generated file
 	* Better Readme.md
