@@ -21,6 +21,7 @@ class YamlArguments {
   static const startIndex = 'start_index';
   static const dependOnContext = 'depend_on_context';
   static const useSingleQuotes = 'use_single_quotes';
+  static const replaceNoBreakSpaces = 'replace_no_break_spaces';
 }
 
 void main(List<String> arguments) {
@@ -63,6 +64,7 @@ void main(List<String> arguments) {
     startIndex: settings[YamlArguments.startIndex],
     dependOnContext: settings[YamlArguments.dependOnContext],
     useSingleQuotes: settings[YamlArguments.useSingleQuotes],
+    replaceNoBreakSpaces: settings[YamlArguments.replaceNoBreakSpaces],
   );
 }
 

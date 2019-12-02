@@ -60,6 +60,7 @@ class FlappyTranslator {
     int startIndex,
     bool dependOnContext,
     bool useSingleQuotes,
+    bool replaceNoBreakSpaces,
   }) async {
     final File file = File(inputFilePath);
     if (!file.existsSync()) {
@@ -75,6 +76,7 @@ class FlappyTranslator {
     startIndex ??= DefaultSettings.startIndex;
     dependOnContext ??= DefaultSettings.dependOnContext;
     useSingleQuotes ??= DefaultSettings.useSingleQuotes;
+    replaceNoBreakSpaces ??= DefaultSettings.replaceNoBreakSpaces;
 
     // construct the template
     String template =
@@ -125,7 +127,12 @@ class FlappyTranslator {
     template = template.replaceAll(FIELDS_AREA_TEMPLATE_KEY, fields);
     template = template.replaceAll(
       VALUES_AREA_TEMPLATE_KEY,
-      _generateStringValuesFromList(maps, supportedLanguages, quoteString: quoteString),
+      _generateStringValuesFromList(
+        maps,
+        supportedLanguages,
+        quoteString: quoteString,
+        replaceNoBreakSpaces: replaceNoBreakSpaces,
+      ),
     );
 
     _writeInFile(template, outputDir, fileName);
@@ -145,7 +152,7 @@ class FlappyTranslator {
   }
 
   String _generateStringValuesFromList(List<Map<String, String>> maps, List<String> supportedLanguages,
-      {String quoteString = '"'}) {
+      {String quoteString = '"', bool replaceNoBreakSpaces = false}) {
     final Map<String, Map<String, String>> allValuesMap = Map();
     final List<String> mapsNames = [];
     String result = "";
@@ -166,6 +173,9 @@ class FlappyTranslator {
           formattedString = formattedString.replaceAll('\'', '\\\'');
           // incase the string already had \' then it will become \\\\\', replace this with \\\'
           formattedString = formattedString.replaceAll('\\\\\'', '\\\'');
+        }
+        if (replaceNoBreakSpaces) {
+          formattedString = _replaceNoBreakSpaces(formattedString);
         }
         result += """
         $quoteString$key$quoteString: $quoteString$formattedString$quoteString,
@@ -195,6 +205,14 @@ class FlappyTranslator {
   String _formatString(String text) {
     text = text.replaceAll('"', '\\"');
     text = text.replaceAll('\$', '\\\$');
+
+    return text;
+  }
+
+  String _replaceNoBreakSpaces(String text) {
+    // sometimes there can be the strange '194 160' space, ie `no break space`. replace this with a normal space.
+    text = text.replaceAll('\u00A0', ' ');
+    text = text.replaceAll(' ', ' ');
 
     return text;
   }
