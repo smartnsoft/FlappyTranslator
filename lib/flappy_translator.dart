@@ -2,11 +2,14 @@ library flappy_translator;
 
 import 'dart:io';
 
+import 'package:dart_style/dart_style.dart';
+
+import 'default_settings.dart';
 import 'flappy_logger.dart';
 import 'parsing/csv_parser.dart';
-import 'parsing/file_parser.dart';
 import 'template.dart';
 
+const String CLASS_NAME_TEMPLATE_KEY = "#CLASS_NAME#";
 const String VALUES_AREA_TEMPLATE_KEY = "/// Values area";
 const String FIELDS_AREA_TEMPLATE_KEY = "/// Fields area";
 const String SUPPORTED_LANGUAGES_AREA_TEMPLATE_KEY = "/// SupportedLanguages area";
@@ -48,31 +51,52 @@ const List<String> RESERVED_WORDS = [
 ];
 
 class FlappyTranslator {
-  void generate(String filePath, {String targetPath = ""}) async {
-    final File file = File(filePath);
-
+  void generate(
+    String inputFilePath, {
+    String outputDir,
+    String fileName,
+    String className,
+    String delimiter,
+    int startIndex,
+    bool dependOnContext,
+    bool useSingleQuotes,
+  }) async {
+    final File file = File(inputFilePath);
     if (!file.existsSync()) {
-      FlappyLogger.logError("File $filePath does not exist");
+      FlappyLogger.logError("File $inputFilePath does not exist");
       return;
     }
 
-    String template = templateString;
+    // if null has been passed in, ensure that vars are given default values
+    outputDir ??= DefaultSettings.outputDirectory;
+    fileName ??= DefaultSettings.fileName;
+    className ??= DefaultSettings.className;
+    delimiter ??= DefaultSettings.delimiter;
+    startIndex ??= DefaultSettings.startIndex;
+    dependOnContext ??= DefaultSettings.dependOnContext;
+    useSingleQuotes ??= DefaultSettings.useSingleQuotes;
 
-    final FileParser fileParser = CSVParser();
+    // construct the template
+    String template =
+        templateBegining + (dependOnContext ? templateDependContext : templateDontDependContext) + templateEnding;
+    template = template.replaceAll(CLASS_NAME_TEMPLATE_KEY, className);
 
-    final lines = file.readAsLinesSync();
+    final CSVParser csvParser = CSVParser(fieldDelimiter: delimiter);
 
-    final List<String> supportedLanguages = fileParser.getSupportedLanguages(lines);
+    final List<String> lines = file.readAsLinesSync();
+
+    final List<String> supportedLanguages = csvParser.getSupportedLanguages(lines, startIndex: startIndex);
     final List<Map<String, String>> maps = _generateValuesMaps(supportedLanguages);
     template = _replaceSupportedLanguages(template, supportedLanguages);
 
+    final String quoteString = useSingleQuotes ? '\'' : '"';
     String fields = "";
     FlappyLogger.logProgress("${lines.length - 1} words recognized");
 
-    for (var linesIndex = 1; linesIndex < lines.length; linesIndex++) {
-      final List<String> wordsOfLine = fileParser.getWordsOfLine(lines[linesIndex]);
+    for (int linesIndex = 1; linesIndex < lines.length; linesIndex++) {
+      final List<String> wordsOfLine = csvParser.getWordsOfLine(lines[linesIndex]);
       final String key = wordsOfLine.first;
-      final words = wordsOfLine.sublist(1, wordsOfLine.length);
+      final List<String> words = wordsOfLine.sublist(startIndex, wordsOfLine.length);
       if (words.length > supportedLanguages.length) {
         FlappyLogger.logError(
             "The line number ${linesIndex + 1} seems to be not well formatted (${words.length} words for ${supportedLanguages.length} columns)");
@@ -90,56 +114,65 @@ class FlappyTranslator {
             "$key is a reserved keyword in Dart and cannot be used as key (line ${linesIndex + 1})\nAll reserved words in Dart are : $RESERVED_WORDS");
         return;
       }
-      fields += _addField(key, defaultWord);
+      fields += _addField(key, defaultWord, dependsOnContext: dependOnContext, quoteString: quoteString);
 
       maps[0][key] = defaultWord;
-      for (var wordIndex = 1; wordIndex < words.length; wordIndex++) {
+      for (int wordIndex = 1; wordIndex < words.length; wordIndex++) {
         maps[wordIndex][key] = words[wordIndex].isEmpty ? defaultWord : words[wordIndex];
       }
     }
 
     template = template.replaceAll(FIELDS_AREA_TEMPLATE_KEY, fields);
-    template = template.replaceAll(VALUES_AREA_TEMPLATE_KEY, _generateStringValuesFromList(maps, supportedLanguages));
+    template = template.replaceAll(
+      VALUES_AREA_TEMPLATE_KEY,
+      _generateStringValuesFromList(maps, supportedLanguages, quoteString: quoteString),
+    );
 
-    _writeInFile(template, targetPath);
+    _writeInFile(template, outputDir, fileName);
 
     FlappyLogger.logProgress("End of work !");
   }
 
-  void _writeInFile(String template, String targetPath) {
-    if (targetPath != null) {
-      if (!Directory(targetPath).existsSync()) {
-        Directory(targetPath).createSync(recursive: true);
-      }
-    }
-    final File generatedFile = File(targetPath != null ? "$targetPath/i18n.dart" : "i18n.dart");
-    generatedFile.createSync();
+  void _writeInFile(String contents, String outputDir, String fileName) {
+    // format the contents according to dart defaults
+    contents = DartFormatter().format(contents);
 
-    generatedFile.writeAsStringSync(template, mode: FileMode.write);
+    final File generatedFile = File(outputDir == null || outputDir.isEmpty ? 'i18n.dart' : '$outputDir/$fileName.dart');
+    if (!generatedFile.existsSync()) {
+      generatedFile.createSync(recursive: true);
+    }
+    generatedFile.writeAsStringSync(contents, mode: FileMode.write);
   }
 
-  String _generateStringValuesFromList(List<Map<String, String>> maps, List<String> supportedLanguages) {
+  String _generateStringValuesFromList(List<Map<String, String>> maps, List<String> supportedLanguages,
+      {String quoteString = '"'}) {
     final Map<String, Map<String, String>> allValuesMap = Map();
     final List<String> mapsNames = [];
     String result = "";
 
-    for (var mapIndex = 0; mapIndex < maps.length; mapIndex++) {
+    for (int mapIndex = 0; mapIndex < maps.length; mapIndex++) {
       final String lang = supportedLanguages[mapIndex];
       final Map<String, String> map = maps[mapIndex];
       final String mapName = "_${lang}Values";
       mapsNames.add(mapName);
 
       result += """
-      \nstatic Map<String, String> $mapName = {
+      static Map<String, String> $mapName = {
       """;
 
       map.forEach((key, value) {
+        String formattedString = _formatString(value);
+        if (quoteString == '\'') {
+          formattedString = formattedString.replaceAll('\'', '\\\'');
+          // incase the string already had \' then it will become \\\\\', replace this with \\\'
+          formattedString = formattedString.replaceAll('\\\\\'', '\\\'');
+        }
         result += """
-        "$key": "${_formatString(value)}",
+        $quoteString$key$quoteString: $quoteString$formattedString$quoteString,
         """;
       });
 
-      result += "};\n";
+      result += "};\n\n";
 
       allValuesMap[lang] = map;
     }
@@ -150,7 +183,7 @@ class FlappyTranslator {
 
     supportedLanguages.asMap().forEach((index, lang) {
       result += """
-        "$lang": ${mapsNames[index]},
+        $quoteString$lang$quoteString: ${mapsNames[index]},
       """;
     });
 
@@ -172,7 +205,7 @@ class FlappyTranslator {
     return maps;
   }
 
-  String _addField(String key, String defaultWord) {
+  String _addField(String key, String defaultWord, {bool dependsOnContext = false, String quoteString = '"'}) {
     final RegExp regex = new RegExp(PARAMETERS_REGEX);
     final bool hasParameters = regex.hasMatch(defaultWord);
     if (hasParameters) {
@@ -183,8 +216,9 @@ class FlappyTranslator {
         parameters += "$parameterType ${getParameterNameFromPlaceholder(match.group(0))}, ";
       }
 
-      String result = """String $key({$parameters}) {
-      String text = _getText("$key");
+      String result = (!dependsOnContext ? "static " : "") +
+          """String $key({$parameters}) {
+      String text = _getText($quoteString$key$quoteString);
       """;
 
       for (RegExpMatch match in matches) {
@@ -204,7 +238,7 @@ class FlappyTranslator {
       }
       """;
     }
-    return """String get $key => _getText("$key");\n\n""";
+    return (!dependsOnContext ? "static " : "") + """String get $key => _getText($quoteString$key$quoteString);\n\n""";
   }
 
   String getParameterNameFromPlaceholder(String placeholder) {
@@ -218,14 +252,14 @@ class FlappyTranslator {
   String _replaceSupportedLanguages(String template, List<String> supportedLanguages) {
     final StringBuffer languageLocals = StringBuffer();
 
-    for (var lang in supportedLanguages) {
+    for (String lang in supportedLanguages) {
       languageLocals.write(createLocalConstructorFromLanguage(lang) + ',');
     }
 
-    final supportedLocals =
-    """
+    final String supportedLocals = """
     static final Set<Locale> supportedLocals = { $languageLocals };
-    """.trim();
+    """
+        .trim();
 
     return template.replaceAll(
       SUPPORTED_LANGUAGES_AREA_TEMPLATE_KEY,
@@ -234,15 +268,14 @@ class FlappyTranslator {
       
       @override
       bool isSupported(Locale locale) => supportedLocals.contains(locale);
-      """.trim(),
+      """
+          .trim(),
     );
   }
 
   String createLocalConstructorFromLanguage(String language) {
-    final parts = language.split('_');
-    return (parts.length == 1)
-        ? """Locale('${parts[0]}')"""
-        : """Locale('${parts[0]}', '${parts[1]}')""";
+    final List<String> parts = language.split('_');
+    return (parts.length == 1) ? """Locale('${parts[0]}')""" : """Locale('${parts[0]}', '${parts[1]}')""";
   }
 
   bool _isKeyAReservedWord(String key) {
