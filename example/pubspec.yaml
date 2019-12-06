@@ -27,6 +27,7 @@ flappy_translator:
   start_index: 1
   depend_on_context: true
   use_single_quotes: false
+  replace_no_break_spaces: false
 
 flutter:
   uses-material-design: true

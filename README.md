@@ -54,18 +54,20 @@ flappy_translator:
   start_index: 1
   depend_on_context: true
   use_single_quotes: false
+  replace_no_break_spaces: false
 ```
 
-| Setting           | Default | Description                                                                     |
-| ----------------- | ------- | ------------------------------------------------------------------------------- |
-| input_file_path   | N/A     | A path to the input CSV file.                                                   |
-| output_dir        | lib     | A directory to generate the output file.                                        |
-| file_name         | i18n    | A filename for the generated file.                                              |
-| class_name        | I18n    | A class name for the generated file.                                            |
-| delimiter         | ,       | A delimited to separate columns in the input CSV file.                          |
-| start_index       | 1       | The column index where translations begin (i.e. column index of main language.) |
-| depend_on_context | true    | Whether the generated localizations should depend on *BuildContext*             |
-| use_single_quotes | false   | Whether the generated file should use single or double quotes for strings.      |
+| Setting                 | Default | Description                                                                      |
+| ----------------------- | ------- | -------------------------------------------------------------------------------- |
+| input_file_path         | N/A     | A path to the input CSV file.                                                    |
+| output_dir              | lib     | A directory to generate the output file.                                         |
+| file_name               | i18n    | A filename for the generated file.                                               |
+| class_name              | I18n    | A class name for the generated file.                                             |
+| delimiter               | ,       | A delimited to separate columns in the input CSV file.                           |
+| start_index             | 1       | The column index where translations begin (i.e. column index of main language.)  |
+| depend_on_context       | true    | Whether the generated localizations should depend on *BuildContext*              |
+| use_single_quotes       | false   | Whether the generated file should use single or double quotes for strings.       |
+| replace_no_break_spaces | false   | Whether no break spaces (\u00A0) should be replaced with normal spaces (\u0020). |
 
 ### Run package
 
