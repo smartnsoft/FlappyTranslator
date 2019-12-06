@@ -32,3 +32,7 @@
 	* All generated parameters are now *@required*
 	* Added *currentLocale* to generated file
 	* Better Readme.md
+
+## [1.2.0] - 06/12/2019 
+
+* Add setting to handle "no break" spaces by replacing them by normal spaces
