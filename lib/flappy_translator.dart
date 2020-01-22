@@ -160,7 +160,8 @@ class FlappyTranslator {
     for (int mapIndex = 0; mapIndex < maps.length; mapIndex++) {
       final String lang = supportedLanguages[mapIndex];
       final Map<String, String> map = maps[mapIndex];
-      final String mapName = "_${lang}Values";
+      final String cleanLang = lang.replaceAll("_", "");
+      final String mapName = "_${cleanLang}Values";
       mapsNames.add(mapName);
 
       result += """
@@ -192,8 +193,9 @@ class FlappyTranslator {
     """;
 
     supportedLanguages.asMap().forEach((index, lang) {
+      cleanLang = lang.replace("_", "");
       result += """
-        $quoteString$lang$quoteString: ${mapsNames[index]},
+        $quoteString$cleanLang$quoteString: ${mapsNames[index]},
       """;
     });
 
@@ -299,4 +301,5 @@ class FlappyTranslator {
   bool _isKeyAReservedWord(String key) {
     return RESERVED_WORDS.contains(key);
   }
-}
+eanLang
+
