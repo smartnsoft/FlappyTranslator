@@ -36,3 +36,7 @@
 ## [1.2.0] - 06/12/2019 
 
 * Add setting to handle "no break" spaces by replacing them by normal spaces
+
+## [1.2.1] - 24/01/2020 
+
+* Make sure that snake_case countries like `de_CH` are written in camelCase in generated file
