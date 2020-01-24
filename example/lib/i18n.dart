@@ -10,7 +10,7 @@ class I18n {
   String get subtitle => _getText("subtitle");
 
   String description({
-    String var1,
+    @required String var1,
   }) {
     String text = _getText("description");
     if (var1 != null) {
@@ -20,7 +20,7 @@ class I18n {
   }
 
   String littleTest({
-    int age,
+    @required int age,
   }) {
     String text = _getText("littleTest");
     if (age != null) {
@@ -54,7 +54,7 @@ class I18n {
         "Aqui esta, por ejemplo, \"una prueba\" con la variable %age\$d",
   };
 
-  static Map<String, String> _de_CHValues = {
+  static Map<String, String> _deCHValues = {
     "appTitle": "Meine tolle App",
     "subtitle": "Ein Untertitel",
     "description": "Text mit einer Variable: %1\$s",
@@ -66,7 +66,7 @@ class I18n {
     "fr": _frValues,
     "en": _enValues,
     "es": _esValues,
-    "de_CH": _de_CHValues,
+    "deCH": _deCHValues,
   };
 
   I18n(Locale locale) {
@@ -102,7 +102,7 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
     Locale('fr'),
     Locale('en'),
     Locale('es'),
-    Locale('de', 'CH'),
+    Locale('deCH'),
   };
 
   @override

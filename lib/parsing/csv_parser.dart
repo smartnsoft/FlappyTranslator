@@ -10,7 +10,7 @@ class CSVParser with FileParser {
 
   @override
   List<String> getSupportedLanguages(List<String> fileLines, {@required startIndex}) {
-    final List<String> words = getWordsOfLine(fileLines.first);
+    final List<String> words = getWordsOfLine(fileLines.first).map((String word) => word.replaceAll("_", '')).toList();
     return words.sublist(startIndex, words.length);
   }
 
