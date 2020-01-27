@@ -171,7 +171,7 @@ class FlappyTranslator {
     for (int mapIndex = 0; mapIndex < maps.length; mapIndex++) {
       final String lang = supportedLanguages[mapIndex];
       final Map<String, String> map = maps[mapIndex];
-      final String mapName = "_${lang}Values";
+      final String mapName = "_${lang.replaceAll("_", "")}Values";
       mapsNames.add(mapName);
 
       result += """

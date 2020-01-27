@@ -40,3 +40,7 @@
 ## [1.2.1] - 24/01/2020 
 
 * Make sure that snake_case countries like `de_CH` are written in camelCase in generated file
+
+## [1.2.2] - 27/01/2020 
+
+* Fix issue on Locale written in camelCase 

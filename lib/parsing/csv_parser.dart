@@ -6,14 +6,13 @@ import 'file_parser.dart';
 class CSVParser with FileParser {
   final String fieldDelimiter;
 
-  const CSVParser({@required this.fieldDelimiter});
+  const CSVParser({
+    @required this.fieldDelimiter,
+  });
 
   @override
-  List<String> getSupportedLanguages(List<String> fileLines,
-      {@required startIndex}) {
-    final List<String> words = getWordsOfLine(fileLines.first)
-        .map((String word) => word.replaceAll("_", ''))
-        .toList();
+  List<String> getSupportedLanguages(List<String> fileLines, {@required startIndex}) {
+    final List<String> words = getWordsOfLine(fileLines.first).toList();
     return words.sublist(startIndex, words.length);
   }
 

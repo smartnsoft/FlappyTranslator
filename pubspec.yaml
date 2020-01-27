@@ -1,6 +1,6 @@
 name: flappy_translator
 description: A Flutter internationalized strings generator.
-version: 1.2.1
+version: 1.2.2
 homepage: https://github.com/smartnsoft/FlappyTranslator
 
 environment:

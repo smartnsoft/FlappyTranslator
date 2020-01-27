@@ -66,7 +66,7 @@ class I18n {
     "fr": _frValues,
     "en": _enValues,
     "es": _esValues,
-    "deCH": _deCHValues,
+    "de_CH": _deCHValues,
   };
 
   I18n(Locale locale) {
@@ -102,7 +102,7 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
     Locale('fr'),
     Locale('en'),
     Locale('es'),
-    Locale('deCH'),
+    Locale('de', 'CH'),
   };
 
   @override
