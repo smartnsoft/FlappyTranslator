@@ -114,3 +114,7 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
   @override
   bool shouldReload(I18nDelegate old) => false;
 }
+
+extension I18nExtension on I18n {
+  String text(String key) => this._getText(key);
+}
