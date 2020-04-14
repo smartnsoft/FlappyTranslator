@@ -74,3 +74,9 @@ class #CLASS_NAME#Delegate extends LocalizationsDelegate<#CLASS_NAME#> {
 }
 
 """;
+
+const String templateExposeGetText = """
+  extension #CLASS_NAME#Extension on #CLASS_NAME# {
+  String text(String key) => this._getText(key);
+}
+""";

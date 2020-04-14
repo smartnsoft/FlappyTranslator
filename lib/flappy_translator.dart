@@ -62,6 +62,7 @@ class FlappyTranslator {
     bool dependOnContext,
     bool useSingleQuotes,
     bool replaceNoBreakSpaces,
+    bool exposeGetText,
   }) async {
     final File file = File(inputFilePath);
     if (!file.existsSync()) {
@@ -78,11 +79,13 @@ class FlappyTranslator {
     dependOnContext ??= DefaultSettings.dependOnContext;
     useSingleQuotes ??= DefaultSettings.useSingleQuotes;
     replaceNoBreakSpaces ??= DefaultSettings.replaceNoBreakSpaces;
+    exposeGetText ??= DefaultSettings.replaceNoBreakSpaces;
 
     // construct the template
     String template = templateBegining +
         (dependOnContext ? templateDependContext : templateDontDependContext) +
-        templateEnding;
+        templateEnding +
+        (exposeGetText ? templateExposeGetText : '');
     template = template.replaceAll(CLASS_NAME_TEMPLATE_KEY, className);
 
     final CSVParser csvParser = CSVParser(fieldDelimiter: delimiter);

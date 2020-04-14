@@ -22,6 +22,7 @@ class YamlArguments {
   static const dependOnContext = 'depend_on_context';
   static const useSingleQuotes = 'use_single_quotes';
   static const replaceNoBreakSpaces = 'replace_no_break_spaces';
+  static const exposeGetText = 'expose_get_text';
 }
 
 void main(List<String> arguments) {
@@ -65,6 +66,7 @@ void main(List<String> arguments) {
     dependOnContext: settings[YamlArguments.dependOnContext],
     useSingleQuotes: settings[YamlArguments.useSingleQuotes],
     replaceNoBreakSpaces: settings[YamlArguments.replaceNoBreakSpaces],
+    exposeGetText: settings[YamlArguments.exposeGetText],
   );
 }
 
