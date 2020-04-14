@@ -84,8 +84,12 @@ class FlappyTranslator {
     // construct the template
     String template = templateBegining +
         (dependOnContext ? templateDependContext : templateDontDependContext) +
-        templateEnding +
-        (exposeGetText ? templateExposeGetText : '');
+        (exposeGetText
+            ? (dependOnContext
+                ? templateGetTextDependContext
+                : templateGetTextDontDependContext)
+            : '') +
+        templateEnding;
     template = template.replaceAll(CLASS_NAME_TEMPLATE_KEY, className);
 
     final CSVParser csvParser = CSVParser(fieldDelimiter: delimiter);

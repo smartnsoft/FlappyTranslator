@@ -52,6 +52,16 @@ const String templateDontDependContext = """
   static String get currentLanguage => _locale.languageCode;
 """;
 
+const String templateGetTextDependContext = """
+
+  String getText(String key) => _getText(key);
+""";
+
+const String templateGetTextDontDependContext = """
+
+  static String getText(String key) => _getText(key);
+""";
+
 const String templateEnding = """
 
   static Future<#CLASS_NAME#> load(Locale locale) async {
@@ -73,10 +83,4 @@ class #CLASS_NAME#Delegate extends LocalizationsDelegate<#CLASS_NAME#> {
   bool shouldReload(#CLASS_NAME#Delegate old) => false;
 }
 
-""";
-
-const String templateExposeGetText = """
-  extension #CLASS_NAME#Extension on #CLASS_NAME# {
-  String text(String key) => this._getText(key);
-}
 """;
