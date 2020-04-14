@@ -88,6 +88,8 @@ class I18n {
 
   String get currentLanguage => _locale.languageCode;
 
+  String getText(String key) => _getText(key);
+
   static Future<I18n> load(Locale locale) async {
     final translations = I18n(locale);
     _localizedValues = _allValues[locale.toString()];
@@ -113,8 +115,4 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
 
   @override
   bool shouldReload(I18nDelegate old) => false;
-}
-
-extension I18nExtension on I18n {
-  String text(String key) => this._getText(key);
 }
