@@ -55,6 +55,7 @@ flappy_translator:
   depend_on_context: true
   use_single_quotes: false
   replace_no_break_spaces: false
+  expose_get_text: false
 ```
 
 | Setting                 | Default | Description                                                                      |
