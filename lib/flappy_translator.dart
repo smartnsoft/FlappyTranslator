@@ -15,6 +15,7 @@ const String FIELDS_AREA_TEMPLATE_KEY = "/// Fields area";
 const String SUPPORTED_LANGUAGES_AREA_TEMPLATE_KEY =
     "/// SupportedLanguages area";
 const String PARAMETERS_REGEX = r"(\%[[0-9a-zA-Z]+]*\$(d|s))";
+const String PLURALS_REGEX = r'\|(.*?)\|';
 const List<String> RESERVED_WORDS = [
   "assert",
   "default",
@@ -237,11 +238,14 @@ class FlappyTranslator {
 
   String _addField(String key, String defaultWord,
       {bool dependsOnContext = false, String quoteString = '"'}) {
-    final RegExp regex = new RegExp(PARAMETERS_REGEX);
-    final bool hasParameters = regex.hasMatch(defaultWord);
+    final RegExp paramtersRegExp = RegExp(PARAMETERS_REGEX);
+    final RegExp pluralsRegExp = RegExp(PLURALS_REGEX);
+    final bool hasParameters = paramtersRegExp.hasMatch(defaultWord);
+    final bool hasPlural = pluralsRegExp.hasMatch(defaultWord);
     if (hasParameters) {
       String parameters = "";
-      final List<RegExpMatch> matches = regex.allMatches(defaultWord).toList();
+      final List<RegExpMatch> matches =
+          paramtersRegExp.allMatches(defaultWord).toList();
       for (RegExpMatch match in matches) {
         final String parameterType = match.group(2) == "d" ? "int" : "String";
         parameters +=
@@ -263,9 +267,44 @@ class FlappyTranslator {
         """;
       }
 
+      if (hasPlural) {
+        final plurals = pluralsRegExp
+            .firstMatch(defaultWord)
+            .group(0)
+            .replaceAll('|', '')
+            .split(':');
+        if (plurals.length != 6) {
+          FlappyLogger.logError(
+              "Incorrect number of plurals given in $defaultWord. Must give 6.");
+          return null;
+        }
+
+        String varName =
+            getParameterNameFromPlaceholder(matches.first.group(0));
+        result += """
+        final plurals = _pluralsRegExp.firstMatch(text).group(0).replaceAll('|', '').split(':');
+        if(plurals.length != 6) {
+          return 'Issue with key $key. Incorrect number of plurals.';
+        }
+        return Intl.plural(
+              $varName,
+              zero: text.replaceAll(_pluralsRegExp, plurals[0]),
+              one: text.replaceAll(_pluralsRegExp, plurals[1]),
+              two: text.replaceAll(_pluralsRegExp, plurals[2]),
+              few: text.replaceAll(_pluralsRegExp, plurals[3]),
+              many: text.replaceAll(_pluralsRegExp, plurals[4]),
+              other: text.replaceAll(_pluralsRegExp, plurals[5]),
+            );
+        
+        """;
+      } else {
+        result += """
+            return text;
+      """;
+      }
+
       return result +
           """
-      return text;
       
       }
       """;
