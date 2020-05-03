@@ -181,7 +181,25 @@ Let's take the example of the `description` String in the CSV we used.
 The generated function signature will be :
 
 ```
-String description({String var1,})
+String description({@required String var1,})
 ```
 
 If the variables are not provided, the String will be given without replacing the variables placeholders.
+
+### Plurals
+
+Plurals are possible thanks to dart's [Intl.plural](https://api.flutter.dev/flutter/intl/Intl/plural.html) method. In order to select the correct plural form, six alternatives must be given: `zero`, `one`, `two`, `few`, `many` and `other`. An explanation about these alternatives can be found [here](http://cldr.unicode.org/index/cldr-spec/plural-rules).
+
+These alternatives must be given in the form `|alt1:alt2:alt3:alt4:alt5:alt6|`, that is, surrounded by `|` and separated with `:`.
+
+|key|fr|en|es|de|
+|-|-|-|-|-|
+|pluralTest|`Temps restant: %seconds$d |seconde:second:secondes:secondes:secondes:secondes|`|`Time left: %seconds$d |seconds:second:seconds:seconds:seconds:seconds|`|`Tiempo que queda: %seconds$d |segundos:segundo:segundos:segundos:segundos:segundos|`|`Verbleibende Zeit: %seconds$d |Sekunden:Sekunde:Sekunden:Sekunden:Sekunden:Sekunden|`
+
+`pluralTest` would then be parsed with the following function signature: `String pluralTest({@required int seconds})` and could be used as follows:
+
+|seconds|fr|en|es|de|
+|:-:|-|-|-|-|
+|0|Temps restant: 0 seconde|Time left: 0 seconds|Tiempo que queda: 0 segundos|Verbleibende Zeit: 0 Sekunden|
+|1|Temps restant: 1 second|Time left: 1 second|Tiempo que queda: 1 segundo|Verbleibende Zeit: 1 Sekunde|
+|2|Temps restant: 2 secondes|Time left: 2 seconds|Tiempo que queda: 2 segundos|Verbleibende Zeit: 2 Sekunden|
