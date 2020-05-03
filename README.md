@@ -192,14 +192,15 @@ Plurals are possible thanks to dart's [Intl.plural](https://api.flutter.dev/flut
 
 These alternatives must be given in the form `|alt1:alt2:alt3:alt4:alt5:alt6|`, that is, surrounded by `|` and separated with `:`.
 
-|key|fr|en|es|de|
-|-|-|-|-|-|
-|pluralTest|`Temps restant: %seconds$d |seconde:second:secondes:secondes:secondes:secondes|`|`Time left: %seconds$d |seconds:second:seconds:seconds:seconds:seconds|`|`Tiempo que queda: %seconds$d |segundos:segundo:segundos:segundos:segundos:segundos|`|`Verbleibende Zeit: %seconds$d |Sekunden:Sekunde:Sekunden:Sekunden:Sekunden:Sekunden|`
+```
+pluralTest,Time left: %seconds$d |seconds:second:seconds:seconds:seconds:seconds|,Verbleibende Zeit: %seconds$d |Sekunden:Sekunde:Sekunden:Sekunden:Sekunden:Sekunden|,Pozostały czas: %seconds$d |sekund:sekunda:sekundy:sekund:sekund:sekund|
+```
 
 `pluralTest` would then be parsed with the following function signature: `String pluralTest({@required int seconds})` and could be used as follows:
 
-|seconds|fr|en|es|de|
-|:-:|-|-|-|-|
-|0|Temps restant: 0 seconde|Time left: 0 seconds|Tiempo que queda: 0 segundos|Verbleibende Zeit: 0 Sekunden|
-|1|Temps restant: 1 second|Time left: 1 second|Tiempo que queda: 1 segundo|Verbleibende Zeit: 1 Sekunde|
-|2|Temps restant: 2 secondes|Time left: 2 seconds|Tiempo que queda: 2 segundos|Verbleibende Zeit: 2 Sekunden|
+|seconds|en|de|pl|
+|:-:|-|-|-|
+|0|Time left: 0 seconds|Verbleibende Zeit: 0 Sekunden|Pozostały czas: 0 sekund|
+|1|Time left: 1 second|Verbleibende Zeit: 1 Sekunde|Pozostały czas: 1 sekunda|
+|2|Time left: 2 seconds|Verbleibende Zeit: 2 Sekunden|Pozostały czas: 2 sekundy|
+|5|Time left: 5 seconds|Verbleibende Zeit: 5 Sekunden|Pozostały czas: 5 sekund|
