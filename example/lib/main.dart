@@ -32,6 +32,8 @@ class Home extends StatelessWidget {
               Text(I18n.of(context).appTitle),
               Text(I18n.of(context).description(var1: "2")),
               Text(I18n.of(context).littleTest(age: 32)),
+              Text(I18n.of(context).pluralTest(seconds: 24)),
+              Text(I18n.of(context).pluralTest(seconds: 1)),
             ],
           ),
         ),
