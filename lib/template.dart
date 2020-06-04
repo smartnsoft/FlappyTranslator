@@ -1,6 +1,6 @@
 const String templateBegining = """
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: prefer_final_fields
+// ignore_for_file: prefer_final_fields, public_member_api_docs
 
 import 'dart:async';
 
