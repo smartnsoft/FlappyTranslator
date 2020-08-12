@@ -62,6 +62,11 @@ const String templateGetTextDontDependContext = """
   static String getText(String key) => _getText(key);
 """;
 
+const String templateLocalizedValues = """
+
+  static Map<String, String> get localizedValues => _localizedValues;
+""";
+
 const String templateEnding = """
 
   static Future<#CLASS_NAME#> load(Locale locale) async {
