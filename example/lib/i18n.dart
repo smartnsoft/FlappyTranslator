@@ -90,6 +90,8 @@ class I18n {
 
   String getText(String key) => _getText(key);
 
+  static Map<String, String> get localizedValues => _localizedValues;
+
   static Future<I18n> load(Locale locale) async {
     final translations = I18n(locale);
     _localizedValues = _allValues[locale.toString()];
