@@ -1,9 +1,8 @@
 import 'dart:io';
 
-import 'package:yaml/yaml.dart';
-
 import 'package:flappy_translator/flappy_logger.dart';
 import 'package:flappy_translator/flappy_translator.dart';
+import 'package:yaml/yaml.dart';
 
 /// The path to the pubspec file path
 const pubspecFilePath = 'pubspec.yaml';
@@ -23,6 +22,7 @@ class YamlArguments {
   static const useSingleQuotes = 'use_single_quotes';
   static const replaceNoBreakSpaces = 'replace_no_break_spaces';
   static const exposeGetText = 'expose_get_text';
+  static const exposeLocalizedValues = 'expose_localized_values';
 }
 
 void main(List<String> arguments) {
@@ -67,6 +67,7 @@ void main(List<String> arguments) {
     useSingleQuotes: settings[YamlArguments.useSingleQuotes],
     replaceNoBreakSpaces: settings[YamlArguments.replaceNoBreakSpaces],
     exposeGetText: settings[YamlArguments.exposeGetText],
+    exposeLocalizedValues: settings[YamlArguments.exposeLocalizedValues],
   );
 }
 
