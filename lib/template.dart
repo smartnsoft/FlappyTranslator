@@ -52,6 +52,18 @@ const String templateDontDependContext = """
   static String get currentLanguage => _locale.languageCode;
 """;
 
+const String templateGetStringDependContext = """
+
+  /// Returns the corresponding string for a given key
+  String getString(String key) => _getText(key);
+""";
+
+const String templateGetStringDontDependContext = """
+
+  /// Returns the corresponding string for a given key
+  static String getString(String key) => _getText(key);
+""";
+
 const String templateEnding = """
 
   static Future<#CLASS_NAME#> load(Locale locale) async {
