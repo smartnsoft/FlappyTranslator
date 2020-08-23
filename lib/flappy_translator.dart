@@ -62,7 +62,7 @@ class FlappyTranslator {
     bool dependOnContext,
     bool useSingleQuotes,
     bool replaceNoBreakSpaces,
-    bool exposeGetText,
+    bool exposeGetString,
   }) async {
     final File file = File(inputFilePath);
     if (!file.existsSync()) {
@@ -79,15 +79,15 @@ class FlappyTranslator {
     dependOnContext ??= DefaultSettings.dependOnContext;
     useSingleQuotes ??= DefaultSettings.useSingleQuotes;
     replaceNoBreakSpaces ??= DefaultSettings.replaceNoBreakSpaces;
-    exposeGetText ??= DefaultSettings.replaceNoBreakSpaces;
+    exposeGetString ??= DefaultSettings.exposeGetString;
 
     // construct the template
     String template = templateBegining +
         (dependOnContext ? templateDependContext : templateDontDependContext) +
-        (exposeGetText
+        (exposeGetString
             ? (dependOnContext
-                ? templateGetTextDependContext
-                : templateGetTextDontDependContext)
+                ? templateGetStringDependContext
+                : templateGetStringDontDependContext)
             : '') +
         templateEnding;
     template = template.replaceAll(CLASS_NAME_TEMPLATE_KEY, className);

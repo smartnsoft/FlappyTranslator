@@ -55,7 +55,7 @@ flappy_translator:
   depend_on_context: true
   use_single_quotes: false
   replace_no_break_spaces: false
-  expose_get_text: false
+  expose_get_string: false
 ```
 
 | Setting                 | Default | Description                                                                      |
@@ -69,7 +69,7 @@ flappy_translator:
 | depend_on_context       | true    | Whether the generated localizations should depend on *BuildContext*              |
 | use_single_quotes       | false   | Whether the generated file should use single or double quotes for strings.       |
 | replace_no_break_spaces | false   | Whether no break spaces (\u00A0) should be replaced with normal spaces (\u0020). |
-| expose_get_text         | false   | The default value for whether a getText method should be exposed                 |
+| expose_get_string       | false   | The default value for whether a getString method should be exposed.              |
 
 ### Run package
 

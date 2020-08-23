@@ -26,6 +26,6 @@ class DefaultSettings {
   /// The default value for whether the generated code should replace no break spaces (\u00A0) with normal spaces (\u0020)
   static const replaceNoBreakSpaces = false;
 
-  /// The default value for whether a getText method should be exposed
-  static const exposeGetText = false;
+  /// The default value for whether a getLocaString method should be exposed
+  static const exposeGetString = false;
 }
