@@ -88,7 +88,8 @@ class I18n {
 
   String get currentLanguage => _locale.languageCode;
 
-  String getText(String key) => _getText(key);
+  /// Returns the corresponding string for a given key
+  String getString(String key) => _getText(key);
 
   static Map<String, String> get localizedValues => _localizedValues;
 
