@@ -1,24 +1,20 @@
-## [1.0.0] - 21/08/2019
+## [1.3.0] - 05/09/2020 
 
-* Initial Release
+* The method `getString(String key)` can now be generated depending on the input setting `expose_get_string`
+* Variable names are now checked if they are valid (i.e. myVar is valid, both my-Var and MyVar aren't)
+* To avoid generated code triggering warnings, certain rules are now ignored. This is a temporary solution until v2.0.0
 
-## [1.0.1] - 21/08/2019
+## [1.2.2] - 27/01/2020 
 
-* Fix documentation
-* Fix template's file path
+* Fix issue on Locale written in camelCase
 
-## [1.0.2] - 21/08/2019
+## [1.2.1] - 24/01/2020 
 
-* Fix template by handling a String instead of file
+* Make sure that snake_case countries like `de_CH` are written in camelCase in generated file
 
-## [1.0.3] - 21/08/2019
+## [1.2.0] - 06/12/2019 
 
-* Fix error on CSV not well formed
-* Fix error when using Dart reserved keywords
-
-## [1.0.4] - 18/10/2019
-
-* Handle possibility to have multiple languages for one country
+* Add setting to handle "no break" spaces by replacing them by normal spaces
 
 ## [1.1.0] - 02/12/2019  
   
@@ -33,14 +29,24 @@
 	* Added *currentLocale* to generated file
 	* Better Readme.md
 
-## [1.2.0] - 06/12/2019 
+## [1.0.4] - 18/10/2019
 
-* Add setting to handle "no break" spaces by replacing them by normal spaces
+* Handle possibility to have multiple languages for one country
 
-## [1.2.1] - 24/01/2020 
+## [1.0.3] - 21/08/2019
 
-* Make sure that snake_case countries like `de_CH` are written in camelCase in generated file
+* Fix error on CSV not well formed
+* Fix error when using Dart reserved keywords
 
-## [1.2.2] - 27/01/2020 
+## [1.0.2] - 21/08/2019
 
-* Fix issue on Locale written in camelCase 
+* Fix template by handling a String instead of file
+
+## [1.0.1] - 21/08/2019
+
+* Fix documentation
+* Fix template's file path
+
+## [1.0.0] - 21/08/2019
+
+* Initial Release
