@@ -54,16 +54,14 @@ const String templateDontDependContext = """
   static String get currentLanguage => _locale.languageCode;
 """;
 
-const String templateGetStringDependContext = """
+String templateGetString(bool dependOnContext) =>
+    """
 
   /// Returns the corresponding string for a given key
+""" +
+    (dependOnContext ? "" : "static ") +
+    """
   String getString(String key) => _getText(key);
-""";
-
-const String templateGetStringDontDependContext = """
-
-  /// Returns the corresponding string for a given key
-  static String getString(String key) => _getText(key);
 """;
 
 String templateLocaStrings(bool dependOnContext) =>

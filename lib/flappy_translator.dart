@@ -89,11 +89,7 @@ class FlappyTranslator {
     // construct the template
     String template = templateBegining +
         (dependOnContext ? templateDependContext : templateDontDependContext) +
-        (exposeGetString
-            ? (dependOnContext
-                ? templateGetStringDependContext
-                : templateGetStringDontDependContext)
-            : '') +
+        (exposeGetString ? templateGetString(dependOnContext) : '') +
         (exposeLocaStrings ? templateLocaStrings(dependOnContext) : '') +
         (exposeLocaleMaps ? templateLocaleMaps(dependOnContext) : '') +
         templateEnding;
