@@ -69,7 +69,26 @@ const String templateGetStringDontDependContext = """
 const String templateLocaStrings = """
 
   /// Returns a map of key-locastring for the selected locale
+  /// 
+  /// ```dart
+  /// {
+  ///   'test': 'Hello world!',
+  /// }
+  /// ```
   static Map<String, String> get locaStrings => _localizedValues;
+""";
+
+const String templateLocaleMaps = """
+
+  /// Returns a map of loca maps per locale
+  /// 
+  /// ```dart
+  /// {
+  ///   'en': {'test': 'Hello world!'},
+  ///   'de_CH': {'test': 'Hallo welt!'},
+  /// }
+  /// ```
+  static Map<String, Map<String, String>> get localeMaps => _allValues;
 """;
 
 const String templateEnding = """

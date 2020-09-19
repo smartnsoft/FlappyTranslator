@@ -31,4 +31,7 @@ class DefaultSettings {
 
   /// The default value for whether locaStrings getter should be exposed
   static const exposeLocaStrings = false;
+
+  /// The default value for whether localeMaps getter should be exposed
+  static const exposeLocaleMaps = false;
 }
