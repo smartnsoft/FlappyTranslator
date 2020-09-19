@@ -30,6 +30,7 @@ flappy_translator:
   replace_no_break_spaces: false
   expose_get_string: false
   expose_loca_strings: false
+  expose_locale_maps: false
 
 flutter:
   uses-material-design: true
