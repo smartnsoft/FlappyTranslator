@@ -66,7 +66,8 @@ const String templateGetStringDontDependContext = """
   static String getString(String key) => _getText(key);
 """;
 
-const String templateLocaStrings = """
+String templateLocaStrings(bool dependOnContext) =>
+    """
 
   /// Returns a map of key-locastring for the selected locale
   /// 
@@ -75,10 +76,14 @@ const String templateLocaStrings = """
   ///   'test': 'Hello world!',
   /// }
   /// ```
-  static Map<String, String> get locaStrings => _localizedValues;
+""" +
+    (dependOnContext ? "" : "static ") +
+    """
+  Map<String, String> get locaStrings => _localizedValues;
 """;
 
-const String templateLocaleMaps = """
+String templateLocaleMaps(bool dependOnContext) =>
+    """
 
   /// Returns a map of loca maps per locale
   /// 
@@ -88,7 +93,10 @@ const String templateLocaleMaps = """
   ///   'de_CH': {'test': 'Hallo welt!'},
   /// }
   /// ```
-  static Map<String, Map<String, String>> get localeMaps => _allValues;
+""" +
+    (dependOnContext ? "" : "static ") +
+    """
+  Map<String, Map<String, String>> get localeMaps => _allValues;
 """;
 
 const String templateEnding = """

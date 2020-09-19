@@ -94,8 +94,8 @@ class FlappyTranslator {
                 ? templateGetStringDependContext
                 : templateGetStringDontDependContext)
             : '') +
-        (exposeLocaStrings ? templateLocaStrings : '') +
-        (exposeLocaleMaps ? templateLocaleMaps : '') +
+        (exposeLocaStrings ? templateLocaStrings(dependOnContext) : '') +
+        (exposeLocaleMaps ? templateLocaleMaps(dependOnContext) : '') +
         templateEnding;
     template = template.replaceAll(CLASS_NAME_TEMPLATE_KEY, className);
 
