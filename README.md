@@ -56,7 +56,7 @@ flappy_translator:
   use_single_quotes: false
   replace_no_break_spaces: false
   expose_get_string: false
-  exposeLocalizedValues: false
+  exposeLocaStrings: false
 ```
 
 | Setting                 | Default | Description                                                                      |
@@ -71,7 +71,7 @@ flappy_translator:
 | use_single_quotes       | false   | Whether the generated file should use single or double quotes for strings.       |
 | replace_no_break_spaces | false   | Whether no break spaces (\u00A0) should be replaced with normal spaces (\u0020). |
 | expose_get_string       | false   | The default value for whether a getString method should be exposed.              |
-| exposeLocalizedValues   | false   | The default value for whether localizedValues getter should be exposed           |
+| expose_loca_strings     | false   | The default value for whether locaStrings getter should be exposed.              |
 
 ### Run package
 

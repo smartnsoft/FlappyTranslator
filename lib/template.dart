@@ -66,9 +66,10 @@ const String templateGetStringDontDependContext = """
   static String getString(String key) => _getText(key);
 """;
 
-const String templateLocalizedValues = """
+const String templateLocaStrings = """
 
-  static Map<String, String> get localizedValues => _localizedValues;
+  /// Returns a map of key-locastring for the selected locale
+  static Map<String, String> get locaStrings => _localizedValues;
 """;
 
 const String templateEnding = """

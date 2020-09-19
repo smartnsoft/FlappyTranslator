@@ -82,7 +82,7 @@ class FlappyTranslator {
     useSingleQuotes ??= DefaultSettings.useSingleQuotes;
     replaceNoBreakSpaces ??= DefaultSettings.replaceNoBreakSpaces;
     exposeGetString ??= DefaultSettings.exposeGetString;
-    exposeLocalizedValues ??= DefaultSettings.exposeLocalizedValues;
+    exposeLocalizedValues ??= DefaultSettings.exposeLocaStrings;
 
     // construct the template
     String template = templateBegining +
@@ -92,7 +92,7 @@ class FlappyTranslator {
                 ? templateGetStringDependContext
                 : templateGetStringDontDependContext)
             : '') +
-        (exposeLocalizedValues ? templateLocalizedValues : '') +
+        (exposeLocalizedValues ? templateLocaStrings : '') +
         templateEnding;
     template = template.replaceAll(CLASS_NAME_TEMPLATE_KEY, className);
 

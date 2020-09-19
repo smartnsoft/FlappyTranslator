@@ -22,7 +22,7 @@ class YamlArguments {
   static const useSingleQuotes = 'use_single_quotes';
   static const replaceNoBreakSpaces = 'replace_no_break_spaces';
   static const exposeGetString = 'expose_get_string';
-  static const exposeLocalizedValues = 'expose_localized_values';
+  static const exposeLocaStrings = 'expose_loca_strings';
 }
 
 void main(List<String> arguments) {
@@ -67,7 +67,7 @@ void main(List<String> arguments) {
     useSingleQuotes: settings[YamlArguments.useSingleQuotes],
     replaceNoBreakSpaces: settings[YamlArguments.replaceNoBreakSpaces],
     exposeGetString: settings[YamlArguments.exposeGetString],
-    exposeLocalizedValues: settings[YamlArguments.exposeLocalizedValues],
+    exposeLocalizedValues: settings[YamlArguments.exposeLocaStrings],
   );
 }
 

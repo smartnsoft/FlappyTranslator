@@ -29,6 +29,6 @@ class DefaultSettings {
   /// The default value for whether a getString method should be exposed
   static const exposeGetString = false;
 
-  /// The default value for whether localizedValues getter should be exposed
-  static const exposeLocalizedValues = false;
+  /// The default value for whether locaStrings getter should be exposed
+  static const exposeLocaStrings = false;
 }
