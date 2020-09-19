@@ -50,6 +50,7 @@ const List<String> RESERVED_WORDS = [
   "null",
   "true",
 ];
+final RegExp validateVariableNamesRegexp = RegExp(r'^[a-z][a-zA-z0-9_]+$');
 
 class FlappyTranslator {
   void generate(
@@ -132,6 +133,12 @@ class FlappyTranslator {
             "$key is a reserved keyword in Dart and cannot be used as key (line ${linesIndex + 1})\nAll reserved words in Dart are : $RESERVED_WORDS");
         return;
       }
+
+      if (!validateVariableNamesRegexp.hasMatch(key)) {
+        FlappyLogger.logError("$key is an invalid key.");
+        return;
+      }
+
       fields += _addField(key, defaultWord,
           dependsOnContext: dependOnContext, quoteString: quoteString);
 
