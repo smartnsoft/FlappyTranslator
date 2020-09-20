@@ -54,16 +54,53 @@ const String templateDontDependContext = """
   static String get currentLanguage => _locale.languageCode;
 """;
 
-const String templateGetStringDependContext = """
+String templateGetString(bool dependOnContext) =>
+    """
 
   /// Returns the corresponding string for a given key
+""" +
+    (dependOnContext ? "" : "static ") +
+    """
   String getString(String key) => _getText(key);
 """;
 
-const String templateGetStringDontDependContext = """
+String templateLocaStrings(bool dependOnContext) =>
+    """
 
-  /// Returns the corresponding string for a given key
-  static String getString(String key) => _getText(key);
+  /// Returns a map of key-locastring for the current locale
+  /// 
+  /// ```dart
+  /// {
+  ///   'test': 'Hello world!',
+  /// }
+  /// ```
+""" +
+    (dependOnContext ? "" : "static ") +
+    """
+  Map<String, String> get locaStrings => Map<String, String>.from(_localizedValues);
+""";
+
+String templateLocaleMaps(bool dependOnContext) =>
+    """
+
+  /// Returns a map of loca maps per locale
+  /// 
+  /// ```dart
+  /// {
+  ///   'en': {'test': 'Hello world!'},
+  ///   'de': {'test': 'Hallo welt!'},
+  /// }
+  /// ```
+""" +
+    (dependOnContext ? "" : "static ") +
+    """
+  Map<String, Map<String, String>> get localeMaps {
+    final returnMap = <String, Map<String, String>>{};
+    _allValues.forEach(
+      (key, value) => returnMap[key] = Map<String, String>.from(value),
+    );
+    return returnMap;
+  }
 """;
 
 const String templateEnding = """

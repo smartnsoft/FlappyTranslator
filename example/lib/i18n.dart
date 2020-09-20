@@ -90,9 +90,6 @@ class I18n {
 
   String get currentLanguage => _locale.languageCode;
 
-  /// Returns the corresponding string for a given key
-  String getString(String key) => _getText(key);
-
   static Future<I18n> load(Locale locale) async {
     final translations = I18n(locale);
     _localizedValues = _allValues[locale.toString()];
