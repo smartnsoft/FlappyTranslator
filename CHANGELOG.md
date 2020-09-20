@@ -1,3 +1,8 @@
+## [1.4.0] - 20/09/2020 
+
+* The getter `locaStrings` (map of key-locastring for the current locale) can now be generated depending on the input setting `expose_loca_strings`
+* The getter `localeMaps` (map of loca maps per locale) can now be generated depending on the input setting `expose_locale_maps`
+
 ## [1.3.0] - 05/09/2020 
 
 * The method `getString(String key)` can now be generated depending on the input setting `expose_get_string`
