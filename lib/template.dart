@@ -67,7 +67,7 @@ String templateGetString(bool dependOnContext) =>
 String templateLocaStrings(bool dependOnContext) =>
     """
 
-  /// Returns a map of key-locastring for the selected locale
+  /// Returns a map of key-locastring for the current locale
   /// 
   /// ```dart
   /// {
@@ -77,7 +77,7 @@ String templateLocaStrings(bool dependOnContext) =>
 """ +
     (dependOnContext ? "" : "static ") +
     """
-  Map<String, String> get locaStrings => _localizedValues;
+  Map<String, String> get locaStrings => Map<String, String>.from(_localizedValues);
 """;
 
 String templateLocaleMaps(bool dependOnContext) =>
@@ -88,13 +88,19 @@ String templateLocaleMaps(bool dependOnContext) =>
   /// ```dart
   /// {
   ///   'en': {'test': 'Hello world!'},
-  ///   'de_CH': {'test': 'Hallo welt!'},
+  ///   'de': {'test': 'Hallo welt!'},
   /// }
   /// ```
 """ +
     (dependOnContext ? "" : "static ") +
     """
-  Map<String, Map<String, String>> get localeMaps => _allValues;
+  Map<String, Map<String, String>> get localeMaps {
+    final returnMap = <String, Map<String, String>>{};
+    _allValues.forEach(
+      (key, value) => returnMap[key] = Map<String, String>.from(value),
+    );
+    return returnMap;
+  }
 """;
 
 const String templateEnding = """
