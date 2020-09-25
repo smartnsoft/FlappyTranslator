@@ -7,6 +7,7 @@ import 'package:dart_style/dart_style.dart';
 import 'default_settings.dart';
 import 'flappy_logger.dart';
 import 'parsing/csv_parser.dart';
+import 'parsing/file_parser.dart';
 import 'template.dart';
 
 const String CLASS_NAME_TEMPLATE_KEY = "#CLASS_NAME#";
@@ -95,29 +96,29 @@ class FlappyTranslator {
         templateEnding;
     template = template.replaceAll(CLASS_NAME_TEMPLATE_KEY, className);
 
-    final CSVParser csvParser = CSVParser(fieldDelimiter: delimiter);
+    final FileParser parser = CSVParser(
+      file: file,
+      startIndex: startIndex,
+      fieldDelimiter: delimiter,
+    );
 
-    final List<String> lines = file.readAsLinesSync();
-
-    final List<String> supportedLanguages =
-        csvParser.getSupportedLanguages(lines, startIndex: startIndex);
+    final List<String> supportedLanguages = parser.supportedLanguages;
     final List<Map<String, String>> maps =
         _generateValuesMaps(supportedLanguages);
     template = _replaceSupportedLanguages(template, supportedLanguages);
 
     final String quoteString = useSingleQuotes ? '\'' : '"';
     String fields = "";
-    FlappyLogger.logProgress("${lines.length - 1} words recognized");
 
-    for (int linesIndex = 1; linesIndex < lines.length; linesIndex++) {
-      final List<String> wordsOfLine =
-          csvParser.getWordsOfLine(lines[linesIndex]);
-      final String key = wordsOfLine.first;
-      final List<String> words =
-          wordsOfLine.sublist(startIndex, wordsOfLine.length);
+    final localizationsTable = parser.localizationsTable;
+    FlappyLogger.logProgress("${localizationsTable.length} words recognized");
+
+    for (final row in localizationsTable) {
+      final String key = row.first;
+      final List<String> words = row.sublist(startIndex);
       if (words.length > supportedLanguages.length) {
         FlappyLogger.logError(
-            "The line number ${linesIndex + 1} seems to be not well formatted (${words.length} words for ${supportedLanguages.length} columns)");
+            "The row {$row} does not seems to be well formatted: (${words.length} words for ${supportedLanguages.length} columns)");
         return;
       }
       final String defaultWord = words[0];
@@ -129,7 +130,7 @@ class FlappyTranslator {
 
       if (_isKeyAReservedWord(key)) {
         FlappyLogger.logError(
-            "$key is a reserved keyword in Dart and cannot be used as key (line ${linesIndex + 1})\nAll reserved words in Dart are : $RESERVED_WORDS");
+            "$key is a reserved keyword in Dart and cannot be used as key in row {$row}.\nAll reserved words in Dart are : $RESERVED_WORDS");
         return;
       }
 
