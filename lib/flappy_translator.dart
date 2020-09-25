@@ -95,6 +95,8 @@ class FlappyTranslator {
       return;
     }
 
+    FlappyLogger.logProgress('Loading file $inputFilePath...');
+
     // if null has been passed in, ensure that vars are given default values
     outputDir ??= DefaultSettings.outputDirectory;
     fileName ??= DefaultSettings.fileName;
@@ -129,12 +131,13 @@ class FlappyTranslator {
     final List<Map<String, String>> maps =
         _generateValuesMaps(supportedLanguages);
     template = _replaceSupportedLanguages(template, supportedLanguages);
+    FlappyLogger.logProgress('Locales ${supportedLanguages} determined');
 
     final String quoteString = useSingleQuotes ? '\'' : '"';
     String fields = "";
 
     final localizationsTable = parser.localizationsTable;
-    FlappyLogger.logProgress("${localizationsTable.length} words recognized");
+    FlappyLogger.logProgress('Parsing ${localizationsTable.length} keys...');
 
     for (final row in localizationsTable) {
       final String key = row.first;
@@ -185,7 +188,7 @@ class FlappyTranslator {
 
     _writeInFile(template, outputDir, fileName);
 
-    FlappyLogger.logProgress("End of work !");
+    FlappyLogger.logProgress('Localizations sucessfully generated!');
   }
 
   void _writeInFile(String contents, String outputDir, String fileName) {
