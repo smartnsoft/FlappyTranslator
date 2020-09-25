@@ -5,10 +5,13 @@ import 'dart:io';
 import 'package:dart_style/dart_style.dart';
 
 import 'default_settings.dart';
+import 'enums/supported_input_file_type.dart';
 import 'flappy_logger.dart';
 import 'parsing/csv_parser.dart';
+import 'parsing/excel_parser.dart';
 import 'parsing/file_parser.dart';
 import 'template.dart';
+import 'utils/utils.dart';
 
 const String CLASS_NAME_TEMPLATE_KEY = "#CLASS_NAME#";
 const String VALUES_AREA_TEMPLATE_KEY = "/// Values area";
@@ -68,9 +71,27 @@ class FlappyTranslator {
     bool exposeLocaStrings,
     bool exposeLocaleMaps,
   }) async {
+    // check that the file exists
     final File file = File(inputFilePath);
     if (!file.existsSync()) {
-      FlappyLogger.logError("File $inputFilePath does not exist");
+      FlappyLogger.logError('File $inputFilePath does not exist!');
+      return;
+    }
+
+    // check that the file has an extension - this is needed to determine if the file is supported
+    if (!file.path.contains('.')) {
+      FlappyLogger.logError('File $inputFilePath has no specified extension!');
+      return;
+    }
+
+    // check that the file extension is correct
+    final fileExtension = file.path.split('.').last?.toLowerCase();
+    if (!SupportedInputFileType.values
+        .map((value) => describeEnum(value))
+        .contains(fileExtension)) {
+      FlappyLogger.logError(
+        'File $inputFilePath has extension $fileExtension which is not supported!',
+      );
       return;
     }
 
@@ -96,11 +117,13 @@ class FlappyTranslator {
         templateEnding;
     template = template.replaceAll(CLASS_NAME_TEMPLATE_KEY, className);
 
-    final FileParser parser = CSVParser(
-      file: file,
-      startIndex: startIndex,
-      fieldDelimiter: delimiter,
-    );
+    final FileParser parser = fileExtension == 'csv'
+        ? CSVParser(
+            file: file,
+            startIndex: startIndex,
+            fieldDelimiter: delimiter,
+          )
+        : ExcelParser(file: file, startIndex: startIndex);
 
     final List<String> supportedLanguages = parser.supportedLanguages;
     final List<Map<String, String>> maps =
