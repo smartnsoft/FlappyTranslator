@@ -14,11 +14,10 @@ jobs:
           channel: 'stable'
       - name: Install packages
         run:
-          flutter pub get
+          pub get
       - name: Lint
         run: 
-          flutter analyze
+          dartanalyzer lib bin test
       - name: Unit tests
         run:
-          flutter test
-      
+          pub run test

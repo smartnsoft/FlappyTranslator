@@ -9,8 +9,6 @@ environment:
   sdk: ">=2.3.0 <3.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
   meta: ^1.1.7
   csv: ^4.0.3
   yaml: ^2.2.0
@@ -18,7 +16,4 @@ dependencies:
   excel: ^1.0.0
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-
-flutter:
+  test: ^1.13.0
