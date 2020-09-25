@@ -6,14 +6,14 @@ repository: https://github.com/smartnsoft/FlappyTranslator
 issue_tracker: https://github.com/smartnsoft/FlappyTranslator/issues
 
 environment:
-  sdk: ">=2.3.0 <3.0.0"
+  sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
   meta: ^1.1.7
   csv: ^4.0.3
   yaml: ^2.2.0
   dart_style: ^1.3.3
-  excel: ^1.0.0
+  excel: ^1.1.5
 
 dev_dependencies:
   test: ^1.13.0
