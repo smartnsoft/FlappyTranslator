@@ -5,13 +5,11 @@ import 'dart:io';
 import 'package:dart_style/dart_style.dart';
 
 import 'default_settings.dart';
-import 'enums/supported_input_file_type.dart';
+import 'extensions/file_extensions.dart';
 import 'flappy_logger.dart';
 import 'parsing/csv_parser.dart';
 import 'parsing/excel_parser.dart';
-import 'parsing/file_parser.dart';
 import 'template.dart';
-import 'utils/utils.dart';
 
 const String CLASS_NAME_TEMPLATE_KEY = "#CLASS_NAME#";
 const String VALUES_AREA_TEMPLATE_KEY = "/// Values area";
@@ -85,12 +83,9 @@ class FlappyTranslator {
     }
 
     // check that the file extension is correct
-    final fileExtension = file.path.split('.').last?.toLowerCase();
-    if (!SupportedInputFileType.values
-        .map((value) => describeEnum(value))
-        .contains(fileExtension)) {
+    if (!file.hasValidExtension) {
       FlappyLogger.logError(
-        'File $inputFilePath has extension $fileExtension which is not supported!',
+        'File $inputFilePath has extension ${file.extensionType} which is not supported!',
       );
       return;
     }
@@ -119,7 +114,7 @@ class FlappyTranslator {
         templateEnding;
     template = template.replaceAll(CLASS_NAME_TEMPLATE_KEY, className);
 
-    final FileParser parser = fileExtension == 'csv'
+    final parser = file.hasCSVExtension
         ? CSVParser(
             file: file,
             startIndex: startIndex,
