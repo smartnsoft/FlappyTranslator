@@ -172,14 +172,14 @@ Otherwise, the generated variable name would be the name you provided.
 * `%1$d` becomes `var1`
 * `%age$d` becomes `age`
 
-3. Variables are optional in the generated dart code
+3. Variables are required in the generated dart code
 
 Let's take the example of the `description` String in the CSV we used.
 
 The generated function signature will be :
 
+```dart
+String description({
+  @required String var1,
+})
 ```
-String description({String var1,})
-```
-
-If the variables are not provided, the String will be given without replacing the variables placeholders.
