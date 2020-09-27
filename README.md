@@ -1,6 +1,6 @@
 # flappy_translator
 
-A tool which automatically generates Flutter localized resources from CSV and Excel files.
+A tool which automatically generates Flutter localization resources from CSV and Excel files.
 
 This is especially useful as any team member can edit the CSV/Excel file, with the subsequent translations imported into the project with the use of a simple terminal command. This contrasts starkly to the default i18n approach in which dart files need to be manually for new keys and languages. More information can be found in [Internationalizing Flutter apps](https://flutter.dev/docs/development/accessibility-and-localization/internationalization#an-alternative-class-for-the-apps-localized-resources).
 
