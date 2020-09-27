@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flappy_translator/flappy_logger.dart';
 import 'package:flappy_translator/flappy_translator.dart';
 import 'package:yaml/yaml.dart';
 
@@ -50,8 +49,8 @@ void main(List<String> arguments) {
 
   // display an error and quit if the input file hasn't been specified
   if ((inputFilePath == null)) {
-    FlappyLogger.logError(
-        'CSV input file path not defined. This can be set as a command line argument or in pubspec.yaml');
+    print(
+        '[ERROR] CSV input file path not defined. This can be set as a command line argument or in pubspec.yaml\n');
     return;
   }
 

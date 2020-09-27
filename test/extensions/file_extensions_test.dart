@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import '../../lib/extensions/file_extensions.dart';
+import '../../lib/src/extensions/file_extensions.dart';
 import 'temp_file_handler.dart';
 
 void main() {
