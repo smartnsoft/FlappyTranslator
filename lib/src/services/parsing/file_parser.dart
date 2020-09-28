@@ -1,7 +1,8 @@
 import 'dart:io';
 
-import 'package:flappy_translator/flappy_logger.dart';
 import 'package:meta/meta.dart';
+
+import '../flappy_logger.dart';
 
 /// A base file parser which should be extended by supported file times
 abstract class FileParser {

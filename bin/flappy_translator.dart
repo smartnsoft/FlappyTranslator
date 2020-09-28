@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flappy_translator/flappy_logger.dart';
 import 'package:flappy_translator/flappy_translator.dart';
 import 'package:yaml/yaml.dart';
 
@@ -30,8 +29,8 @@ void main(List<String> arguments) {
   String inputFilePath, outputDir;
 
   // try to load settings from the project's pubspec.yaml
-  final Map<String, dynamic> settings = loadSettings();
-  if (settings.length > 0) {
+  final settings = loadSettings();
+  if (settings.isNotEmpty) {
     if (settings.containsKey(YamlArguments.inputFilePath)) {
       inputFilePath = settings[YamlArguments.inputFilePath];
     }
@@ -41,7 +40,7 @@ void main(List<String> arguments) {
   }
 
   // parse command line arguments
-  if (arguments.length > 0 && arguments.first != null) {
+  if (arguments.isNotEmpty && arguments.first != null) {
     inputFilePath = arguments.first;
   }
   if (arguments.length > 1 && arguments[1] != null) {
@@ -50,8 +49,8 @@ void main(List<String> arguments) {
 
   // display an error and quit if the input file hasn't been specified
   if ((inputFilePath == null)) {
-    FlappyLogger.logError(
-        'CSV input file path not defined. This can be set as a command line argument or in pubspec.yaml');
+    print(
+        '[ERROR] CSV input file path not defined. This can be set as a command line argument or in pubspec.yaml\n');
     return;
   }
 
@@ -75,12 +74,12 @@ void main(List<String> arguments) {
 
 /// Returns configuration settings for flappy_translator from pubspec.yaml
 Map<String, dynamic> loadSettings() {
-  final File file = File(pubspecFilePath);
-  final String yamlString = file.readAsStringSync();
+  final file = File(pubspecFilePath);
+  final yamlString = file.readAsStringSync();
   final Map<dynamic, dynamic> yamlMap = loadYaml(yamlString);
 
   // determine <String, dynamic> map from <dynamic, dynamic> yaml
-  final Map<String, dynamic> settings = <String, dynamic>{};
+  final settings = <String, dynamic>{};
   if (yamlMap.containsKey(yamlSectionId)) {
     for (final kvp in yamlMap[yamlSectionId].entries) {
       settings[kvp.key] = kvp.value;
