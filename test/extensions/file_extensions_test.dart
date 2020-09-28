@@ -1,6 +1,6 @@
+import 'package:flappy_translator/src/extensions/file_extensions.dart';
 import 'package:test/test.dart';
 
-import '../../lib/src/extensions/file_extensions.dart';
 import 'temp_file_handler.dart';
 
 void main() {
