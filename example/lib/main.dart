@@ -6,7 +6,6 @@ import 'i18n.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,7 +29,7 @@ class Home extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Text(I18n.of(context).appTitle),
-              Text(I18n.of(context).description(var1: "2")),
+              Text(I18n.of(context).description(var1: '2')),
               Text(I18n.of(context).littleTest(age: 32)),
             ],
           ),
