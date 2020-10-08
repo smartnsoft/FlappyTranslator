@@ -1,6 +1,6 @@
 # example
 
-A new Flutter application.
+An example for flappy_translator package.
 
 ## Getting Started
 
