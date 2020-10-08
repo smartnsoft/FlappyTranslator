@@ -46,8 +46,6 @@ flappy_translator:
   use_single_quotes: false
   replace_no_break_spaces: false
   expose_get_string: false
-  properties_to_ignore:
-    - 'hello'
   expose_loca_strings: false
   expose_locale_maps: false
 ```
@@ -64,7 +62,6 @@ flappy_translator:
 | use_single_quotes       | false   | Whether the generated file should use single or double quotes for strings.       |
 | replace_no_break_spaces | false   | Whether no break spaces (\u00A0) should be replaced with normal spaces (\u0020). |
 | expose_get_string       | false   | The default value for whether a getString method should be exposed.              |
-| fields_to_ignore        | none    | Regexp pattern to ignore properties generation (note: still exposed by getString.) |
 | expose_loca_strings     | false   | The default value for whether a locaStrings getter should be exposed.            |
 | expose_locale_maps      | false   | The default value for whether a localeMaps getter should be exposed.             |
 
