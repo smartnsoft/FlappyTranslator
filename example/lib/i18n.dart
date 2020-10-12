@@ -14,21 +14,21 @@ class I18n {
   String description({
     @required String var1,
   }) {
-    String text = _getText("description");
+    String _text = _getText("description");
     if (var1 != null) {
-      text = text.replaceAll("%1\$s", var1);
+      _text = _text.replaceAll("%1\$s", var1);
     }
-    return text;
+    return _text;
   }
 
   String littleTest({
     @required int age,
   }) {
-    String text = _getText("littleTest");
+    String _text = _getText("littleTest");
     if (age != null) {
-      text = text.replaceAll("%age\$d", age.toString());
+      _text = _text.replaceAll("%age\$d", age.toString());
     }
-    return text;
+    return _text;
   }
 
   static Map<String, String> _localizedValues;
