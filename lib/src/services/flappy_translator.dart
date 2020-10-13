@@ -294,7 +294,7 @@ class FlappyTranslator {
 
       var result = (!dependsOnContext ? 'static ' : '') +
           '''String $key({$parameters}) {
-      String text = _getText($quoteString$key$quoteString);
+      String _text = _getText($quoteString$key$quoteString);
       ''';
 
       for (final match in matches) {
@@ -302,14 +302,14 @@ class FlappyTranslator {
         var varName = getParameterNameFromPlaceholder(match.group(0));
         result += '''
         if ($varName != null) {
-          text = text.replaceAll($quoteString$placeholderName$quoteString, ${varName += match.group(2) == 'd' ? '.toString()' : ''});
+          _text = _text.replaceAll($quoteString$placeholderName$quoteString, ${varName += match.group(2) == 'd' ? '.toString()' : ''});
         }
         ''';
       }
 
       return result +
           '''
-      return text;
+      return _text;
       
       }
       ''';
