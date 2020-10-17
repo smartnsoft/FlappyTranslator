@@ -322,6 +322,8 @@ class FlappyTranslator {
     var givenName = placeholder.substring(1, placeholder.length - 2);
     if (int.tryParse(givenName[0]) != null) {
       givenName = 'var$givenName';
+    } else if (RESERVED_WORDS.contains(givenName)) {
+      givenName = 'var$givenName';
     }
     return givenName;
   }
