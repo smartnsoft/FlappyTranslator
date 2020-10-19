@@ -1,3 +1,11 @@
+## [1.5.0] - 19/10/2020 
+
+* Adds support to generate localization resources from Excel files (XLSX)
+* Removes dependency on Flutter and increases Dart SDK constraint to >= 2.7
+* Fixes a bug where a variable named `text` would not be correctly processed
+* Fixes a bug where variables named as dart keywords would crash code generation
+* Updates the example to be compatible with newer versions of flutter
+
 ## [1.4.0] - 20/09/2020 
 
 * The getter `locaStrings` (map of key-locastring for the current locale) can now be generated depending on the input setting `expose_loca_strings`
