@@ -6,6 +6,7 @@ import '../configs/default_settings.dart';
 import '../configs/template.dart';
 import '../extensions/file_extensions.dart';
 import '../utils/flappy_logger.dart';
+import 'file_writer/file_writer.dart';
 import 'parsing/csv_parser.dart';
 import 'parsing/excel_parser.dart';
 
@@ -179,22 +180,16 @@ class FlappyTranslator {
       ),
     );
 
-    _writeInFile(template, outputDir, fileName);
+    // format the contents according to dart defaults
+    template = DartFormatter().format(template);
+
+    // write output file
+    final path = outputDir == null || outputDir.isEmpty
+        ? 'i18n.dart'
+        : '$outputDir/$fileName.dart';
+    FileWriter().write(contents: template, path: path);
 
     FlappyLogger.logProgress('Localizations sucessfully generated!');
-  }
-
-  void _writeInFile(String contents, String outputDir, String fileName) {
-    // format the contents according to dart defaults
-    contents = DartFormatter().format(contents);
-
-    final generatedFile = File(outputDir == null || outputDir.isEmpty
-        ? 'i18n.dart'
-        : '$outputDir/$fileName.dart');
-    if (!generatedFile.existsSync()) {
-      generatedFile.createSync(recursive: true);
-    }
-    generatedFile.writeAsStringSync(contents, mode: FileMode.write);
   }
 
   String _generateStringValuesFromList(
