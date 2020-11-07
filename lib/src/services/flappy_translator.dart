@@ -5,7 +5,7 @@ import 'package:dart_style/dart_style.dart';
 import '../configs/default_settings.dart';
 import '../configs/template.dart';
 import '../extensions/file_extensions.dart';
-import 'flappy_logger.dart';
+import '../utils/flappy_logger.dart';
 import 'parsing/csv_parser.dart';
 import 'parsing/excel_parser.dart';
 
