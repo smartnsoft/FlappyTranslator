@@ -17,6 +17,7 @@ abstract class FileParser {
 
   /// A 2D list of parsed localizations
   @protected
+  @visibleForTesting
   List<List<String>> parsedContents;
 
   FileParser({
@@ -31,6 +32,7 @@ abstract class FileParser {
 
   /// Erases all parsed content
   @protected
+  @visibleForTesting
   void eraseParsedContents() => parsedContents = <List<String>>[];
 
   /// Parses the file. All base classes must implement this method.

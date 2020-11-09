@@ -16,7 +16,8 @@ class CSVParser extends FileParser {
     @required File file,
     @required int startIndex,
     @required this.fieldDelimiter,
-  }) : super(file: file, startIndex: startIndex);
+  })  : assert(fieldDelimiter != null),
+        super(file: file, startIndex: startIndex);
 
   @override
   void parseFile() {
