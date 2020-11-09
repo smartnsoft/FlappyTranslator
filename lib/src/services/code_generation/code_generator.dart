@@ -37,9 +37,7 @@ class CodeGenerator {
         _quoteString = useSingleQuotes ? '\'' : '"' {
     // construct template
     _template = Template.begining +
-        (dependOnContext
-            ? Template.middleDependContext
-            : Template.middleDontDependContext) +
+        (dependOnContext ? Template.middleDependContext : Template.middleDontDependContext) +
         (exposeGetString ? Template.getString(dependOnContext) : '') +
         (exposeLocaStrings ? Template.locaStrings(dependOnContext) : '') +
         (exposeLocaleMaps ? Template.localeMaps(dependOnContext) : '') +
@@ -56,9 +54,7 @@ class CodeGenerator {
     var supportedLocals = 'static final Set<Locale> supportedLocals = {\n';
     for (var lang in supportedLanguages) {
       final parts = lang.split('_');
-      supportedLocals += parts.length == 1
-          ? '''Locale('${parts[0]}')'''
-          : '''Locale('${parts[0]}', '${parts[1]}')''';
+      supportedLocals += parts.length == 1 ? '''Locale('${parts[0]}')''' : '''Locale('${parts[0]}', '${parts[1]}')''';
       supportedLocals += ',\n';
     }
     supportedLocals += '};';
@@ -84,13 +80,12 @@ class CodeGenerator {
       final matches = _parametersRegex.allMatches(defaultWord).toList();
       for (final match in matches) {
         final parameterType = match.group(2) == 'd' ? 'int' : 'String';
-        parameters +=
-            '@required $parameterType ${_getParameterNameFromPlaceholder(match.group(0))}, ';
+        parameters += '@required $parameterType ${_getParameterNameFromPlaceholder(match.group(0))}, ';
       }
 
       result = (!dependOnContext ? 'static ' : '') +
           '''String $key({$parameters}) {
-      String _text = _getText($_quoteString$key$_quoteString);
+      var _text = _getText($_quoteString$key$_quoteString);
       ''';
 
       for (final match in matches) {
@@ -109,16 +104,15 @@ class CodeGenerator {
       }
       ''';
     } else {
-      result = (!dependOnContext ? 'static ' : '') +
-          '''String get $key => _getText($_quoteString$key$_quoteString);\n\n''';
+      result =
+          (!dependOnContext ? 'static ' : '') + '''String get $key => _getText($_quoteString$key$_quoteString);\n\n''';
     }
 
     _fields += result;
 
     _maps[0][key] = defaultWord;
     for (var wordIndex = 1; wordIndex < words.length; wordIndex++) {
-      _maps[wordIndex][key] =
-          words[wordIndex].isEmpty ? defaultWord : words[wordIndex];
+      _maps[wordIndex][key] = words[wordIndex].isEmpty ? defaultWord : words[wordIndex];
     }
   }
 
@@ -150,7 +144,7 @@ class CodeGenerator {
       mapsNames.add(mapName);
 
       result += '''
-      static Map<String, String> $mapName = {
+      static final $mapName = {
       ''';
 
       map.forEach((key, value) {
@@ -174,7 +168,7 @@ class CodeGenerator {
     }
 
     result += '''
-    static Map<String, Map<String, String>> _allValues = {
+    static final _allValues = {
     ''';
 
     _supportedLanguages.asMap().forEach((index, lang) {

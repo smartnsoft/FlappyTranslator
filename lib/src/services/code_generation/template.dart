@@ -1,7 +1,7 @@
 abstract class Template {
   static const begining = '''
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: prefer_final_fields, public_member_api_docs, prefer_single_quotes, omit_local_variable_types, unnecessary_this
+// ignore_for_file: public_member_api_docs, prefer_single_quotes
 
 import 'dart:async';
 
@@ -19,7 +19,7 @@ class #CLASS_NAME# {
 
   static const String middleDependContext = '''
   #CLASS_NAME#(Locale locale) {
-    this._locale = locale;
+    _locale = locale;
     _localizedValues = null;
   }
 

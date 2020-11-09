@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: prefer_final_fields, public_member_api_docs, prefer_single_quotes, omit_local_variable_types, unnecessary_this
+// ignore_for_file: public_member_api_docs, prefer_single_quotes
 
 import 'dart:async';
 
@@ -14,7 +14,7 @@ class I18n {
   String description({
     @required String var1,
   }) {
-    String _text = _getText("description");
+    var _text = _getText("description");
     if (var1 != null) {
       _text = _text.replaceAll("%1\$s", var1);
     }
@@ -24,7 +24,7 @@ class I18n {
   String littleTest({
     @required int age,
   }) {
-    String _text = _getText("littleTest");
+    var _text = _getText("littleTest");
     if (age != null) {
       _text = _text.replaceAll("%age\$d", age.toString());
     }
@@ -33,14 +33,14 @@ class I18n {
 
   static Map<String, String> _localizedValues;
 
-  static Map<String, String> _frValues = {
+  static final _frValues = {
     "appTitle": "Ma super application",
     "subtitle": "Un sous titre",
     "description": "Un texte avec une variable : %1\$s",
     "littleTest": "Voici, pour l'exemple, \"un test\" avec la variable %age\$d",
   };
 
-  static Map<String, String> _enValues = {
+  static final _enValues = {
     "appTitle": "My awesome application",
     "subtitle": "A subtitle",
     "description": "Text with a variable: %1\$s",
@@ -48,7 +48,7 @@ class I18n {
         "Here is, for the example, \"a test\" with the variable %age\$d",
   };
 
-  static Map<String, String> _esValues = {
+  static final _esValues = {
     "appTitle": "Mi gran application",
     "subtitle": "Un subtitulò",
     "description": "Un texto con una variable : %1\$s",
@@ -56,7 +56,7 @@ class I18n {
         "Aqui esta, por ejemplo, \"una prueba\" con la variable %age\$d",
   };
 
-  static Map<String, String> _deCHValues = {
+  static final _deCHValues = {
     "appTitle": "Meine tolle App",
     "subtitle": "Ein Untertitel",
     "description": "Text mit einer Variable: %1\$s",
@@ -64,7 +64,7 @@ class I18n {
         "Hier ist, zum Beispiel, \"ein Test\" mit der Variable %age\$d",
   };
 
-  static Map<String, Map<String, String>> _allValues = {
+  static final _allValues = {
     "fr": _frValues,
     "en": _enValues,
     "es": _esValues,
@@ -72,7 +72,7 @@ class I18n {
   };
 
   I18n(Locale locale) {
-    this._locale = locale;
+    _locale = locale;
     _localizedValues = null;
   }
 
