@@ -55,18 +55,13 @@ class #CLASS_NAME# {
   static String get currentLanguage => _locale.languageCode;
 ''';
 
-  static String getString(bool dependOnContext) =>
-      '''
+  static String getString(bool dependOnContext) => '''
 
   /// Returns the corresponding string for a given key
-''' +
-      (dependOnContext ? '' : 'static ') +
-      '''
-  String getString(String key) => _getText(key);
+  ${(dependOnContext ? '' : 'static ')}String getString(String key) => _getText(key);
 ''';
 
-  static String locaStrings(bool dependOnContext) =>
-      '''
+  static String locaStrings(bool dependOnContext) => '''
 
   /// Returns a map of key-locastring for the current locale
   /// 
@@ -75,14 +70,10 @@ class #CLASS_NAME# {
   ///   'test': 'Hello world!',
   /// }
   /// ```
-''' +
-      (dependOnContext ? '' : 'static ') +
-      '''
-  Map<String, String> get locaStrings => Map<String, String>.from(_localizedValues);
+  ${(dependOnContext ? '' : 'static ')}Map<String, String> get locaStrings => Map<String, String>.from(_localizedValues);
 ''';
 
-  static String localeMaps(bool dependOnContext) =>
-      '''
+  static String localeMaps(bool dependOnContext) => '''
 
   /// Returns a map of loca maps per locale
   /// 
@@ -92,10 +83,7 @@ class #CLASS_NAME# {
   ///   'de': {'test': 'Hallo welt!'},
   /// }
   /// ```
-''' +
-      (dependOnContext ? '' : 'static ') +
-      '''
-  Map<String, Map<String, String>> get localeMaps {
+  ${(dependOnContext ? '' : 'static ')}Map<String, Map<String, String>> get localeMaps {
     final returnMap = <String, Map<String, String>>{};
     _allValues.forEach(
       (key, value) => returnMap[key] = Map<String, String>.from(value),

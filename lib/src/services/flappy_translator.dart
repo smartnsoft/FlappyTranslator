@@ -4,7 +4,7 @@ import '../configs/constants.dart' as constants;
 import '../configs/default_settings.dart';
 import '../extensions/file_extensions.dart';
 import '../utils/flappy_logger.dart';
-import 'code_generator/code_generator.dart';
+import 'code_generation/code_generator.dart';
 import 'file_writer/file_writer.dart';
 import 'parsing/csv_parser.dart';
 import 'parsing/excel_parser.dart';
