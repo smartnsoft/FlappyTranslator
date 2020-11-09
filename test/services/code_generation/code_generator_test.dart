@@ -252,10 +252,6 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
     codeGenerator.addField('test', 'Hello %name\$s!', ['Hello %name\$s!', 'Hallo %name\$s!']);
     codeGenerator.finalize();
 
-    print(codeGenerator.formattedString);
-
-    return;
-
     expect(
       codeGenerator.formattedString,
       '''
@@ -275,7 +271,7 @@ class I18n {
   }) {
     var _text = _getText('test');
     if (name != null) {
-      _text = _text.replaceAll('%name\$s', name);
+      _text = _text.replaceAll('%name\\\$s', name);
     }
     return _text;
   }
@@ -283,11 +279,11 @@ class I18n {
   static Map<String, String> _localizedValues;
 
   static final _enUSValues = {
-    'test': 'Hello %name\$s!',
+    'test': 'Hello %name\\\$s!',
   };
 
   static final _deValues = {
-    'test': 'Hallo %name\$s!',
+    'test': 'Hallo %name\\\$s!',
   };
 
   static final _allValues = {
@@ -334,7 +330,6 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
   @override
   bool shouldReload(I18nDelegate old) => false;
 }
-
 ''',
     );
   });
