@@ -129,10 +129,10 @@ class CodeGenerator {
   void finalize() {
     _template = _template.replaceAll(TemplateKeys.fieldsArea, _fields);
 
-    _generateStringValuesFromList();
+    _generateMapValues();
   }
 
-  void _generateStringValuesFromList() {
+  void _generateMapValues() {
     final allValuesMap = <String, Map<String, String>>{};
     final mapsNames = <String>[];
     var result = '';
