@@ -4,6 +4,7 @@ import '../../configs/constants.dart' as constants;
 import '../../configs/default_settings.dart';
 import 'template.dart';
 
+/// A service which generates I18n class and delegate using string concatenation
 class CodeGenerator {
   final bool dependOnContext;
   final String _quoteString;
@@ -15,6 +16,7 @@ class CodeGenerator {
   String _fields;
   List<String> _supportedLanguages;
 
+  /// Returns a string formatted according to default dart rules
   String get formattedString => DartFormatter().format(_template);
 
   CodeGenerator({
@@ -33,6 +35,7 @@ class CodeGenerator {
         assert(exposeLocaStrings != null),
         assert(exposeLocaleMaps != null),
         _quoteString = useSingleQuotes ? '\'' : '"' {
+    // construct template
     _template = Template.begining +
         (dependOnContext
             ? Template.middleDependContext
@@ -42,20 +45,23 @@ class CodeGenerator {
         (exposeLocaleMaps ? Template.localeMaps(dependOnContext) : '') +
         Template.ending;
     _template = _template.replaceAll(TemplateKeys.className, className);
+
+    // initialize local variables
+    _fields = '';
   }
 
-  void replaceSupportedLanguages(List<String> supportedLanguages) {
+  void setSupportedLanguages(List<String> supportedLanguages) {
     _supportedLanguages = supportedLanguages;
 
-    final languageLocals = StringBuffer();
+    var supportedLocals = 'static final Set<Locale> supportedLocals = {\n';
     for (var lang in supportedLanguages) {
-      languageLocals.write(_createLocalConstructorFromLanguage(lang) + ',');
+      final parts = lang.split('_');
+      supportedLocals += parts.length == 1
+          ? '''Locale('${parts[0]}')'''
+          : '''Locale('${parts[0]}', '${parts[1]}')''';
+      supportedLocals += ',\n';
     }
-
-    final supportedLocals = '''
-    static final Set<Locale> supportedLocals = { $languageLocals };
-    '''
-        .trim();
+    supportedLocals += '};';
 
     _template = _template.replaceAll(
       TemplateKeys.supportedLanguagesArea,
@@ -64,21 +70,10 @@ class CodeGenerator {
       
       @override
       bool isSupported(Locale locale) => supportedLocals.contains(locale);
-      '''
-          .trim(),
+      ''',
     );
 
-    _maps = <Map<String, String>>[];
-    _fields = '';
-    supportedLanguages
-        .forEach((supportedLanguage) => _maps.add(<String, String>{}));
-  }
-
-  String _createLocalConstructorFromLanguage(String language) {
-    final parts = language.split('_');
-    return (parts.length == 1)
-        ? '''Locale('${parts[0]}')'''
-        : '''Locale('${parts[0]}', '${parts[1]}')''';
+    _maps = List.generate(supportedLanguages.length, (index) => {});
   }
 
   void addField(String key, String defaultWord, List<String> words) {
@@ -137,7 +132,7 @@ class CodeGenerator {
     return givenName;
   }
 
-  void generate() {
+  void finalize() {
     _template = _template.replaceAll(TemplateKeys.fieldsArea, _fields);
 
     _generateStringValuesFromList();

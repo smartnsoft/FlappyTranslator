@@ -80,7 +80,7 @@ class FlappyTranslator {
         : ExcelParser(file: file, startIndex: startIndex);
 
     final supportedLanguages = parser.supportedLanguages;
-    codeGenerator.replaceSupportedLanguages(supportedLanguages);
+    codeGenerator.setSupportedLanguages(supportedLanguages);
     FlappyLogger.logProgress('Locales ${supportedLanguages} determined');
 
     final localizationsTable = parser.localizationsTable;
@@ -117,7 +117,7 @@ class FlappyTranslator {
       codeGenerator.addField(key, defaultWord, words);
     }
 
-    codeGenerator.generate();
+    codeGenerator.finalize();
 
     // format the contents according to dart defaults
     final formattedString = codeGenerator.formattedString;
