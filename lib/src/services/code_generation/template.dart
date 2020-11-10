@@ -1,6 +1,7 @@
-const String templateBegining = """
+abstract class Template {
+  static const begining = '''
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: prefer_final_fields, public_member_api_docs, prefer_single_quotes, omit_local_variable_types, unnecessary_this
+// ignore_for_file: public_member_api_docs, prefer_single_quotes
 
 import 'dart:async';
 
@@ -14,11 +15,11 @@ class #CLASS_NAME# {
 
   /// Values area
 
-""";
+''';
 
-const String templateDependContext = """
+  static const String middleDependContext = '''
   #CLASS_NAME#(Locale locale) {
-    this._locale = locale;
+    _locale = locale;
     _localizedValues = null;
   }
 
@@ -35,9 +36,9 @@ const String templateDependContext = """
   Locale get currentLocale => _locale;
 
   String get currentLanguage => _locale.languageCode;
-""";
+''';
 
-const String templateDontDependContext = """
+  static const middleDontDependContext = '''
   #CLASS_NAME#(Locale locale) {
     _locale = locale;
     _localizedValues = null;
@@ -52,20 +53,15 @@ const String templateDontDependContext = """
   static Locale get currentLocale => _locale;
 
   static String get currentLanguage => _locale.languageCode;
-""";
+''';
 
-String templateGetString(bool dependOnContext) =>
-    """
+  static String getString(bool dependOnContext) => '''
 
   /// Returns the corresponding string for a given key
-""" +
-    (dependOnContext ? "" : "static ") +
-    """
-  String getString(String key) => _getText(key);
-""";
+  ${(dependOnContext ? '' : 'static ')}String getString(String key) => _getText(key);
+''';
 
-String templateLocaStrings(bool dependOnContext) =>
-    """
+  static String locaStrings(bool dependOnContext) => '''
 
   /// Returns a map of key-locastring for the current locale
   /// 
@@ -74,14 +70,10 @@ String templateLocaStrings(bool dependOnContext) =>
   ///   'test': 'Hello world!',
   /// }
   /// ```
-""" +
-    (dependOnContext ? "" : "static ") +
-    """
-  Map<String, String> get locaStrings => Map<String, String>.from(_localizedValues);
-""";
+  ${(dependOnContext ? '' : 'static ')}Map<String, String> get locaStrings => Map<String, String>.from(_localizedValues);
+''';
 
-String templateLocaleMaps(bool dependOnContext) =>
-    """
+  static String localeMaps(bool dependOnContext) => '''
 
   /// Returns a map of loca maps per locale
   /// 
@@ -91,19 +83,16 @@ String templateLocaleMaps(bool dependOnContext) =>
   ///   'de': {'test': 'Hallo welt!'},
   /// }
   /// ```
-""" +
-    (dependOnContext ? "" : "static ") +
-    """
-  Map<String, Map<String, String>> get localeMaps {
+  ${(dependOnContext ? '' : 'static ')}Map<String, Map<String, String>> get localeMaps {
     final returnMap = <String, Map<String, String>>{};
     _allValues.forEach(
       (key, value) => returnMap[key] = Map<String, String>.from(value),
     );
     return returnMap;
   }
-""";
+''';
 
-const String templateEnding = """
+  static const String ending = '''
 
   static Future<#CLASS_NAME#> load(Locale locale) async {
     final translations = #CLASS_NAME#(locale);
@@ -124,4 +113,12 @@ class #CLASS_NAME#Delegate extends LocalizationsDelegate<#CLASS_NAME#> {
   bool shouldReload(#CLASS_NAME#Delegate old) => false;
 }
 
-""";
+''';
+}
+
+abstract class TemplateKeys {
+  static const className = '#CLASS_NAME#';
+  static const valuesArea = '/// Values area';
+  static const fieldsArea = '/// Fields area';
+  static const supportedLanguagesArea = '/// SupportedLanguages area';
+}
