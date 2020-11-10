@@ -50,20 +50,20 @@ flappy_translator:
   expose_locale_maps: false
 ```
 
-| Setting                 | Default | Description                                                                      |
-| ----------------------- | ------- | -------------------------------------------------------------------------------- |
-| input_file_path         | N/A     | A path to the input CSV/Excel file.                                              |
-| output_dir              | lib     | A directory to generate the output file.                                         |
-| file_name               | i18n    | A filename for the generated file.                                               |
-| class_name              | I18n    | A class name for the generated file.                                             |
-| delimiter               | ,       | CSV files only: a delimited to separate columns in the input CSV file.           |
-| start_index             | 1       | The column index where translations begin (i.e. column index of main language.)  |
-| depend_on_context       | true    | Whether the generated localizations should depend on *BuildContext*              |
-| use_single_quotes       | false   | Whether the generated file should use single or double quotes for strings.       |
-| replace_no_break_spaces | false   | Whether no break spaces (\u00A0) should be replaced with normal spaces (\u0020). |
-| expose_get_string       | false   | The default value for whether a getString method should be exposed.              |
-| expose_loca_strings     | false   | The default value for whether a locaStrings getter should be exposed.            |
-| expose_locale_maps      | false   | The default value for whether a localeMaps getter should be exposed.             |
+| Setting                 | Default | Description                                                                        |
+| ----------------------- | ------- | ---------------------------------------------------------------------------------- |
+| input_file_path         | N/A     | A path to the input CSV/Excel file.                                                |
+| output_dir              | lib     | A directory to generate the output file.                                           |
+| file_name               | i18n    | A filename for the generated file.                                                 |
+| class_name              | I18n    | A class name for the generated file.                                               |
+| delimiter               | ,       | CSV files only: a delimited to separate columns in the input CSV file.             |
+| start_index             | 1       | The column index where translations begin (i.e. column index of default language). |
+| depend_on_context       | true    | Whether the generated localizations should depend on *BuildContext*                |
+| use_single_quotes       | false   | Whether the generated file should use single or double quotes for strings.         |
+| replace_no_break_spaces | false   | Whether no break spaces (\u00A0) should be replaced with normal spaces (\u0020).   |
+| expose_get_string       | false   | The default value for whether a getString method should be exposed.                |
+| expose_loca_strings     | false   | The default value for whether a locaStrings getter should be exposed.              |
+| expose_locale_maps      | false   | The default value for whether a localeMaps getter should be exposed.               |
 
 ### Run package
 
@@ -142,19 +142,16 @@ Please see [example](example/) for more information.
 
 ## Rules and functionalities
 
+### Locale
+
+Locales are specified in the top row and are expected to be given in the form `en` or `en_US`.
+
 ### Default language
 
-The `first` language's column of your CSV file will be considered as the `default` one.
-That means : 
+The column at `start_index` is considered the default language. This means that:
 
-* If other languages does not have translation for specific words, it will take the corresponding one in the default language.
-
-* The first column must be totally filled ! It will not work otherwise.
-
-### Handling different languages for one country
-
-You have the possibility, since version 1.4 to write something like `de_CH`.
-It will take the Swiss's German language.
+1. This column must be completely filled, otherwise an error is printed to the console and code generation will not succeed.
+2. If another language does not have translations for a given key, the value of the default language will be used.
 
 ### Add variables in Strings
 
