@@ -33,14 +33,14 @@ class I18n {
 
   static Map<String, String> _localizedValues;
 
-  static final _frValues = {
+  static const _frValues = {
     "appTitle": "Ma super application",
     "subtitle": "Un sous titre",
     "description": "Un texte avec une variable : %1\$s",
     "littleTest": "Voici, pour l'exemple, \"un test\" avec la variable %age\$d",
   };
 
-  static final _enValues = {
+  static const _enValues = {
     "appTitle": "My awesome application",
     "subtitle": "A subtitle",
     "description": "Text with a variable: %1\$s",
@@ -48,7 +48,7 @@ class I18n {
         "Here is, for the example, \"a test\" with the variable %age\$d",
   };
 
-  static final _esValues = {
+  static const _esValues = {
     "appTitle": "Mi gran application",
     "subtitle": "Un subtitulò",
     "description": "Un texto con una variable : %1\$s",
@@ -56,7 +56,7 @@ class I18n {
         "Aqui esta, por ejemplo, \"una prueba\" con la variable %age\$d",
   };
 
-  static final _deCHValues = {
+  static const _deCHValues = {
     "appTitle": "Meine tolle App",
     "subtitle": "Ein Untertitel",
     "description": "Text mit einer Variable: %1\$s",
@@ -64,7 +64,7 @@ class I18n {
         "Hier ist, zum Beispiel, \"ein Test\" mit der Variable %age\$d",
   };
 
-  static final _allValues = {
+  static const _allValues = {
     "fr": _frValues,
     "en": _enValues,
     "es": _esValues,

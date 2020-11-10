@@ -150,7 +150,7 @@ class CodeGenerator {
       mapsNames.add(mapName);
 
       result += '''
-      static final $mapName = {
+      static const $mapName = {
       ''';
 
       map.forEach((key, value) {
@@ -174,7 +174,7 @@ class CodeGenerator {
     }
 
     result += '''
-    static final _allValues = {
+    static const _allValues = {
     ''';
 
     _supportedLanguages.asMap().forEach((index, lang) {

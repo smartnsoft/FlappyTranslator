@@ -278,15 +278,15 @@ class I18n {
 
   static Map<String, String> _localizedValues;
 
-  static final _enUSValues = {
+  static const _enUSValues = {
     'test': 'Hello %name\\\$s!',
   };
 
-  static final _deValues = {
+  static const _deValues = {
     'test': 'Hallo %name\\\$s!',
   };
 
-  static final _allValues = {
+  static const _allValues = {
     'en_US': _enUSValues,
     'de': _deValues,
   };
