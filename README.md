@@ -140,6 +140,10 @@ class Home extends StatelessWidget {
 
 Please see [example](example/) for more information.
 
+### Material Localizations
+
+Supporting a language (i.e. ga or cy) not included in GlobalMaterialLocalizations requires adding a material localization class and delegate. Although this is out of the scope of this package, a warning is logged to the console during code generation. [More info](https://flutter.dev/docs/development/accessibility-and-localization/internationalization#adding-support-for-a-new-language).
+
 ## Rules and functionalities
 
 ### Locale

@@ -87,9 +87,16 @@ class FlappyTranslator {
             '$supportedLanguage isn\'t a valid locale. Expected locale of the form "en" or "en_US".');
         return;
       }
+      final languageCode = supportedLanguage.split('_').first;
+      if (!constants.flutterLocalizedLanguages.contains(languageCode)) {
+        FlappyLogger.logWarning(
+            '$languageCode isn\'t supported by default in Flutter.');
+        FlappyLogger.logWarning(
+            'Please see https://flutter.dev/docs/development/accessibility-and-localization/internationalization#adding-support-for-a-new-language for info on how to add required classes.');
+      }
     }
     codeGenerator.setSupportedLanguages(supportedLanguages);
-    FlappyLogger.logProgress('Locales ${supportedLanguages} determined');
+    FlappyLogger.logProgress('Locales ${supportedLanguages} determined.');
 
     final localizationsTable = parser.localizationsTable;
     FlappyLogger.logProgress('Parsing ${localizationsTable.length} keys...');
