@@ -1,7 +1,7 @@
 import 'package:flappy_translator/src/services/code_generation/code_generator.dart';
 import 'package:test/test.dart';
 
-import '../../utils.dart';
+import '../../testing_utils.dart';
 
 void main() {
   test('Parameter className null triggers assertion', () {

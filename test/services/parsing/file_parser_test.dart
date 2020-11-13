@@ -4,7 +4,7 @@ import 'package:flappy_translator/src/services/parsing/file_parser.dart';
 import 'package:meta/meta.dart';
 import 'package:test/test.dart';
 
-import '../../utils.dart';
+import '../../testing_utils.dart';
 
 void main() {
   test('Parameter file null triggers assertion', () {
