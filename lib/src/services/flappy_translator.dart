@@ -103,27 +103,30 @@ class FlappyTranslator {
 
     for (final row in localizationsTable) {
       final key = row.first;
+
+      if (constants.reservedWords.contains(key)) {
+        FlappyLogger.logError(
+            'Key $key in row $row is a reserved keyword in Dart and is thus invalid.\nDart\'s reserved keywords are ${constants.reservedWords}.');
+        return;
+      }
+
+      if (!key.isValidVariableName) {
+        FlappyLogger.logError(
+            'Key $key in row $row is invalid. First letter must be lower case.');
+        return;
+      }
+
       final words = row.sublist(startIndex);
       if (words.length > supportedLanguages.length) {
         FlappyLogger.logError(
-            'The row {$row} does not seems to be well formatted: (${words.length} words for ${supportedLanguages.length} columns)');
+            'The row $row does not seem to be well formatted. Found ${words.length} values for ${supportedLanguages.length} locales.');
         return;
       }
 
       final defaultWord = words[0];
       if (defaultWord.isEmpty) {
-        FlappyLogger.logError('$key has no translation for default language');
-        return;
-      }
-
-      if (constants.reservedWords.contains(key)) {
         FlappyLogger.logError(
-            '$key is a reserved keyword in Dart and cannot be used as key in row {$row}.\nAll reserved words in Dart are ${constants.reservedWords}');
-        return;
-      }
-
-      if (!key.isValidVariableName) {
-        FlappyLogger.logError('$key is an invalid key.');
+            'Key $key in row $row has no translation for default language.');
         return;
       }
 
