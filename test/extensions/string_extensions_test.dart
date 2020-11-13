@@ -12,4 +12,15 @@ void main() {
     expect('aa_bbb'.isValidLocale, isFalse);
     expect('12_34'.isValidLocale, isFalse);
   });
+
+  test('isValidVariableName', () {
+    expect('a'.isValidVariableName, isTrue);
+    expect('A'.isValidVariableName, isFalse);
+    expect('_'.isValidVariableName, isFalse);
+    expect('1'.isValidVariableName, isFalse);
+    expect('myVar'.isValidVariableName, isTrue);
+    expect('my_var'.isValidVariableName, isTrue);
+    expect('MyVar'.isValidVariableName, isFalse);
+    expect('_myVar'.isValidVariableName, isFalse);
+  });
 }

@@ -101,8 +101,6 @@ class FlappyTranslator {
     final localizationsTable = parser.localizationsTable;
     FlappyLogger.logProgress('Parsing ${localizationsTable.length} keys...');
 
-    final validateVariableNamesRegex = RegExp(r'^[a-z][a-zA-z0-9_]+$');
-
     for (final row in localizationsTable) {
       final key = row.first;
       final words = row.sublist(startIndex);
@@ -124,7 +122,7 @@ class FlappyTranslator {
         return;
       }
 
-      if (!validateVariableNamesRegex.hasMatch(key)) {
+      if (!key.isValidVariableName) {
         FlappyLogger.logError('$key is an invalid key.');
         return;
       }

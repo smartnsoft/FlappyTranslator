@@ -3,4 +3,9 @@ extension StringExtensions on String {
 
   bool get isValidLocale =>
       this != null ? _validLocaleRegex.hasMatch(this) : false;
+
+  static final _validateVariableNamesRegex = RegExp(r'^[a-z][a-zA-z0-9_]*$');
+
+  bool get isValidVariableName =>
+      this != null ? _validateVariableNamesRegex.hasMatch(this) : false;
 }
