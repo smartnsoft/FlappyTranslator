@@ -3,8 +3,8 @@ import 'dart:io';
 import '../configs/constants.dart' as constants;
 import '../configs/default_settings.dart';
 import '../extensions/file_extensions.dart';
+import '../extensions/string_extensions.dart';
 import '../utils/flappy_logger.dart';
-import '../utils/validator.dart';
 import 'code_generation/code_generator.dart';
 import 'file_writer/file_writer.dart';
 import 'parsing/csv_parser.dart';
@@ -82,7 +82,7 @@ class FlappyTranslator {
 
     final supportedLanguages = parser.supportedLanguages;
     for (final supportedLanguage in supportedLanguages) {
-      if (!Validator.isValidLocale(supportedLanguage)) {
+      if (!supportedLanguage.isValidLocale) {
         FlappyLogger.logError(
             '$supportedLanguage isn\'t a valid locale. Expected locale of the form "en" or "en_US".');
         return;
