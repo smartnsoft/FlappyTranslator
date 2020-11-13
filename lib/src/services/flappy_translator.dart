@@ -4,6 +4,7 @@ import '../configs/constants.dart' as constants;
 import '../configs/default_settings.dart';
 import '../extensions/file_extensions.dart';
 import '../utils/flappy_logger.dart';
+import '../utils/validator.dart';
 import 'code_generation/code_generator.dart';
 import 'file_writer/file_writer.dart';
 import 'parsing/csv_parser.dart';
@@ -80,9 +81,8 @@ class FlappyTranslator {
         : ExcelParser(file: file, startIndex: startIndex);
 
     final supportedLanguages = parser.supportedLanguages;
-    final validLocaleRegex = RegExp(r'^[a-z]{2}(_[A-Z]{2})?$');
     for (final supportedLanguage in supportedLanguages) {
-      if (!validLocaleRegex.hasMatch(supportedLanguage)) {
+      if (!Validator.isValidLocale(supportedLanguage)) {
         FlappyLogger.logError(
             '$supportedLanguage isn\'t a valid locale. Expected locale of the form "en" or "en_US".');
         return;
