@@ -80,6 +80,14 @@ class FlappyTranslator {
         : ExcelParser(file: file, startIndex: startIndex);
 
     final supportedLanguages = parser.supportedLanguages;
+    final validLocaleRegex = RegExp(r'^[a-z]{2}(_[A-Z]{2})?$');
+    for (final supportedLanguage in supportedLanguages) {
+      if (!validLocaleRegex.hasMatch(supportedLanguage)) {
+        FlappyLogger.logError(
+            '$supportedLanguage isn\'t a valid locale. Expected locale of the form "en" or "en_US".');
+        return;
+      }
+    }
     codeGenerator.setSupportedLanguages(supportedLanguages);
     FlappyLogger.logProgress('Locales ${supportedLanguages} determined');
 
