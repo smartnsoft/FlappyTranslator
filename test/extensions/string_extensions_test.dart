@@ -11,6 +11,7 @@ void main() {
     expect('a_a'.isValidLocale, isFalse);
     expect('aa_bbb'.isValidLocale, isFalse);
     expect('12_34'.isValidLocale, isFalse);
+    expect('gsw_CH'.isValidLocale, isTrue);
   });
 
   test('isValidVariableName', () {
