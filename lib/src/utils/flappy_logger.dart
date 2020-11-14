@@ -6,4 +6,8 @@ class FlappyLogger {
   static void logProgress(String text) {
     print('[PROGRESS] $text');
   }
+
+  static void logWarning(String text) {
+    print('[WARNING] $text');
+  }
 }

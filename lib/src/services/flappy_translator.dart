@@ -3,6 +3,7 @@ import 'dart:io';
 import '../configs/constants.dart' as constants;
 import '../configs/default_settings.dart';
 import '../extensions/file_extensions.dart';
+import '../extensions/string_extensions.dart';
 import '../utils/flappy_logger.dart';
 import 'code_generation/code_generator.dart';
 import 'file_writer/file_writer.dart';
@@ -80,45 +81,52 @@ class FlappyTranslator {
         : ExcelParser(file: file, startIndex: startIndex);
 
     final supportedLanguages = parser.supportedLanguages;
-    final validLocaleRegex = RegExp(r'^[a-z]{2}(_[A-Z]{2})?$');
     for (final supportedLanguage in supportedLanguages) {
-      if (!validLocaleRegex.hasMatch(supportedLanguage)) {
+      if (!supportedLanguage.isValidLocale) {
         FlappyLogger.logError(
             '$supportedLanguage isn\'t a valid locale. Expected locale of the form "en" or "en_US".');
         return;
       }
+      final languageCode = supportedLanguage.split('_').first;
+      if (!constants.flutterLocalizedLanguages.contains(languageCode)) {
+        FlappyLogger.logWarning(
+            '$languageCode isn\'t supported by default in Flutter.');
+        FlappyLogger.logWarning(
+            'Please see https://flutter.dev/docs/development/accessibility-and-localization/internationalization#adding-support-for-a-new-language for info on how to add required classes.');
+      }
     }
     codeGenerator.setSupportedLanguages(supportedLanguages);
-    FlappyLogger.logProgress('Locales ${supportedLanguages} determined');
+    FlappyLogger.logProgress('Locales ${supportedLanguages} determined.');
 
     final localizationsTable = parser.localizationsTable;
     FlappyLogger.logProgress('Parsing ${localizationsTable.length} keys...');
 
-    final validateVariableNamesRegex = RegExp(r'^[a-z][a-zA-z0-9_]+$');
-
     for (final row in localizationsTable) {
       final key = row.first;
+
+      if (constants.reservedWords.contains(key)) {
+        FlappyLogger.logError(
+            'Key $key in row $row is a reserved keyword in Dart and is thus invalid.\nDart\'s reserved keywords are ${constants.reservedWords}.');
+        return;
+      }
+
+      if (!key.isValidVariableName) {
+        FlappyLogger.logError(
+            'Key $key in row $row is invalid. First letter must be lower case.');
+        return;
+      }
+
       final words = row.sublist(startIndex);
       if (words.length > supportedLanguages.length) {
         FlappyLogger.logError(
-            'The row {$row} does not seems to be well formatted: (${words.length} words for ${supportedLanguages.length} columns)');
+            'The row $row does not seem to be well formatted. Found ${words.length} values for ${supportedLanguages.length} locales.');
         return;
       }
 
       final defaultWord = words[0];
       if (defaultWord.isEmpty) {
-        FlappyLogger.logError('$key has no translation for default language');
-        return;
-      }
-
-      if (constants.reservedWords.contains(key)) {
         FlappyLogger.logError(
-            '$key is a reserved keyword in Dart and cannot be used as key in row {$row}.\nAll reserved words in Dart are ${constants.reservedWords}');
-        return;
-      }
-
-      if (!validateVariableNamesRegex.hasMatch(key)) {
-        FlappyLogger.logError('$key is an invalid key.');
+            'Key $key in row $row has no translation for default language.');
         return;
       }
 

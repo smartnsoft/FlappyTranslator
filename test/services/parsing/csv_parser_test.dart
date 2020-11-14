@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flappy_translator/src/services/parsing/csv_parser.dart';
 import 'package:test/test.dart';
 
-import '../../utils.dart';
+import '../../testing_utils.dart';
 
 // ignore_for_file: prefer_single_quotes
 void main() {
