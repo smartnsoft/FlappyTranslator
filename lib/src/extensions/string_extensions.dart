@@ -1,5 +1,5 @@
 extension StringExtensions on String {
-  static final _validLocaleRegex = RegExp(r'^[a-z]{2}(_[A-Z]{2})?$');
+  static final _validLocaleRegex = RegExp(r'^[a-z]{2,3}(_[A-Z]{2})?$');
 
   /// Returns whether a locale pattern (i.e. en, en_GB) is valid.
   ///
