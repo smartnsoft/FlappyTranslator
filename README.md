@@ -1,16 +1,14 @@
 # flappy_translator
 
-A Flutter internationalized strings generator which automatically imports localization strings from a CSV file. 
+A tool which automatically generates Flutter localization resources from CSV and Excel files.
 
-This is especially useful as any team member can work on a CSV file, with the translations imported into the project with the use of a simple terminal command. This contrasts starkly to the default i18n approach in which dart files need to be manually for new keys and languages.
+This is especially useful as any team member can edit the CSV/Excel file, with the subsequent translations imported into the project with the use of a simple terminal command. This contrasts starkly to the default i18n approach in which dart files need to be manually for new keys and languages. More information can be found in [Internationalizing Flutter apps](https://flutter.dev/docs/development/accessibility-and-localization/internationalization#an-alternative-class-for-the-apps-localized-resources).
 
 ## Getting Started
 
-In order to use the *flappy_translator* package, please provide your translations in a CSV file - separators `,` and `;` have been tested to work.
+In order to use the *flappy_translator* package, please provide your translations in a CSV or Excel file. For CSV files, delimiters `,` and `;` have been tested to work.
 
-### Create a CSV file
-
-Consider that we have a table of localizations for the following languages:
+The following table is used in the [example](example/) project:
 
 | keys | fr | en | es | de_CH |
 | ---- | -- | -- | -- | ----- |
@@ -19,19 +17,9 @@ Consider that we have a table of localizations for the following languages:
 | description | Un texte avec une variable : %1$s | Text with a variable: %1$s | Un texto con una variable : %1$s | Text mit einer Variable: %1$s |
 | littleTest | "Voici, pour l'exemple, ""un test"" avec la variable %age$d" | "Here is, for the example, ""a test"" with the variable %age$d" | "Aqui esta, por ejemplo, ""una prueba"" con la variable %age$d" | "Hier ist, zum Beispiel, ""ein Test"" mit der Variable %age$d" |
 
-This spreadsheet would be exported as the following CSV file:
-
-```
-keys,fr,en,es,de_CH
-appTitle,Ma super application,My awesome application,Mi gran application,Meine tolle App
-subtitle,Un sous titre,A subtitle,Un subtitulò,Ein Untertitle
-description,Un texte avec une variable : %1$s,Text with a variable: %1$s,Un texto con una variable : %1$s,Text mit einer Variable: %1$s
-littleTest,"Voici, pour l'exemple, ""un test"" avec la variable %age$d","Here is, for the example, ""a test"" with the variable %age$d","Aqui esta, por ejemplo, ""una prueba"" con la variable %age$d","Hier ist, zum Beispiel, ""ein Test"" mit der Variable %age$d"
-```
-
 ### Add dependency
 
-```
+```yaml
 dependencies:
   flutter_localizations:
     sdk: flutter
@@ -39,6 +27,8 @@ dependencies:
 dev_dependencies: 
   flappy_translator: 
 ```
+
+Note that *flappy_translator* requires dart sdk >= 2.7.
 
 ### Define Settings
 
@@ -55,38 +45,60 @@ flappy_translator:
   depend_on_context: true
   use_single_quotes: false
   replace_no_break_spaces: false
+  expose_get_string: false
+  expose_loca_strings: false
+  expose_locale_maps: false
 ```
 
-| Setting                 | Default | Description                                                                      |
-| ----------------------- | ------- | -------------------------------------------------------------------------------- |
-| input_file_path         | N/A     | A path to the input CSV file.                                                    |
-| output_dir              | lib     | A directory to generate the output file.                                         |
-| file_name               | i18n    | A filename for the generated file.                                               |
-| class_name              | I18n    | A class name for the generated file.                                             |
-| delimiter               | ,       | A delimited to separate columns in the input CSV file.                           |
-| start_index             | 1       | The column index where translations begin (i.e. column index of main language.)  |
-| depend_on_context       | true    | Whether the generated localizations should depend on *BuildContext*              |
-| use_single_quotes       | false   | Whether the generated file should use single or double quotes for strings.       |
-| replace_no_break_spaces | false   | Whether no break spaces (\u00A0) should be replaced with normal spaces (\u0020). |
+| Setting                 | Default | Description                                                                        |
+| ----------------------- | ------- | ---------------------------------------------------------------------------------- |
+| input_file_path         | N/A     | A path to the input CSV/Excel file.                                                |
+| output_dir              | lib     | A directory to generate the output file.                                           |
+| file_name               | i18n    | A filename for the generated file.                                                 |
+| class_name              | I18n    | A class name for the generated file.                                               |
+| delimiter               | ,       | CSV files only: a delimited to separate columns in the input CSV file.             |
+| start_index             | 1       | The column index where translations begin (i.e. column index of default language). |
+| depend_on_context       | true    | Whether the generated localizations should depend on *BuildContext*                |
+| use_single_quotes       | false   | Whether the generated file should use single or double quotes for strings.         |
+| replace_no_break_spaces | false   | Whether no break spaces (\u00A0) should be replaced with normal spaces (\u0020).   |
+| expose_get_string       | false   | The default value for whether a getString method should be exposed.                |
+| expose_loca_strings     | false   | The default value for whether a locaStrings getter should be exposed.              |
+| expose_locale_maps      | false   | The default value for whether a localeMaps getter should be exposed.               |
 
 ### Run package
 
 Make sure that your current working directory is the project root.
 
-A file path to the CSV file must be supplied, either as a setting in *pubspec.yaml* or as a command line argument (CLA), while the output directory can also be optionally supplied as a CLA.
+An input file path must be supplied, either as a setting in *pubspec.yaml* or as a command line argument (CLA), while the output directory can also be optionally supplied as a CLA.
 
-```
+```sh
 flutter pub get
 flutter pub run flappy_translator <test.csv> <output dir>
 ```
 
+### Update iOS Info.plist
+
+For iOS, *ios/Runner/Info.plist* needs to be updated with an array of the languages that the app will supports:
+
+```plist
+<key>CFBundleLocalizations</key>
+<array>
+  <string>fr</string>
+  <string>en</string>
+  <string>es</string>
+  <string>de</string>
+</array>
+```
+
+For more information, see [Internationalizing Flutter apps](https://flutter.dev/docs/development/accessibility-and-localization/internationalization#appendix-updating-the-ios-app-bundle).
+
 ### Use the i18n generated file
 
-The package used your CV file in order to generate a file named *file_name* in *output_dir* you provided. The following example uses the default *class_name* I18n with a dependency on *BuildContext*:
+The package used your input file in order to generate a file named *file_name* in *output_dir* you provided. The following example uses the default *class_name* I18n with a dependency on *BuildContext*.
 
-1. Add the I18nDelegate to your delegates
+Firstly, add the I18nDelegate to your delegates:
 
-```
+```dart
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -103,9 +115,9 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-2. Use your generated I18n class ! :)
+Then use the generated I18n class!
 
-```
+```dart
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -126,37 +138,28 @@ class Home extends StatelessWidget {
 }
 ```
 
-### Update iOS Info.plist
+Please see [example](example/) for more information.
 
-For iOS, *ios/Runner/Info.plist* needs to be updated with an array of the languages that the app supports:
+### Material Localizations
 
-```plist
-<key>CFBundleLocalizations</key>
-<array>
-  <string>fr</string>
-  <string>en</string>
-  <string>es</string>
-  <string>de</string>
-</array>
-```
-
-For more information, see [Internationalizing Flutter apps](https://flutter.dev/docs/development/accessibility-and-localization/internationalization#appendix-updating-the-ios-app-bundle).
+Supporting a language (i.e. ga or cy) not included in GlobalMaterialLocalizations requires adding a material localization class and delegate. Although this is out of the scope of this package, a warning is logged to the console during code generation. [More info](https://flutter.dev/docs/development/accessibility-and-localization/internationalization#adding-support-for-a-new-language).
 
 ## Rules and functionalities
 
+### Locale
+
+Locales are specified in the top row and are expected to be given in the form `en` or `en_US`.
+
 ### Default language
 
-The `first` language's column of your CSV file will be considered as the `default` one.
-That means : 
+The column at `start_index` is considered the default language. This means that:
 
-* If other languages does not have translation for specific words, it will take the corresponding one in the default language.
+1. This column must be completely filled, otherwise an error is printed to the console and code generation will not succeed.
+2. If another language does not have translations for a given key, the value of the default language will be used.
 
-* The first column must be totally filled ! It will not work otherwise.
+### Keys
 
-### Handling different languages for one country
-
-You have the possibility, since version 1.4 to write something like `de_CH`.
-It will take the Swiss's German language.
+Each loca key must begin with a lowercase letter, after which any combinations of lowercase, uppercase, digits or underscores are valid.
 
 ### Add variables in Strings
 
@@ -174,14 +177,16 @@ Otherwise, the generated variable name would be the name you provided.
 * `%1$d` becomes `var1`
 * `%age$d` becomes `age`
 
-3. Variables are optional in the generated dart code
+3. Variables are required in the generated dart code
 
 Let's take the example of the `description` String in the CSV we used.
 
 The generated function signature will be :
 
-```
-String description({@required String var1,})
+```dart
+String description({
+  @required String var1,
+})
 ```
 
 If the variables are not provided, the String will be given without replacing the variables placeholders.

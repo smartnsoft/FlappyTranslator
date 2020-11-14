@@ -1,21 +1,20 @@
 name: flappy_translator
-description: A Flutter internationalized strings generator. It enables you to writte all your i18n strings in a CSV and automatically generate Strings in your app.
-version: 1.2.2
+description: A tool which automatically generates Flutter localization resources from CSV and Excel files.
+version: 1.5.0
 homepage: https://github.com/smartnsoft/FlappyTranslator
+repository: https://github.com/smartnsoft/FlappyTranslator
+issue_tracker: https://github.com/smartnsoft/FlappyTranslator/issues
 
 environment:
-  sdk: ">=2.3.0 <3.0.0"
+  sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
+  meta: ^1.1.7
   csv: ^4.0.3
   yaml: ^2.2.0
   dart_style: ^1.3.3
-  meta: ^1.1.7
+  excel: ^1.1.5
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-
-flutter:
+  test: ^1.13.0
+  pedantic: ^1.9.0

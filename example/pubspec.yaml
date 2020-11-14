@@ -1,9 +1,9 @@
 name: example
-description: A new Flutter application.
+description: An example for flappy_translator package.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.3.0 <3.0.0"
+  sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -14,8 +14,6 @@ dependencies:
   intl: ^0.16.1
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
   flappy_translator:
     path: ../
 
@@ -29,6 +27,9 @@ flappy_translator:
   depend_on_context: true
   use_single_quotes: false
   replace_no_break_spaces: false
+  expose_get_string: false
+  expose_loca_strings: false
+  expose_locale_maps: false
 
 flutter:
   uses-material-design: true

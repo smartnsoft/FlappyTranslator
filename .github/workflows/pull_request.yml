@@ -1,0 +1,23 @@
+name: pull_request
+on: pull_request
+jobs:
+  lint-unit-tests-android-web:
+    name: Lint + Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable'
+      - name: Install packages
+        run:
+          pub get
+      - name: Lint
+        run: 
+          dartanalyzer lib bin test
+      - name: Unit tests
+        run:
+          pub run test
