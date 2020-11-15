@@ -81,6 +81,12 @@ class CodeGenerator {
   }
 
   void addField(String key, String defaultWord, List<String> words) {
+    if (_pluralsRegexp.allMatches(defaultWord).length > 1) {
+      FlappyLogger.logError(
+          'Key $key contains multiple plurals. Only one plural per key is supported.');
+      exit(0);
+    }
+
     var result = '';
     final hasParameters = _parametersRegex.hasMatch(defaultWord);
     final hasPlural = _pluralsRegexp.hasMatch(defaultWord);

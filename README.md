@@ -209,3 +209,5 @@ pluralTest,Time left: %seconds$d |seconds:second:seconds:seconds:seconds:seconds
 |1|Time left: 1 second|Verbleibende Zeit: 1 Sekunde|Pozostały czas: 1 sekunda|
 |2|Time left: 2 seconds|Verbleibende Zeit: 2 Sekunden|Pozostały czas: 2 sekundy|
 |5|Time left: 5 seconds|Verbleibende Zeit: 5 Sekunden|Pozostały czas: 5 sekund|
+
+Note that only one plural per key is presently supported.
