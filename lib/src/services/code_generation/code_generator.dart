@@ -78,7 +78,7 @@ class CodeGenerator {
       for (final match in matches) {
         final parameterType = match.group(2) == 'd' ? 'int' : 'String';
         parameters +=
-            '@required $parameterType ${_getParameterNameFromPlaceholder(match.group(0)!)}, ';
+            'required $parameterType ${_getParameterNameFromPlaceholder(match.group(0)!)}, ';
       }
 
       result = (!dependOnContext ? 'static ' : '') +
@@ -90,9 +90,7 @@ class CodeGenerator {
         final placeholderName = _formatString(match.group(1)!);
         var varName = _getParameterNameFromPlaceholder(match.group(0)!);
         result += '''
-        if ($varName != null) {
-          _text = _text.replaceAll($_quoteString$placeholderName$_quoteString, ${varName += match.group(2) == 'd' ? '.toString()' : ''});
-        }
+        _text = _text.replaceAll($_quoteString$placeholderName$_quoteString, ${varName += match.group(2) == 'd' ? '.toString()' : ''});
         ''';
       }
 
