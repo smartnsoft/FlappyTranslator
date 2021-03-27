@@ -96,7 +96,7 @@ class FlappyTranslator {
       }
     }
     codeGenerator.setSupportedLanguages(supportedLanguages);
-    FlappyLogger.logProgress('Locales ${supportedLanguages} determined.');
+    FlappyLogger.logProgress('Locales $supportedLanguages determined.');
 
     final localizationsTable = parser.localizationsTable;
     FlappyLogger.logProgress('Parsing ${localizationsTable.length} keys...');
