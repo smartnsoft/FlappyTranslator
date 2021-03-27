@@ -1,114 +1,7 @@
 import 'package:flappy_translator/src/services/code_generation/code_generator.dart';
 import 'package:test/test.dart';
 
-// import '../../testing_utils.dart';
-
 void main() {
-  // test('Parameter className null triggers assertion', () {
-  //   expect(
-  //     () => CodeGenerator(
-  //       className: null,
-  //       dependOnContext: false,
-  //       useSingleQuotes: true,
-  //       replaceNoBreakSpaces: false,
-  //       exposeGetString: false,
-  //       exposeLocaStrings: false,
-  //       exposeLocaleMaps: false,
-  //     ),
-  //     throwsAssertionError,
-  //   );
-  // });
-
-  // test('Parameter dependOnContext null triggers assertion', () {
-  //   expect(
-  //     () => CodeGenerator(
-  //       className: 'className',
-  //       dependOnContext: null,
-  //       useSingleQuotes: true,
-  //       replaceNoBreakSpaces: false,
-  //       exposeGetString: false,
-  //       exposeLocaStrings: false,
-  //       exposeLocaleMaps: false,
-  //     ),
-  //     throwsAssertionError,
-  //   );
-  // });
-
-  // test('Parameter useSingleQuotes null triggers assertion', () {
-  //   expect(
-  //     () => CodeGenerator(
-  //       className: 'className',
-  //       dependOnContext: false,
-  //       useSingleQuotes: null,
-  //       replaceNoBreakSpaces: false,
-  //       exposeGetString: false,
-  //       exposeLocaStrings: false,
-  //       exposeLocaleMaps: false,
-  //     ),
-  //     throwsAssertionError,
-  //   );
-  // });
-
-  // test('Parameter replaceNoBreakSpaces null triggers assertion', () {
-  //   expect(
-  //     () => CodeGenerator(
-  //       className: 'className',
-  //       dependOnContext: false,
-  //       useSingleQuotes: true,
-  //       replaceNoBreakSpaces: null,
-  //       exposeGetString: false,
-  //       exposeLocaStrings: false,
-  //       exposeLocaleMaps: false,
-  //     ),
-  //     throwsAssertionError,
-  //   );
-  // });
-
-  // test('Parameter exposeGetString null triggers assertion', () {
-  //   expect(
-  //     () => CodeGenerator(
-  //       className: 'className',
-  //       dependOnContext: false,
-  //       useSingleQuotes: true,
-  //       replaceNoBreakSpaces: false,
-  //       exposeGetString: null,
-  //       exposeLocaStrings: false,
-  //       exposeLocaleMaps: false,
-  //     ),
-  //     throwsAssertionError,
-  //   );
-  // });
-
-  // test('Parameter exposeLocaStrings null triggers assertion', () {
-  //   expect(
-  //     () => CodeGenerator(
-  //       className: 'className',
-  //       dependOnContext: false,
-  //       useSingleQuotes: true,
-  //       replaceNoBreakSpaces: false,
-  //       exposeGetString: false,
-  //       exposeLocaStrings: null,
-  //       exposeLocaleMaps: false,
-  //     ),
-  //     throwsAssertionError,
-  //   );
-  // });
-
-  // test('Parameter exposeLocaleMaps null triggers assertion', () {
-  //   expect(
-  //     () => CodeGenerator(
-  //       className: 'className',
-  //       dependOnContext: false,
-  //       useSingleQuotes: true,
-  //       replaceNoBreakSpaces: false,
-  //       exposeGetString: false,
-  //       exposeLocaStrings: false,
-  //       exposeLocaleMaps: null,
-  //     ),
-  //     throwsAssertionError,
-  //   );
-  // });
-
   test('formattedString', () {
     final codeGenerator = CodeGenerator(
       className: 'I18n',
@@ -246,8 +139,10 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
       replaceNoBreakSpaces: true,
     );
     codeGenerator.setSupportedLanguages(['en_US', 'de']);
-    codeGenerator.addField('test', 'Hello, World!', ['Hello, World!', 'Hallo, Welt!']);
-    codeGenerator.addField('test', 'Hello %name\$s!', ['Hello %name\$s!', 'Hallo %name\$s!']);
+    codeGenerator
+        .addField('test', 'Hello, World!', ['Hello, World!', 'Hallo, Welt!']);
+    codeGenerator.addField(
+        'test', 'Hello %name\$s!', ['Hello %name\$s!', 'Hallo %name\$s!']);
     codeGenerator.finalize();
 
     expect(

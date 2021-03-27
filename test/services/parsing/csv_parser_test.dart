@@ -7,13 +7,6 @@ import 'package:test/test.dart';
 
 // ignore_for_file: prefer_single_quotes
 void main() {
-  // test('Parameter fieldDelimiter null triggers assertion', () {
-  //   expect(
-  //     () => CSVParser(file: File('example/test.csv'), startIndex: 1, fieldDelimiter: null),
-  //     throwsAssertionError,
-  //   );
-  // });
-
   test('parseFile', () {
     final parser = CSVParser(
         file: File('example/test.csv'), startIndex: 1, fieldDelimiter: ',');
@@ -41,7 +34,7 @@ void main() {
         'Text mit einer Variable: %1\$s'
       ],
       [
-        "littleTest",
+        'littleTest',
         "Voici, pour l'exemple, \"un test\" avec la variable %age\$d",
         "Here is, for the example, \"a test\" with the variable %age\$d",
         "Aqui esta, por ejemplo, \"una prueba\" con la variable %age\$d",

@@ -6,20 +6,6 @@ import 'package:test/test.dart';
 import '../../testing_utils.dart';
 
 void main() {
-  // test('Parameter file null triggers assertion', () {
-  //   expect(
-  //     () => _MockFileParser(file: null, startIndex: 1),
-  //     throwsAssertionError,
-  //   );
-  // });
-
-  // test('Parameter startIndex null triggers assertion', () {
-  //   expect(
-  //     () => _MockFileParser(file: File('example/test.csv'), startIndex: null),
-  //     throwsAssertionError,
-  //   );
-  // });
-
   test('Parameter startIndex <= 0 triggers assertion', () {
     expect(
       () => _MockFileParser(file: File('example/test.csv'), startIndex: 0),

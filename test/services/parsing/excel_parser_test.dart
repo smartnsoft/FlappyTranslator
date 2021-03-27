@@ -31,7 +31,7 @@ void main() {
         'Text mit einer Variable: %1\$s'
       ],
       [
-        "littleTest",
+        'littleTest',
         "Voici, pour l'exemple, \"un test\" avec la variable %age\$d",
         "Here is, for the example, \"a test\" with the variable %age\$d",
         "Aqui esta, por ejemplo, \"una prueba\" con la variable %age\$d",
