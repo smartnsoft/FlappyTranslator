@@ -71,6 +71,7 @@ class CodeGenerator {
 
   void addField(String key, String defaultWord, List<String> words) {
     var result = '';
+    final getTextString = '_getText($_quoteString$key$_quoteString)';
     final hasParameters = _parametersRegex.hasMatch(defaultWord);
     if (hasParameters) {
       var parameters = '';
@@ -81,27 +82,21 @@ class CodeGenerator {
             'required $parameterType ${_getParameterNameFromPlaceholder(match.group(0)!)}, ';
       }
 
-      result = (!dependOnContext ? 'static ' : '') +
-          '''String $key({$parameters}) {
-      var _text = _getText($_quoteString$key$_quoteString);
-      ''';
+      result =
+          (!dependOnContext ? 'static ' : '') + 'String $key({$parameters}) =>';
 
       for (final match in matches) {
         final placeholderName = _formatString(match.group(1)!);
         var varName = _getParameterNameFromPlaceholder(match.group(0)!);
         result += '''
-        _text = _text.replaceAll($_quoteString$placeholderName$_quoteString, ${varName += match.group(2) == 'd' ? '.toString()' : ''});
+        $getTextString.replaceAll($_quoteString$placeholderName$_quoteString, ${varName += match.group(2) == 'd' ? '.toString()' : ''});
         ''';
       }
 
-      result += '''
-      return _text;
-      
-      }
-      ''';
+      result += '\n';
     } else {
       result = (!dependOnContext ? 'static ' : '') +
-          '''String get $key => _getText($_quoteString$key$_quoteString);\n\n''';
+          'String get $key => $getTextString;\n\n';
     }
 
     _fields += result;

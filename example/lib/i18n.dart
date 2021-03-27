@@ -13,19 +13,13 @@ class I18n {
 
   String description({
     required String var1,
-  }) {
-    var _text = _getText("description");
-    _text = _text.replaceAll("%1\$s", var1);
-    return _text;
-  }
+  }) =>
+      _getText("description").replaceAll("%1\$s", var1);
 
   String littleTest({
     required int age,
-  }) {
-    var _text = _getText("littleTest");
-    _text = _text.replaceAll("%age\$d", age.toString());
-    return _text;
-  }
+  }) =>
+      _getText("littleTest").replaceAll("%age\$d", age.toString());
 
   static late Map<String, String> _localizedValues;
 
