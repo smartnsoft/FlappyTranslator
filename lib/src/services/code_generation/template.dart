@@ -41,11 +41,10 @@ class #CLASS_NAME# {
     _localizedValues = {};
   }
 
-  static Locale _locale;
+  static late Locale _locale;
 
-  static String _getText(String key) {
-    return _localizedValues[key] ?? '** \$key not found';
-  }
+  static String _getText(String key) =>
+    _localizedValues[key] ?? '** \$key not found';
 
   static Locale get currentLocale => _locale;
 
