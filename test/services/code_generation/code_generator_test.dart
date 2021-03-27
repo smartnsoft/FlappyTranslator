@@ -139,8 +139,10 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
       replaceNoBreakSpaces: true,
     );
     codeGenerator.setSupportedLanguages(['en_US', 'de']);
-    codeGenerator.addField('test', 'Hello, World!', ['Hello, World!', 'Hallo, Welt!']);
-    codeGenerator.addField('test', 'Hello %name\$s!', ['Hello %name\$s!', 'Hallo %name\$s!']);
+    codeGenerator
+        .addField('test', 'Hello, World!', ['Hello, World!', 'Hallo, Welt!']);
+    codeGenerator.addField(
+        'test', 'Hello %name\$s!', ['Hello %name\$s!', 'Hallo %name\$s!']);
     codeGenerator.finalize();
 
     expect(

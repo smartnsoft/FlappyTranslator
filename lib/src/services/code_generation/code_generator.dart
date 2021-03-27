@@ -84,16 +84,17 @@ class CodeGenerator {
 
       result =
           (!dependOnContext ? 'static ' : '') + 'String $key({$parameters}) =>';
+      result += getTextString;
 
       for (final match in matches) {
         final placeholderName = _formatString(match.group(1)!);
         var varName = _getParameterNameFromPlaceholder(match.group(0)!);
         result += '''
-        $getTextString.replaceAll($_quoteString$placeholderName$_quoteString, ${varName += match.group(2) == 'd' ? '.toString()' : ''});
+        .replaceAll($_quoteString$placeholderName$_quoteString, ${varName += match.group(2) == 'd' ? '.toString()' : ''})
         ''';
       }
 
-      result += '\n';
+      result += ';\n\n';
     } else {
       result = (!dependOnContext ? 'static ' : '') +
           'String get $key => $getTextString;\n\n';
