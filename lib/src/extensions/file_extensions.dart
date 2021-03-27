@@ -3,24 +3,11 @@ import 'dart:io';
 import '../enums/supported_input_file_type.dart';
 
 extension FileExtensions on File {
-  String get extensionType {
-    if (this != null) {
-      return path.split('.').last?.toLowerCase();
-    }
+  String get extensionType => path.split('.').last.toLowerCase();
 
-    return null;
-  }
-
-  bool get hasValidExtension {
-    if (this != null) {
-      final fileExtension = extensionType;
-      return SupportedInputFileType.values
-          .map((value) => _describeEnum(value))
-          .contains(fileExtension);
-    }
-
-    return false;
-  }
+  bool get hasValidExtension => SupportedInputFileType.values
+      .map((value) => _describeEnum(value))
+      .contains(extensionType);
 
   bool get hasCSVExtension => extensionType == 'csv';
 }

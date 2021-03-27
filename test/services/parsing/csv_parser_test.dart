@@ -3,23 +3,36 @@ import 'dart:io';
 import 'package:flappy_translator/src/services/parsing/csv_parser.dart';
 import 'package:test/test.dart';
 
-import '../../testing_utils.dart';
+// import '../../testing_utils.dart';
 
 // ignore_for_file: prefer_single_quotes
 void main() {
-  test('Parameter fieldDelimiter null triggers assertion', () {
-    expect(
-      () => CSVParser(file: File('example/test.csv'), startIndex: 1, fieldDelimiter: null),
-      throwsAssertionError,
-    );
-  });
+  // test('Parameter fieldDelimiter null triggers assertion', () {
+  //   expect(
+  //     () => CSVParser(file: File('example/test.csv'), startIndex: 1, fieldDelimiter: null),
+  //     throwsAssertionError,
+  //   );
+  // });
 
   test('parseFile', () {
-    final parser = CSVParser(file: File('example/test.csv'), startIndex: 1, fieldDelimiter: ',');
+    final parser = CSVParser(
+        file: File('example/test.csv'), startIndex: 1, fieldDelimiter: ',');
     expect(parser.supportedLanguages, ['fr', 'en', 'es', 'de_CH']);
     expect(parser.localizationsTable, [
-      ['appTitle', 'Ma super application', 'My awesome application', 'Mi gran application', 'Meine tolle App'],
-      ['subtitle', 'Un sous titre', 'A subtitle', 'Un subtitulò', 'Ein Untertitel'],
+      [
+        'appTitle',
+        'Ma super application',
+        'My awesome application',
+        'Mi gran application',
+        'Meine tolle App'
+      ],
+      [
+        'subtitle',
+        'Un sous titre',
+        'A subtitle',
+        'Un subtitulò',
+        'Ein Untertitel'
+      ],
       [
         'description',
         'Un texte avec une variable : %1\$s',

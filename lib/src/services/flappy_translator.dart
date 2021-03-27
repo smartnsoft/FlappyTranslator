@@ -13,29 +13,29 @@ import 'parsing/excel_parser.dart';
 class FlappyTranslator {
   void generate(
     String inputFilePath, {
-    String outputDir,
-    String fileName,
-    String className,
-    String delimiter,
-    int startIndex,
-    bool dependOnContext,
-    bool useSingleQuotes,
-    bool replaceNoBreakSpaces,
-    bool exposeGetString,
-    bool exposeLocaStrings,
-    bool exposeLocaleMaps,
+    String? outputDir,
+    String? fileName,
+    String? className,
+    String? delimiter,
+    int? startIndex,
+    bool? dependOnContext,
+    bool? useSingleQuotes,
+    bool? replaceNoBreakSpaces,
+    bool? exposeGetString,
+    bool? exposeLocaStrings,
+    bool? exposeLocaleMaps,
   }) async {
     // check that the file exists
     final file = File(inputFilePath);
     if (!file.existsSync()) {
       FlappyLogger.logError('File $inputFilePath does not exist!');
-      return;
+      // return;
     }
 
     // check that the file has an extension - this is needed to determine if the file is supported
     if (!file.path.contains('.')) {
       FlappyLogger.logError('File $inputFilePath has no specified extension!');
-      return;
+      // return;
     }
 
     // check that the file extension is correct
@@ -43,7 +43,7 @@ class FlappyTranslator {
       FlappyLogger.logError(
         'File $inputFilePath has extension ${file.extensionType} which is not supported!',
       );
-      return;
+      // return;
     }
 
     // File is valid, state progress
@@ -85,7 +85,7 @@ class FlappyTranslator {
       if (!supportedLanguage.isValidLocale) {
         FlappyLogger.logError(
             '$supportedLanguage isn\'t a valid locale. Expected locale of the form "en" or "en_US".');
-        return;
+        // return;
       }
       final languageCode = supportedLanguage.split('_').first;
       if (!constants.flutterLocalizedLanguages.contains(languageCode)) {
@@ -107,27 +107,27 @@ class FlappyTranslator {
       if (constants.reservedWords.contains(key)) {
         FlappyLogger.logError(
             'Key $key in row $row is a reserved keyword in Dart and is thus invalid.\nDart\'s reserved keywords are ${constants.reservedWords}.');
-        return;
+        // return;
       }
 
       if (!key.isValidVariableName) {
         FlappyLogger.logError(
             'Key $key in row $row is invalid. First letter must be lower case.');
-        return;
+        // return;
       }
 
       final words = row.sublist(startIndex);
       if (words.length > supportedLanguages.length) {
         FlappyLogger.logError(
             'The row $row does not seem to be well formatted. Found ${words.length} values for ${supportedLanguages.length} locales.');
-        return;
+        // return;
       }
 
       final defaultWord = words[0];
       if (defaultWord.isEmpty) {
         FlappyLogger.logError(
             'Key $key in row $row has no translation for default language.');
-        return;
+        // return;
       }
 
       codeGenerator.addField(key, defaultWord, words);

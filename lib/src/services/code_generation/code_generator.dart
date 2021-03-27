@@ -11,10 +11,10 @@ class CodeGenerator {
   final bool replaceNoBreakSpaces;
   final _parametersRegex = RegExp(r'(\%[[0-9a-zA-Z]+]*\$(d|s))');
 
-  String _template;
-  List<Map<String, String>> _maps;
-  String _fields;
-  List<String> _supportedLanguages;
+  late String _template;
+  late List<Map<String, String>> _maps;
+  late String _fields;
+  late List<String> _supportedLanguages;
 
   /// Returns a string formatted according to default dart rules
   String get formattedString => DartFormatter().format(_template);
@@ -27,14 +27,7 @@ class CodeGenerator {
     bool exposeGetString = DefaultSettings.exposeGetString,
     bool exposeLocaStrings = DefaultSettings.exposeLocaStrings,
     bool exposeLocaleMaps = DefaultSettings.exposeLocaleMaps,
-  })  : assert(className != null),
-        assert(dependOnContext != null),
-        assert(useSingleQuotes != null),
-        assert(replaceNoBreakSpaces != null),
-        assert(exposeGetString != null),
-        assert(exposeLocaStrings != null),
-        assert(exposeLocaleMaps != null),
-        _quoteString = useSingleQuotes ? '\'' : '"' {
+  }) : _quoteString = useSingleQuotes ? '\'' : '"' {
     // construct template
     _template = Template.begining +
         (dependOnContext
@@ -85,7 +78,7 @@ class CodeGenerator {
       for (final match in matches) {
         final parameterType = match.group(2) == 'd' ? 'int' : 'String';
         parameters +=
-            '@required $parameterType ${_getParameterNameFromPlaceholder(match.group(0))}, ';
+            '@required $parameterType ${_getParameterNameFromPlaceholder(match.group(0)!)}, ';
       }
 
       result = (!dependOnContext ? 'static ' : '') +
@@ -94,8 +87,8 @@ class CodeGenerator {
       ''';
 
       for (final match in matches) {
-        final placeholderName = _formatString(match.group(1));
-        var varName = _getParameterNameFromPlaceholder(match.group(0));
+        final placeholderName = _formatString(match.group(1)!);
+        var varName = _getParameterNameFromPlaceholder(match.group(0)!);
         result += '''
         if ($varName != null) {
           _text = _text.replaceAll($_quoteString$placeholderName$_quoteString, ${varName += match.group(2) == 'd' ? '.toString()' : ''});
