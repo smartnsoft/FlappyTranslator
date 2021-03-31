@@ -13,10 +13,7 @@ dependencies:
   csv: ^5.0.0
   yaml: ^3.1.0
   dart_style: ^2.0.0
-  excel:
-    git:
-      url: https://github.com/justkawal/excel.git
-      ref: null-safety
+  excel: 2.0.0-null-safety
 
 dev_dependencies:
   test: ^1.16.8
