@@ -13,8 +13,11 @@ jobs:
         with:
           channel: 'stable'
       - name: Install packages
-        run:
+        run: |
           dart pub get
+          cd example
+          flutter pub get
+          cd ..
       - name: Lint
         run: 
           dart analyze
