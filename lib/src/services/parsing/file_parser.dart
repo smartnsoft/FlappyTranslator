@@ -18,14 +18,12 @@ abstract class FileParser {
   /// A 2D list of parsed localizations
   @protected
   @visibleForTesting
-  List<List<String>> parsedContents;
+  late List<List<String>> parsedContents;
 
   FileParser({
-    @required this.file,
-    @required this.startIndex,
-  })  : assert(file != null),
-        assert(startIndex != null),
-        assert(startIndex > 0) {
+    required this.file,
+    required this.startIndex,
+  }) : assert(startIndex > 0) {
     eraseParsedContents();
     parseFile();
   }
@@ -41,21 +39,19 @@ abstract class FileParser {
 
   /// Returns the localized languages (i.e. fr, en_GB)
   List<String> get supportedLanguages {
-    if (parsedContents != null && parsedContents.isNotEmpty) {
-      return parsedContents.first.sublist(startIndex);
+    if (parsedContents.isEmpty) {
+      FlappyLogger.logError('Error! File contents have not been parsed.');
     }
 
-    FlappyLogger.logError('Error! File contents have not been parsed.');
-    return null;
+    return parsedContents.first.sublist(startIndex);
   }
 
   /// Returns a table of localizations (excluding supported languages)
   List<List<String>> get localizationsTable {
-    if (parsedContents != null && parsedContents.isNotEmpty) {
-      return parsedContents.sublist(_numberHeaderLines);
+    if (parsedContents.isEmpty) {
+      FlappyLogger.logError('Error! File contents have not been parsed.');
     }
 
-    FlappyLogger.logError('Error! File contents have not been parsed.');
-    return null;
+    return parsedContents.sublist(_numberHeaderLines);
   }
 }

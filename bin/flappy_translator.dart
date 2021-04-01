@@ -26,7 +26,7 @@ class YamlArguments {
 }
 
 void main(List<String> arguments) {
-  String inputFilePath, outputDir;
+  String? inputFilePath, outputDir;
 
   // try to load settings from the project's pubspec.yaml
   final settings = loadSettings();
@@ -40,17 +40,17 @@ void main(List<String> arguments) {
   }
 
   // parse command line arguments
-  if (arguments.isNotEmpty && arguments.first != null) {
+  if (arguments.isNotEmpty) {
     inputFilePath = arguments.first;
   }
-  if (arguments.length > 1 && arguments[1] != null) {
+  if (arguments.length > 1) {
     outputDir = arguments[1];
   }
 
   // display an error and quit if the input file hasn't been specified
   if ((inputFilePath == null)) {
     print(
-        '[ERROR] CSV input file path not defined. This can be set as a command line argument or in pubspec.yaml\n');
+        '[ERROR] Input file path not defined. This can be set as a command line argument or in pubspec.yaml\n');
     return;
   }
 
@@ -73,13 +73,13 @@ void main(List<String> arguments) {
 }
 
 /// Returns configuration settings for flappy_translator from pubspec.yaml
-Map<String, dynamic> loadSettings() {
+Map<String?, dynamic> loadSettings() {
   final file = File(pubspecFilePath);
   final yamlString = file.readAsStringSync();
   final Map<dynamic, dynamic> yamlMap = loadYaml(yamlString);
 
-  // determine <String, dynamic> map from <dynamic, dynamic> yaml
-  final settings = <String, dynamic>{};
+  // determine <String?, dynamic> map from <dynamic, dynamic> yaml
+  final settings = <String?, dynamic>{};
   if (yamlMap.containsKey(yamlSectionId)) {
     for (final kvp in yamlMap[yamlSectionId].entries) {
       settings[kvp.key] = kvp.value;

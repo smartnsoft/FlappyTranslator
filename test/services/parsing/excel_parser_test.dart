@@ -9,8 +9,20 @@ void main() {
     final parser = ExcelParser(file: File('example/test.xlsx'), startIndex: 1);
     expect(parser.supportedLanguages, ['fr', 'en', 'es', 'de_CH']);
     expect(parser.localizationsTable, [
-      ['appTitle', 'Ma super application', 'My awesome application', 'Mi gran application', 'Meine tolle App'],
-      ['subtitle', 'Un sous titre', 'A subtitle', 'Un subtitulò', 'Ein Untertitel'],
+      [
+        'appTitle',
+        'Ma super application',
+        'My awesome application',
+        'Mi gran application',
+        'Meine tolle App'
+      ],
+      [
+        'subtitle',
+        'Un sous titre',
+        'A subtitle',
+        'Un subtitulò',
+        'Ein Untertitel'
+      ],
       [
         'description',
         'Un texte avec une variable : %1\$s',
@@ -19,7 +31,7 @@ void main() {
         'Text mit einer Variable: %1\$s'
       ],
       [
-        "littleTest",
+        'littleTest',
         "Voici, pour l'exemple, \"un test\" avec la variable %age\$d",
         "Here is, for the example, \"a test\" with the variable %age\$d",
         "Aqui esta, por ejemplo, \"una prueba\" con la variable %age\$d",

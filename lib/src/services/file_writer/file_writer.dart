@@ -1,11 +1,9 @@
 import 'dart:io';
 
-import 'package:meta/meta.dart';
-
 class FileWriter {
   bool write({
-    @required String contents,
-    @required String path,
+    required String? contents,
+    required String? path,
   }) {
     if (contents != null && path != null) {
       final file = File(path);
