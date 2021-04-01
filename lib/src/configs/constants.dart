@@ -54,6 +54,14 @@ const reservedWords = [
   'yield',
 ];
 
+/// A list of dart types
+const types = [
+  'bool',
+  'double',
+  'int',
+  'num',
+];
+
 /// A list of languages which flutter automatically supports
 ///
 /// https://api.flutter.dev/flutter/flutter_localizations/GlobalMaterialLocalizations-class.html
