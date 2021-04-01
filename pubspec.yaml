@@ -1,6 +1,6 @@
 name: flappy_translator
 description: A tool which automatically generates Flutter localization resources from CSV and Excel files.
-version: 1.5.0
+version: 2.0.0-nullsafety.0
 homepage: https://github.com/smartnsoft/FlappyTranslator
 repository: https://github.com/smartnsoft/FlappyTranslator
 issue_tracker: https://github.com/smartnsoft/FlappyTranslator/issues
