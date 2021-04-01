@@ -29,13 +29,11 @@ class FlappyTranslator {
     final file = File(inputFilePath);
     if (!file.existsSync()) {
       FlappyLogger.logError('File $inputFilePath does not exist!');
-      // return;
     }
 
     // check that the file has an extension - this is needed to determine if the file is supported
     if (!file.path.contains('.')) {
       FlappyLogger.logError('File $inputFilePath has no specified extension!');
-      // return;
     }
 
     // check that the file extension is correct
@@ -43,7 +41,6 @@ class FlappyTranslator {
       FlappyLogger.logError(
         'File $inputFilePath has extension ${file.extensionType} which is not supported!',
       );
-      // return;
     }
 
     // File is valid, state progress
@@ -85,7 +82,6 @@ class FlappyTranslator {
       if (!supportedLanguage.isValidLocale) {
         FlappyLogger.logError(
             '$supportedLanguage isn\'t a valid locale. Expected locale of the form "en" or "en_US".');
-        // return;
       }
       final languageCode = supportedLanguage.split('_').first;
       if (!constants.flutterLocalizedLanguages.contains(languageCode)) {
@@ -106,28 +102,29 @@ class FlappyTranslator {
 
       if (constants.reservedWords.contains(key)) {
         FlappyLogger.logError(
-            'Key $key in row $row is a reserved keyword in Dart and is thus invalid.\nDart\'s reserved keywords are ${constants.reservedWords}.');
-        // return;
+            'Key $key in row $row is a reserved keyword in Dart and is thus invalid.');
+      }
+
+      if (constants.types.contains(key)) {
+        FlappyLogger.logError(
+            'Key $key in row $row is a type in Dart and is thus invalid.');
       }
 
       if (!key.isValidVariableName) {
         FlappyLogger.logError(
-            'Key $key in row $row is invalid. First letter must be lower case.');
-        // return;
+            'Key $key in row $row is invalid. Expected key in the form lowerCamelCase.');
       }
 
       final words = row.sublist(startIndex);
       if (words.length > supportedLanguages.length) {
         FlappyLogger.logError(
             'The row $row does not seem to be well formatted. Found ${words.length} values for ${supportedLanguages.length} locales.');
-        // return;
       }
 
       final defaultWord = words[0];
       if (defaultWord.isEmpty) {
         FlappyLogger.logError(
             'Key $key in row $row has no translation for default language.');
-        // return;
       }
 
       codeGenerator.addField(key, defaultWord, words);
@@ -139,9 +136,7 @@ class FlappyTranslator {
     final formattedString = codeGenerator.formattedString;
 
     // write output file
-    final path = outputDir == null || outputDir.isEmpty
-        ? 'i18n.dart'
-        : '$outputDir/$fileName.dart';
+    final path = outputDir.isEmpty ? 'i18n.dart' : '$outputDir/$fileName.dart';
     FileWriter().write(contents: formattedString, path: path);
 
     FlappyLogger.logProgress('Localizations sucessfully generated!');
