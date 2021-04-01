@@ -17,9 +17,12 @@ class ExcelParser extends FileParser {
     final excel = Excel.decodeBytes(bytes);
     final table = excel.tables.keys.first;
 
-    for (final row in excel.tables[table]!.rows) {
-      final rowAsStrings = row.map((element) => element.toString()).toList();
-      parsedContents.add(rowAsStrings);
+    if (excel.tables.containsKey(table)) {
+      for (final row in excel.tables[table]!.rows) {
+        final rowAsStrings =
+            row.map((element) => element?.value?.toString() ?? '').toList();
+        parsedContents.add(rowAsStrings);
+      }
     }
   }
 }
