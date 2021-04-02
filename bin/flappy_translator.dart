@@ -25,8 +25,8 @@ class YamlArguments {
   static const exposeLocaleMaps = 'expose_locale_maps';
 }
 
-void main(List<String> arguments) {
-  String? inputFilePath, outputDir;
+void main() {
+  String? inputFilePath;
 
   // try to load settings from the project's pubspec.yaml
   final settings = loadSettings();
@@ -34,23 +34,11 @@ void main(List<String> arguments) {
     if (settings.containsKey(YamlArguments.inputFilePath)) {
       inputFilePath = settings[YamlArguments.inputFilePath];
     }
-    if (settings.containsKey(YamlArguments.outputDir)) {
-      outputDir = settings[YamlArguments.outputDir];
-    }
-  }
-
-  // parse command line arguments
-  if (arguments.isNotEmpty) {
-    inputFilePath = arguments.first;
-  }
-  if (arguments.length > 1) {
-    outputDir = arguments[1];
   }
 
   // display an error and quit if the input file hasn't been specified
   if ((inputFilePath == null)) {
-    print(
-        '[ERROR] Input file path not defined. This can be set as a command line argument or in pubspec.yaml\n');
+    print('[ERROR] Input file path not defined. This can be set as a command line argument or in pubspec.yaml\n');
     return;
   }
 
@@ -58,7 +46,7 @@ void main(List<String> arguments) {
   final flappyTranslator = FlappyTranslator();
   flappyTranslator.generate(
     inputFilePath,
-    outputDir: outputDir,
+    outputDir: settings[YamlArguments.outputDir],
     fileName: settings[YamlArguments.fileName],
     className: settings[YamlArguments.className],
     delimiter: settings[YamlArguments.delimiter],
