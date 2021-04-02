@@ -28,7 +28,7 @@ dev_dependencies:
   flappy_translator: 
 ```
 
-Note that *flappy_translator* requires dart sdk >= 2.7.
+Note that *flappy_translator* requires dart sdk >= 2.12.
 
 ### Define Settings
 
@@ -52,7 +52,7 @@ flappy_translator:
 
 | Setting                 | Default | Description                                                                        |
 | ----------------------- | ------- | ---------------------------------------------------------------------------------- |
-| input_file_path         | N/A     | A path to the input CSV/Excel file.                                                |
+| input_file_path         | N/A     | Required. A path to the input CSV/Excel file.                                      |
 | output_dir              | lib     | A directory to generate the output file.                                           |
 | file_name               | i18n    | A filename for the generated file.                                                 |
 | class_name              | I18n    | A class name for the generated file.                                               |
@@ -67,13 +67,11 @@ flappy_translator:
 
 ### Run package
 
-Make sure that your current working directory is the project root.
-
-An input file path must be supplied, either as a setting in *pubspec.yaml* or as a command line argument (CLA), while the output directory can also be optionally supplied as a CLA.
+Make sure that your current working directory is the project root. An input file path must be supplied as a setting in *pubspec.yaml*.
 
 ```sh
 flutter pub get
-flutter pub run flappy_translator <test.csv> <output dir>
+flutter pub run flappy_translator
 ```
 
 ### Update iOS Info.plist
