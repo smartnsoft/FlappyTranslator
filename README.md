@@ -71,7 +71,7 @@ Make sure that your current working directory is the project root. An input file
 
 ```sh
 flutter pub get
-flutter pub run flappy_translator <test.csv> <output dir>
+flutter pub run flappy_translator
 ```
 
 ### Update iOS Info.plist
