@@ -24,9 +24,17 @@ void main() {
     final parser =
         _MockFileParser(file: File('example/test.csv'), startIndex: 1);
     expect(parser.supportedLanguages, ['en', 'de']);
-    expect(parser.localizationsTable, [
-      ['test', 'Hello, World!', 'Hallo, Welt!']
-    ]);
+    final row = LocalizationTableRow(
+      key: 'test',
+      words: ['Hello, World!', 'Hallo, Welt!'],
+      defaultWord: 'Hello, World!',
+      raw: ['test', 'Hello, World!', 'Hallo, Welt!'],
+    );
+    expect(parser.localizationsTable.length, 1);
+    expect(parser.localizationsTable.first.key, row.key);
+    expect(parser.localizationsTable.first.words, row.words);
+    expect(parser.localizationsTable.first.defaultWord, row.defaultWord);
+    expect(parser.localizationsTable.first.raw, row.raw);
   });
 }
 
