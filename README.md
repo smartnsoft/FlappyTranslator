@@ -52,7 +52,7 @@ flappy_translator:
 
 | Setting                 | Default | Description                                                                        |
 | ----------------------- | ------- | ---------------------------------------------------------------------------------- |
-| input_file_path         | N/A     | Required. A path to the input CSV/Excel file.                                                |
+| input_file_path         | N/A     | Required. A path to the input CSV/Excel file.                                      |
 | output_dir              | lib     | A directory to generate the output file.                                           |
 | file_name               | i18n    | A filename for the generated file.                                                 |
 | class_name              | I18n    | A class name for the generated file.                                               |
