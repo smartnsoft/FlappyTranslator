@@ -64,19 +64,7 @@ class FlappyTranslator {
         : ExcelParser(file: file, startIndex: startIndex);
 
     final supportedLanguages = parser.supportedLanguages;
-    for (final supportedLanguage in supportedLanguages) {
-      if (!supportedLanguage.isValidLocale) {
-        FlappyLogger.logError(
-            '$supportedLanguage isn\'t a valid locale. Expected locale of the form "en" or "en_US".');
-      }
-      final languageCode = supportedLanguage.split('_').first;
-      if (!constants.flutterLocalizedLanguages.contains(languageCode)) {
-        FlappyLogger.logWarning(
-            '$languageCode isn\'t supported by default in Flutter.');
-        FlappyLogger.logWarning(
-            'Please see https://flutter.dev/docs/development/accessibility-and-localization/internationalization#adding-support-for-a-new-language for info on how to add required classes.');
-      }
-    }
+    Validator.validateSupportedLanguages(supportedLanguages);
     codeGenerator.setSupportedLanguages(supportedLanguages);
     FlappyLogger.logProgress('Locales $supportedLanguages determined.');
 
