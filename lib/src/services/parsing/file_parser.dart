@@ -64,6 +64,28 @@ abstract class FileParser {
         )
         .toList(growable: false);
   }
+
+  /// Returns a column from localizations table
+  List<String> getColumn(int index) => parsedContents
+      .sublist(_numberHeaderLines)
+      .map((row) => row[index])
+      .toList(growable: false);
+
+  /// Returns all localization keys
+  List<String> get keys => getColumn(0);
+
+  /// Returns all localizations values for a language
+  List<String> getValues(String language) {
+    if (!supportedLanguages.contains(language)) {
+      FlappyLogger.logError(
+          'Error! Language $language is not part of parsed contents.');
+    }
+
+    return getColumn(parsedContents.first.indexOf(language));
+  }
+
+  /// Returns all localizations values for the default language
+  List<String> get defaultValues => getColumn(startIndex);
 }
 
 /// A model representing a row in a [LocalizationTable]
