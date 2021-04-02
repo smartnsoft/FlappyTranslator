@@ -9,6 +9,7 @@ import 'code_generation/code_generator.dart';
 import 'file_writer/file_writer.dart';
 import 'parsing/csv_parser.dart';
 import 'parsing/excel_parser.dart';
+import 'validation/validator.dart';
 
 class FlappyTranslator {
   void generate(
@@ -25,23 +26,8 @@ class FlappyTranslator {
     bool? exposeLocaStrings,
     bool? exposeLocaleMaps,
   }) async {
-    // check that the file exists
     final file = File(inputFilePath);
-    if (!file.existsSync()) {
-      FlappyLogger.logError('File $inputFilePath does not exist!');
-    }
-
-    // check that the file has an extension - this is needed to determine if the file is supported
-    if (!file.path.contains('.')) {
-      FlappyLogger.logError('File $inputFilePath has no specified extension!');
-    }
-
-    // check that the file extension is correct
-    if (!file.hasValidExtension) {
-      FlappyLogger.logError(
-        'File $inputFilePath has extension ${file.extensionType} which is not supported!',
-      );
-    }
+    Validator.validateFile(file);
 
     // File is valid, state progress
     FlappyLogger.logProgress('Loading file $inputFilePath...');
