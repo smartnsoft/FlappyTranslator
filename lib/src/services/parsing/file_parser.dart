@@ -59,6 +59,7 @@ abstract class FileParser {
             key: row.first,
             defaultWord: row.sublist(startIndex).first,
             words: row.sublist(startIndex),
+            raw: row,
           ),
         )
         .toList(growable: false);
@@ -76,9 +77,13 @@ class LocalizationTableRow {
   /// All translations
   final List<String> words;
 
+  /// The raw content
+  final List<String> raw;
+
   const LocalizationTableRow({
     required this.key,
     required this.defaultWord,
     required this.words,
+    required this.raw,
   });
 }

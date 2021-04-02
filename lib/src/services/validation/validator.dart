@@ -60,29 +60,29 @@ abstract class Validator {
     final key = row.key;
     if (constants.reservedWords.contains(key)) {
       FlappyLogger.logError(
-          'Key $key in row $row is a reserved keyword in Dart and is thus invalid.');
+          'Key $key in row ${row.raw} is a reserved keyword in Dart and is thus invalid.');
     }
 
     if (constants.types.contains(key)) {
       FlappyLogger.logError(
-          'Key $key in row $row is a type in Dart and is thus invalid.');
+          'Key $key in row ${row.raw} is a type in Dart and is thus invalid.');
     }
 
     if (!key.isValidVariableName) {
       FlappyLogger.logError(
-          'Key $key in row $row is invalid. Expected key in the form lowerCamelCase.');
+          'Key $key in row ${row.raw} is invalid. Expected key in the form lowerCamelCase.');
     }
 
     final words = row.words;
     if (words.length > numberSupportedLanguages) {
       FlappyLogger.logError(
-          'The row $row does not seem to be well formatted. Found ${words.length} values for numberSupportedLanguages locales.');
+          'The row ${row.raw} does not seem to be well formatted. Found ${words.length} values for numberSupportedLanguages locales.');
     }
 
     final defaultWord = row.defaultWord;
     if (defaultWord.isEmpty) {
       FlappyLogger.logError(
-          'Key $key in row $row has no translation for default language.');
+          'Key $key in row ${row.raw} has no translation for default language.');
     }
   }
 }
