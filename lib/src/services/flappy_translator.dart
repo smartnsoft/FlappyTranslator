@@ -1,9 +1,7 @@
 import 'dart:io';
 
-import '../configs/constants.dart' as constants;
 import '../configs/default_settings.dart';
 import '../extensions/file_extensions.dart';
-import '../extensions/string_extensions.dart';
 import '../utils/flappy_logger.dart';
 import 'code_generation/code_generator.dart';
 import 'file_writer/file_writer.dart';
@@ -72,36 +70,11 @@ class FlappyTranslator {
     FlappyLogger.logProgress('Parsing ${localizationsTable.length} key(s)...');
 
     for (final row in localizationsTable) {
-      final key = row.key;
-
-      if (constants.reservedWords.contains(row.key)) {
-        FlappyLogger.logError(
-            'Key $key in row $row is a reserved keyword in Dart and is thus invalid.');
-      }
-
-      if (constants.types.contains(key)) {
-        FlappyLogger.logError(
-            'Key $key in row $row is a type in Dart and is thus invalid.');
-      }
-
-      if (!key.isValidVariableName) {
-        FlappyLogger.logError(
-            'Key $key in row $row is invalid. Expected key in the form lowerCamelCase.');
-      }
-
-      final words = row.words;
-      if (words.length > supportedLanguages.length) {
-        FlappyLogger.logError(
-            'The row $row does not seem to be well formatted. Found ${words.length} values for ${supportedLanguages.length} locales.');
-      }
-
-      final defaultWord = row.defaultWord;
-      if (defaultWord.isEmpty) {
-        FlappyLogger.logError(
-            'Key $key in row $row has no translation for default language.');
-      }
-
-      codeGenerator.addField(key, defaultWord, words);
+      Validator.validateLocalizationTableRow(
+        row,
+        numberSupportedLanguages: supportedLanguages.length,
+      );
+      codeGenerator.addField(row.key, row.defaultWord, row.words);
     }
 
     codeGenerator.finalize();

@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:flappy_translator/src/services/parsing/file_parser.dart';
+
 import '../../configs/constants.dart' as constants;
 import '../../extensions/file_extensions.dart';
 import '../../extensions/string_extensions.dart';
@@ -45,6 +47,42 @@ abstract class Validator {
         FlappyLogger.logWarning(
             'Please see https://flutter.dev/docs/development/accessibility-and-localization/internationalization#adding-support-for-a-new-language for info on how to add required classes.');
       }
+    }
+  }
+
+  /// Validates whether [row] is valid
+  ///
+  /// If any error occurs, process is derminated
+  static void validateLocalizationTableRow(
+    LocalizationTableRow row, {
+    required int numberSupportedLanguages,
+  }) {
+    final key = row.key;
+    if (constants.reservedWords.contains(key)) {
+      FlappyLogger.logError(
+          'Key $key in row $row is a reserved keyword in Dart and is thus invalid.');
+    }
+
+    if (constants.types.contains(key)) {
+      FlappyLogger.logError(
+          'Key $key in row $row is a type in Dart and is thus invalid.');
+    }
+
+    if (!key.isValidVariableName) {
+      FlappyLogger.logError(
+          'Key $key in row $row is invalid. Expected key in the form lowerCamelCase.');
+    }
+
+    final words = row.words;
+    if (words.length > numberSupportedLanguages) {
+      FlappyLogger.logError(
+          'The row $row does not seem to be well formatted. Found ${words.length} values for numberSupportedLanguages locales.');
+    }
+
+    final defaultWord = row.defaultWord;
+    if (defaultWord.isEmpty) {
+      FlappyLogger.logError(
+          'Key $key in row $row has no translation for default language.');
     }
   }
 }
