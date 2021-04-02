@@ -4,26 +4,19 @@ import 'package:flappy_translator/flappy_translator.dart';
 import 'package:yaml/yaml.dart';
 
 void main() {
-  String? inputFilePath;
-
   // try to load settings from the project's pubspec.yaml
   final settings = _loadSettings();
-  if (settings.isNotEmpty) {
-    if (settings.containsKey(_YamlArguments.inputFilePath)) {
-      inputFilePath = settings[_YamlArguments.inputFilePath];
-    }
-  }
 
   // display an error and quit if the input file hasn't been specified
-  if ((inputFilePath == null)) {
-    print('[ERROR] Input file path not defined. This can be set as a command line argument or in pubspec.yaml\n');
+  if ((settings[_YamlArguments.inputFilePath] == null)) {
+    print('[ERROR] Input file path not defined. This must be specified in pubspec.yaml\n');
     return;
   }
 
   // parse csv to dart
   final flappyTranslator = FlappyTranslator();
   flappyTranslator.generate(
-    inputFilePath,
+    settings[_YamlArguments.inputFilePath],
     outputDir: settings[_YamlArguments.outputDir],
     fileName: settings[_YamlArguments.fileName],
     className: settings[_YamlArguments.className],
@@ -66,8 +59,8 @@ Map<String?, dynamic> _loadSettings() {
   final yamlString = file.readAsStringSync();
   final Map<dynamic, dynamic> yamlMap = loadYaml(yamlString);
 
-  // determine <String?, dynamic> map from <dynamic, dynamic> yaml
-  final settings = <String?, dynamic>{};
+  // determine <String, dynamic> map from <dynamic, dynamic> yaml
+  final settings = <String, dynamic>{};
   if (yamlMap.containsKey(_yamlSectionId)) {
     for (final kvp in yamlMap[_yamlSectionId].entries) {
       settings[kvp.key] = kvp.value;
