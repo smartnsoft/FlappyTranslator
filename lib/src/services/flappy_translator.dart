@@ -95,12 +95,12 @@ class FlappyTranslator {
     FlappyLogger.logProgress('Locales $supportedLanguages determined.');
 
     final localizationsTable = parser.localizationsTable;
-    FlappyLogger.logProgress('Parsing ${localizationsTable.length} keys...');
+    FlappyLogger.logProgress('Parsing ${localizationsTable.length} key(s)...');
 
     for (final row in localizationsTable) {
-      final key = row.first;
+      final key = row.key;
 
-      if (constants.reservedWords.contains(key)) {
+      if (constants.reservedWords.contains(row.key)) {
         FlappyLogger.logError(
             'Key $key in row $row is a reserved keyword in Dart and is thus invalid.');
       }
@@ -115,13 +115,13 @@ class FlappyTranslator {
             'Key $key in row $row is invalid. Expected key in the form lowerCamelCase.');
       }
 
-      final words = row.sublist(startIndex);
+      final words = row.words;
       if (words.length > supportedLanguages.length) {
         FlappyLogger.logError(
             'The row $row does not seem to be well formatted. Found ${words.length} values for ${supportedLanguages.length} locales.');
       }
 
-      final defaultWord = words[0];
+      final defaultWord = row.defaultWord;
       if (defaultWord.isEmpty) {
         FlappyLogger.logError(
             'Key $key in row $row has no translation for default language.');

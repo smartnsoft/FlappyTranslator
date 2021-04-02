@@ -47,11 +47,38 @@ abstract class FileParser {
   }
 
   /// Returns a table of localizations (excluding supported languages)
-  List<List<String>> get localizationsTable {
+  List<LocalizationTableRow> get localizationsTable {
     if (parsedContents.isEmpty) {
       FlappyLogger.logError('Error! File contents have not been parsed.');
     }
 
-    return parsedContents.sublist(_numberHeaderLines);
+    final locaTable = parsedContents.sublist(_numberHeaderLines);
+    return locaTable
+        .map(
+          (row) => LocalizationTableRow(
+            key: row.first,
+            defaultWord: row.sublist(startIndex).first,
+            words: row.sublist(startIndex),
+          ),
+        )
+        .toList(growable: false);
   }
+}
+
+/// A model representing a row in a [LocalizationTable]
+class LocalizationTableRow {
+  /// The localization key
+  final String key;
+
+  /// The default word (i.e. value for default language)
+  final String defaultWord;
+
+  /// All translations
+  final List<String> words;
+
+  const LocalizationTableRow({
+    required this.key,
+    required this.defaultWord,
+    required this.words,
+  });
 }
