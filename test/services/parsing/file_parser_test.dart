@@ -6,6 +6,10 @@ import 'package:test/test.dart';
 import '../../testing_utils.dart';
 
 void main() {
+  late FileParser parser;
+
+  setUp(() => parser = _MockFileParser(file: File('example/test.csv'), startIndex: 1));
+
   test('Parameter startIndex <= 0 triggers assertion', () {
     expect(
       () => _MockFileParser(file: File('example/test.csv'), startIndex: 0),
@@ -14,16 +18,15 @@ void main() {
   });
 
   test('eraseParsedContents re-initializes parsedContents', () {
-    final parser =
-        _MockFileParser(file: File('example/test.csv'), startIndex: 1);
     parser.eraseParsedContents();
     expect(parser.parsedContents, []);
   });
 
-  test('Ensure supportedLanguages, localizationsTable are correct', () {
-    final parser =
-        _MockFileParser(file: File('example/test.csv'), startIndex: 1);
+  test('supportedLanguages', () {
     expect(parser.supportedLanguages, ['en', 'de']);
+  });
+
+  test('localizationsTable', () {
     final row = LocalizationTableRow(
       key: 'test',
       words: ['Hello, World!', 'Hallo, Welt!'],
@@ -35,6 +38,25 @@ void main() {
     expect(parser.localizationsTable.first.words, row.words);
     expect(parser.localizationsTable.first.defaultWord, row.defaultWord);
     expect(parser.localizationsTable.first.raw, row.raw);
+  });
+
+  test('getColumn', () {
+    expect(parser.getColumn(0), ['test']);
+    expect(parser.getColumn(1), ['Hello, World!']);
+    expect(parser.getColumn(2), ['Hallo, Welt!']);
+  });
+
+  test('keys', () {
+    expect(parser.keys, ['test']);
+  });
+
+  test('getValues', () {
+    expect(parser.getValues('en'), ['Hello, World!']);
+    expect(parser.getValues('de'), ['Hallo, Welt!']);
+  });
+
+  test('defaultValues', () {
+    expect(parser.defaultValues, ['Hello, World!']);
   });
 }
 
