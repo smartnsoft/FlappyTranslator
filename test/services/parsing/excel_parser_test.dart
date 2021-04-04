@@ -8,7 +8,7 @@ void main() {
   test('parseFile', () {
     final parser = ExcelParser(file: File('example/test.xlsx'), startIndex: 1);
     expect(parser.supportedLanguages, ['fr', 'en', 'es', 'de_CH']);
-    expect(parser.localizationsTable, [
+    expect(parser.localizationsTable.map((row) => row.raw), [
       [
         'appTitle',
         'Ma super application',

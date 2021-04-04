@@ -41,35 +41,48 @@ void main() {
   group('validateLocalizationTableRow', () {
     test('key is reserved word', () {
       Validator.validateLocalizationTableRow(
-        LocalizationTableRow(key: 'for', defaultWord: 'a', words: ['a'], raw: ['for', 'a']),
+        LocalizationTableRow(
+            key: 'for', defaultWord: 'a', words: ['a'], raw: ['for', 'a']),
         numberSupportedLanguages: 1,
       );
     });
 
     test('key is type', () {
       Validator.validateLocalizationTableRow(
-        LocalizationTableRow(key: 'int', defaultWord: 'a', words: ['a'], raw: ['int', 'a']),
+        LocalizationTableRow(
+            key: 'int', defaultWord: 'a', words: ['a'], raw: ['int', 'a']),
         numberSupportedLanguages: 1,
       );
     });
 
     test('key is not valid variable name', () {
       Validator.validateLocalizationTableRow(
-        LocalizationTableRow(key: 'MyKey', defaultWord: 'a', words: ['a'], raw: ['MyKey', 'a']),
+        LocalizationTableRow(
+            key: 'MyKey', defaultWord: 'a', words: ['a'], raw: ['MyKey', 'a']),
         numberSupportedLanguages: 1,
       );
     });
 
     test('key is not valid variable name', () {
       Validator.validateLocalizationTableRow(
-        LocalizationTableRow(key: 'MyKey', defaultWord: 'a', words: ['a', 'b'], raw: ['MyKey', 'a', 'b']),
+        LocalizationTableRow(
+          key: 'MyKey',
+          defaultWord: 'a',
+          words: ['a', 'b'],
+          raw: ['MyKey', 'a', 'b'],
+        ),
         numberSupportedLanguages: 1,
       );
     });
 
     test('key is not valid variable name', () {
       Validator.validateLocalizationTableRow(
-        LocalizationTableRow(key: 'MyKey', defaultWord: '', words: ['', 'b'], raw: ['MyKey', '', 'b']),
+        LocalizationTableRow(
+          key: 'MyKey',
+          defaultWord: '',
+          words: ['', 'b'],
+          raw: ['MyKey', '', 'b'],
+        ),
         numberSupportedLanguages: 2,
       );
     });
