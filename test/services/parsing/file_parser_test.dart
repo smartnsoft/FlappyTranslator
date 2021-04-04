@@ -6,10 +6,11 @@ import 'package:test/test.dart';
 import '../../testing_utils.dart';
 
 void main() {
+  setTestingEnvironment();
+
   late FileParser parser;
 
-  setUp(() =>
-      parser = _MockFileParser(file: File('example/test.csv'), startIndex: 1));
+  setUp(() => parser = _MockFileParser(file: File('example/test.csv'), startIndex: 1));
 
   test('Parameter startIndex <= 0 triggers assertion', () {
     expect(
@@ -20,11 +21,20 @@ void main() {
 
   test('eraseParsedContents re-initializes parsedContents', () {
     parser.eraseParsedContents();
-    expect(parser.parsedContents, []);
+    expect(parser.parsedContents, isEmpty);
   });
 
   test('supportedLanguages', () {
     expect(parser.supportedLanguages, ['en', 'de']);
+  });
+
+  test('supportedLanguages exits when contents are not parsed', () {
+    parser.eraseParsedContents();
+    expect(
+      () => parser.supportedLanguages,
+      // as exit(0) is disabled in test, a bad state instead would occur
+      throwsStateError,
+    );
   });
 
   test('localizationsTable', () {
@@ -39,6 +49,15 @@ void main() {
     expect(parser.localizationsTable.first.words, row.words);
     expect(parser.localizationsTable.first.defaultWord, row.defaultWord);
     expect(parser.localizationsTable.first.raw, row.raw);
+  });
+
+  test('localizationsTable exits when contents are not parsed', () {
+    parser.eraseParsedContents();
+    expect(
+      () => parser.localizationsTable,
+      // as exit(0) is disabled in test, a RangeError instead would occur
+      throwsA(isA<RangeError>()),
+    );
   });
 
   test('getColumn', () {
@@ -56,8 +75,24 @@ void main() {
     expect(parser.getValues('de'), ['Hallo, Welt!']);
   });
 
+  test('getValues exits when language is not valid', () {
+    expect(
+      () => parser.getValues('pl'),
+      // as exit(0) is disabled in test, a RangeError instead would occur
+      throwsA(isA<RangeError>()),
+    );
+  });
+
   test('defaultValues', () {
     expect(parser.defaultValues, ['Hello, World!']);
+  });
+
+  test('LocalizationTableRow.toString', () {
+    final row = LocalizationTableRow(key: 'myKey', defaultWord: 'a', words: ['a', 'b'], raw: ['myKey', 'a', 'b']);
+    expect(
+      row.toString(),
+      isNot('Instance of \'LocalizationTableRow\''),
+    );
   });
 }
 
