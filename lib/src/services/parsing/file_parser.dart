@@ -110,6 +110,41 @@ class LocalizationTableRow {
   });
 
   @override
+  bool operator ==(other) =>
+      other is LocalizationTableRow &&
+      key == other.key &&
+      defaultWord == other.defaultWord &&
+      _listEquals(words, other.words) &&
+      _listEquals(raw, other.raw);
+
+  @override
+  int get hashCode => raw.hashCode;
+
+  @override
   String toString() =>
       '{key: $key, defaultWord: $defaultWord, words: $words, raw: $raw}';
+}
+
+/// Compares two lists for deep equality.
+/// Returns true if the lists are both null, or if they are both non-null, have the same length, and contain the same members in the same order. Returns false otherwise.
+///
+/// The term "deep" above refers to the first level of equality: if the elements are maps, lists, sets, or other collections/composite objects, then the values of those elements are not compared element by element unless their equality operators (Object.==) do so.
+///
+/// Taken from Flutter foundation https://api.flutter.dev/flutter/foundation/listEquals.html
+bool _listEquals<T>(List<T>? a, List<T>? b) {
+  if (a == null) {
+    return b == null;
+  }
+  if (b == null || a.length != b.length) {
+    return false;
+  }
+  if (identical(a, b)) {
+    return true;
+  }
+  for (var index = 0; index < a.length; index += 1) {
+    if (a[index] != b[index]) {
+      return false;
+    }
+  }
+  return true;
 }

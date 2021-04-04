@@ -10,7 +10,8 @@ void main() {
 
   late FileParser parser;
 
-  setUp(() => parser = _MockFileParser(file: File('example/test.csv'), startIndex: 1));
+  setUp(() =>
+      parser = _MockFileParser(file: File('example/test.csv'), startIndex: 1));
 
   test('Parameter startIndex <= 0 triggers assertion', () {
     expect(
@@ -38,17 +39,17 @@ void main() {
   });
 
   test('localizationsTable', () {
-    final row = LocalizationTableRow(
-      key: 'test',
-      words: ['Hello, World!', 'Hallo, Welt!'],
-      defaultWord: 'Hello, World!',
-      raw: ['test', 'Hello, World!', 'Hallo, Welt!'],
+    expect(
+      parser.localizationsTable,
+      [
+        LocalizationTableRow(
+          key: 'test',
+          words: ['Hello, World!', 'Hallo, Welt!'],
+          defaultWord: 'Hello, World!',
+          raw: ['test', 'Hello, World!', 'Hallo, Welt!'],
+        ),
+      ],
     );
-    expect(parser.localizationsTable.length, 1);
-    expect(parser.localizationsTable.first.key, row.key);
-    expect(parser.localizationsTable.first.words, row.words);
-    expect(parser.localizationsTable.first.defaultWord, row.defaultWord);
-    expect(parser.localizationsTable.first.raw, row.raw);
   });
 
   test('localizationsTable exits when contents are not parsed', () {
@@ -87,8 +88,26 @@ void main() {
     expect(parser.defaultValues, ['Hello, World!']);
   });
 
+  test('LocalizationTableRow equatability', () {
+    final row1 = LocalizationTableRow(
+        key: 'myKey',
+        defaultWord: 'a',
+        words: ['a', 'b'],
+        raw: ['myKey', 'a', 'b']);
+    final row2 = LocalizationTableRow(
+        key: 'myKey',
+        defaultWord: 'a',
+        words: ['a', 'b'],
+        raw: ['myKey', 'a', 'b']);
+    expect(row1 == row2, isTrue);
+  });
+
   test('LocalizationTableRow.toString', () {
-    final row = LocalizationTableRow(key: 'myKey', defaultWord: 'a', words: ['a', 'b'], raw: ['myKey', 'a', 'b']);
+    final row = LocalizationTableRow(
+        key: 'myKey',
+        defaultWord: 'a',
+        words: ['a', 'b'],
+        raw: ['myKey', 'a', 'b']);
     expect(
       row.toString(),
       isNot('Instance of \'LocalizationTableRow\''),
