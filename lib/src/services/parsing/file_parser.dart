@@ -108,4 +108,8 @@ class LocalizationTableRow {
     required this.words,
     required this.raw,
   });
+
+  @override
+  String toString() =>
+      '{key: $key, defaultWord: $defaultWord, words: $words, raw: $raw}';
 }

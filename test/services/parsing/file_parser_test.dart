@@ -8,7 +8,8 @@ import '../../testing_utils.dart';
 void main() {
   late FileParser parser;
 
-  setUp(() => parser = _MockFileParser(file: File('example/test.csv'), startIndex: 1));
+  setUp(() =>
+      parser = _MockFileParser(file: File('example/test.csv'), startIndex: 1));
 
   test('Parameter startIndex <= 0 triggers assertion', () {
     expect(
