@@ -2,6 +2,7 @@ import 'package:dart_style/dart_style.dart';
 
 import '../../configs/constants.dart' as constants;
 import '../../configs/default_settings.dart';
+import '../../utils/flappy_logger.dart';
 import 'template.dart';
 
 /// A service which generates I18n class and delegate using string concatenation
@@ -112,8 +113,16 @@ class CodeGenerator {
   String _getParameterNameFromPlaceholder(String placeholder) {
     var givenName = placeholder.substring(1, placeholder.length - 2);
     if (int.tryParse(givenName[0]) != null) {
+      FlappyLogger.logWarning(
+          'Variable name $givenName begins with a number. Prepending var.');
       givenName = 'var$givenName';
     } else if (constants.reservedWords.contains(givenName)) {
+      FlappyLogger.logWarning(
+          'Variable name $givenName is a reserved word in dart. Prepending var.');
+      givenName = 'var$givenName';
+    } else if (constants.types.contains(givenName)) {
+      FlappyLogger.logWarning(
+          'Variable name $givenName is a type in dart. Prepending var.');
       givenName = 'var$givenName';
     }
     return givenName;

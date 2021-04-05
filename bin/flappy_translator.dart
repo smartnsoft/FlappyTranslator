@@ -9,7 +9,8 @@ void main() {
 
   // display an error and quit if the input file hasn't been specified
   if ((settings[_YamlArguments.inputFilePath] == null)) {
-    print('[ERROR] Input file path not defined. This must be specified in pubspec.yaml\n');
+    print(
+        '[ERROR] Input file path not defined. This must be specified in pubspec.yaml\n');
     return;
   }
 

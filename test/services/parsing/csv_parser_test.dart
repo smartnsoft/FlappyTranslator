@@ -11,7 +11,7 @@ void main() {
     final parser = CSVParser(
         file: File('example/test.csv'), startIndex: 1, fieldDelimiter: ',');
     expect(parser.supportedLanguages, ['fr', 'en', 'es', 'de_CH']);
-    expect(parser.localizationsTable, [
+    expect(parser.localizationsTable.map((row) => row.raw), [
       [
         'appTitle',
         'Ma super application',
