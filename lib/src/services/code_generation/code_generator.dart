@@ -1,8 +1,8 @@
 import 'package:dart_style/dart_style.dart';
-import 'package:flappy_translator/src/utils/flappy_logger.dart';
 
 import '../../configs/constants.dart' as constants;
 import '../../configs/default_settings.dart';
+import '../../utils/flappy_logger.dart';
 import 'template.dart';
 
 /// A service which generates I18n class and delegate using string concatenation
