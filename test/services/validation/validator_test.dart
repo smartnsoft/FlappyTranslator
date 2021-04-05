@@ -15,12 +15,6 @@ void main() {
       Validator.validateFile(File('bla.csv'));
     });
 
-    test('file does not have extension', () {
-      tempFileHandler('test', (file) {
-        Validator.validateFile(file);
-      });
-    }, skip: true);
-
     test('file not valid extension', () {
       tempFileHandler('test.txt', (file) {
         Validator.validateFile(file);
