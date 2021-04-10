@@ -1,4 +1,12 @@
-## [1.5.0] - 19/10/2020 
+## [2.0.0-nullsafety.1] - 10/04/2021
+
+* Adds null safety support
+* Breaking change: input file path can no longer be given as command line argument
+* Logs an error when a locale is invalid
+* Logs an warning when a locale is not supported by Flutter
+* Improved test coverage
+
+## [1.5.0] - 19/10/2020
 
 * Adds support to generate localization resources from Excel files (XLSX)
 * Removes dependency on Flutter and increases Dart SDK constraint to >= 2.7

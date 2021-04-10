@@ -4,6 +4,8 @@ A tool which automatically generates Flutter localization resources from CSV and
 
 This is especially useful as any team member can edit the CSV/Excel file, with the subsequent translations imported into the project with the use of a simple terminal command. This contrasts starkly to the default i18n approach in which dart files need to be manually for new keys and languages. More information can be found in [Internationalizing Flutter apps](https://flutter.dev/docs/development/accessibility-and-localization/internationalization#an-alternative-class-for-the-apps-localized-resources).
 
+Note that as of version 2.0.0, null sae code is generated. Please use version 1.5.0 for non-null safe projects.
+
 ## Getting Started
 
 In order to use the *flappy_translator* package, please provide your translations in a CSV or Excel file. For CSV files, delimiters `,` and `;` have been tested to work.
@@ -32,7 +34,7 @@ Note that *flappy_translator* requires dart sdk >= 2.12.
 
 ### Define Settings
 
-Settings for *flappy_translator* can be optionally set in your project's *pubspec.yaml* file:
+Settings for *flappy_translator* must set in your project's *pubspec.yaml* file. `input_file_path` is the only required parameter.
 
 ```yaml
 flappy_translator:
@@ -67,7 +69,7 @@ flappy_translator:
 
 ### Run package
 
-Make sure that your current working directory is the project root. An input file path must be supplied as a setting in *pubspec.yaml*.
+Make sure that your current working directory is the project root.
 
 ```sh
 flutter pub get
