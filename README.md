@@ -4,20 +4,19 @@ A tool which automatically generates Flutter localization resources from CSV and
 
 This is especially useful as any team member can edit the CSV/Excel file, with the subsequent translations imported into the project with the use of a simple terminal command. This contrasts starkly to the default i18n approach in which dart files need to be manually for new keys and languages. More information can be found in [Internationalizing Flutter apps](https://flutter.dev/docs/development/accessibility-and-localization/internationalization#an-alternative-class-for-the-apps-localized-resources).
 
-Note that as of version 2.0.0, null sae code is generated. Please use version 1.5.0 for non-null safe projects.
+Note that as of version 2.0.0, null safe code is generated. Please use version 1.5.0 for non-null safe projects.
 
 ## Getting Started
 
 In order to use the *flappy_translator* package, please provide your translations in a CSV or Excel file. For CSV files, delimiters `,` and `;` have been tested to work.
 
-The following table is used in the [example](example/) project:
+| keys          | fr                                 | en                           | en_GB                          | de                            |
+| ------------- | ---------------------------------- | ---------------------------- | ------------------------------ | ----------------------------- |
+| plainText     | Bonjour le monde!                  | Hello world!                 | Hello world!                   | Hallo Welt!                   |
+| welcome       | Bienvenu %name$s!                  | Welcome %name$s!             | Welcome %name$s!               | Willkommen %name$s!           |
+| favoriteColor | Quelle est votre couleur préférée? | What is your favorite color? | What is your favourite colour? | Was ist deine Lieblingsfarbe? |
 
-| keys | fr | en | es | de_CH |
-| ---- | -- | -- | -- | ----- |
-| appTitle | Ma super application | My awesome application | Mi gran application | Meine tolle App |
-| subtitle | Un sous titre | A subtitle | Un subtitulò | Ein Untertitel |
-| description | Un texte avec une variable : %1$s | Text with a variable: %1$s | Un texto con una variable : %1$s | Text mit einer Variable: %1$s |
-| littleTest | "Voici, pour l'exemple, ""un test"" avec la variable %age$d" | "Here is, for the example, ""a test"" with the variable %age$d" | "Aqui esta, por ejemplo, ""una prueba"" con la variable %age$d" | "Hier ist, zum Beispiel, ""ein Test"" mit der Variable %age$d" |
+Localizations can be specified for a region by appending the country code.
 
 ### Add dependency
 
@@ -85,7 +84,6 @@ For iOS, *ios/Runner/Info.plist* needs to be updated with an array of the langua
 <array>
   <string>fr</string>
   <string>en</string>
-  <string>es</string>
   <string>de</string>
 </array>
 ```
@@ -107,6 +105,7 @@ class MyApp extends StatelessWidget {
         const I18nDelegate(),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: I18nDelegate.supportedLocals,
       home: Home(),
@@ -122,20 +121,20 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              Text(I18n.of(context).appTitle),
-              Text(I18n.of(context).description(var1: 2)),
-              Text(I18n.of(context).littleTest(age: 32)),
-            ],
-          ),
+      appBar: AppBar(
+        title: Text('flappy_translator'),
+      ),
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            Text(I18n.of(context).plainText),
+            Text(I18n.of(context).welcome(name: 'Dash')),
+            Text(I18n.of(context).favoriteColor),
+          ],
         ),
       ),
     );
   }
-}
 ```
 
 Please see [example](example/) for more information.
@@ -161,30 +160,19 @@ The column at `start_index` is considered the default language. This means that:
 
 Each loca key must begin with a lowercase letter, after which any combinations of lowercase, uppercase, digits or underscores are valid.
 
-### Add variables in Strings
+### Variables
 
-We added the possibility to handle variables in the Strings.
-This means respecting some rules : 
+In order to include variables in loca strings, they need to be written in the format `%<VAR NAME>$<VAR TYPE>`. Presently only integers and strings are supported as variable types.
 
-1. In order to be able to recognize them, you must write them this way :
+* %myVariable$d (`d` stands for an int)
+* %myVariable$s (`s` stands for a String)
 
-* %myVariable$d (`d` stands for an int type)
-* %myVariable$s (`s` stands for a String type)
-
-2. if your variable's name start with a number, the generated name will be `varmyVariable`
-Otherwise, the generated variable name would be the name you provided.
-
-* `%1$d` becomes `var1`
-* `%age$d` becomes `age`
-
-3. Variables are required in the generated dart code
-
-Let's take the example of the `description` String in the CSV we used.
-
-The generated function signature will be :
+All variables are required. Consider the key `welcome` from example. The generated function signature is
 
 ```dart
-String description({
-  @required String var1,
+String welcome({
+  required String name,
 })
 ```
+
+Note that if the variable's name starts with a number, the generated variable name will be `var<VAR NAME>`. So, for instance, `%1$d` would become `var1`.

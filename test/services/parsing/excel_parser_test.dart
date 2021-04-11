@@ -7,35 +7,28 @@ import 'package:test/test.dart';
 void main() {
   test('parseFile', () {
     final parser = ExcelParser(file: File('example/test.xlsx'), startIndex: 1);
-    expect(parser.supportedLanguages, ['fr', 'en', 'es', 'de_CH']);
+    expect(parser.supportedLanguages, ['fr', 'en', 'en_GB', 'de']);
     expect(parser.localizationsTable.map((row) => row.raw), [
       [
-        'appTitle',
-        'Ma super application',
-        'My awesome application',
-        'Mi gran application',
-        'Meine tolle App'
+        'plainText',
+        'Bonjour le monde!',
+        'Hello world!',
+        'Hello world!',
+        'Hallo Welt!',
       ],
       [
-        'subtitle',
-        'Un sous titre',
-        'A subtitle',
-        'Un subtitulò',
-        'Ein Untertitel'
+        'welcome',
+        'Bienvenu %name\$s!',
+        'Welcome %name\$s!',
+        'Welcome %name\$s!',
+        'Willkommen %name\$s!',
       ],
       [
-        'description',
-        'Un texte avec une variable : %1\$s',
-        'Text with a variable: %1\$s',
-        'Un texto con una variable : %1\$s',
-        'Text mit einer Variable: %1\$s'
-      ],
-      [
-        'littleTest',
-        "Voici, pour l'exemple, \"un test\" avec la variable %age\$d",
-        "Here is, for the example, \"a test\" with the variable %age\$d",
-        "Aqui esta, por ejemplo, \"una prueba\" con la variable %age\$d",
-        "Hier ist, zum Beispiel, \"ein Test\" mit der Variable %age\$d"
+        'favoriteColor',
+        'Quelle est votre couleur préférée?',
+        'What is your favorite color?',
+        'What is your favourite colour?',
+        'Was ist deine Lieblingsfarbe?',
       ],
     ]);
   });
