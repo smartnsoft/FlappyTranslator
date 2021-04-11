@@ -1,5 +1,6 @@
 name: example
 description: An example for flappy_translator package.
+publish_to: 'none'
 version: 1.0.0+1
 
 environment:
