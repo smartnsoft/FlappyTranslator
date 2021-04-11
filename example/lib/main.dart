@@ -24,15 +24,16 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              Text(I18n.of(context).appTitle),
-              Text(I18n.of(context).description(var1: '2')),
-              Text(I18n.of(context).littleTest(age: 32)),
-            ],
-          ),
+      appBar: AppBar(
+        title: Text('flappy_translator'),
+      ),
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            Text(I18n.of(context).plainText),
+            Text(I18n.of(context).welcome(name: 'Dash')),
+            Text(I18n.of(context).favoriteColor),
+          ],
         ),
       ),
     );
