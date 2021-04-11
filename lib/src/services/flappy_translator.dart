@@ -23,7 +23,7 @@ class FlappyTranslator {
     bool? exposeGetString,
     bool? exposeLocaStrings,
     bool? exposeLocaleMaps,
-  }) async {
+  }) {
     final file = File(inputFilePath);
     Validator.validateFile(file);
 
