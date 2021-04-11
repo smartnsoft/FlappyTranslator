@@ -160,30 +160,19 @@ The column at `start_index` is considered the default language. This means that:
 
 Each loca key must begin with a lowercase letter, after which any combinations of lowercase, uppercase, digits or underscores are valid.
 
-### Add variables in Strings
+### Variables
 
-We added the possibility to handle variables in the Strings.
-This means respecting some rules : 
+In order to include variables in loca strings, they need to be written in the format `%<VAR NAME>$<VAR TYPE>`. Presently only integers and strings are supported as variable types.
 
-1. In order to be able to recognize them, you must write them this way :
+* %myVariable$d (`d` stands for an int)
+* %myVariable$s (`s` stands for a String)
 
-* %myVariable$d (`d` stands for an int type)
-* %myVariable$s (`s` stands for a String type)
-
-2. if your variable's name start with a number, the generated name will be `varmyVariable`
-Otherwise, the generated variable name would be the name you provided.
-
-* `%1$d` becomes `var1`
-* `%age$d` becomes `age`
-
-3. Variables are required in the generated dart code
-
-Let's take the example of the `description` String in the CSV we used.
-
-The generated function signature will be :
+All variables are required. Consider the key `welcome` from example. The generated function signature is
 
 ```dart
-String description({
-  @required String var1,
+String welcome({
+  required String name,
 })
 ```
+
+Note that if the variable's name starts with a number, the generated variable name will be `var<VAR NAME>`. So, for instance, `%1$d` would become `var1`.
