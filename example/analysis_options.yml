@@ -1,8 +1,0 @@
-include: package:lint/analysis_options.yaml
-
-
-linter:
-  rules:
-    - sort_constructors_first
-    - always_specify_types
-    - avoid_escaping_inner_quotes
