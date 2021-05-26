@@ -98,7 +98,7 @@ packages:
       name: dart_style
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   equatable:
     dependency: transitive
     description:
@@ -112,7 +112,7 @@ packages:
       name: excel
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0-null-safety"
+    version: "2.0.0-null-safety-3"
   file:
     dependency: transitive
     description:
