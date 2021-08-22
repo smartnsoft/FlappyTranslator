@@ -1,6 +1,7 @@
 ## [2.0.0-nullsafety.2] - 26/05/2021
 
 * Fixes an issue where certain analyzer warnings would be triggered in the generated code when using lint package.
+* Updates example.
 
 ## [2.0.0-nullsafety.1] - 10/04/2021
 

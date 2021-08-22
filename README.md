@@ -2,7 +2,7 @@
 
 A tool which automatically generates Flutter localization resources from CSV and Excel files.
 
-This is especially useful as any team member can edit the CSV/Excel file, with the subsequent translations imported into the project with the use of a simple terminal command. This contrasts starkly to the default i18n approach in which dart files need to be manually for new keys and languages. More information can be found in [Internationalizing Flutter apps](https://flutter.dev/docs/development/accessibility-and-localization/internationalization#an-alternative-class-for-the-apps-localized-resources).
+This is especially useful as any team member can edit the CSV/Excel file, with the subsequent translations imported into the project via a terminal command. Basic variables (strings and integers) are supported, however neither genders nor plurals are planned to be supported. If you require such functionality, consider using [arb_generator](https://pub.dev/packages/arb_generator).
 
 Note that as of version 2.0.0, null safe code is generated. Please use version 1.5.0 for non-null safe projects.
 
