@@ -153,7 +153,7 @@ Locales are specified in the top row and are expected to be given in the form `e
 
 The column at `start_index` is considered the default language. This means that:
 
-1. This column must be completely filled, otherwise an error is printed to the console and code generation will not succeed.
+1. If this column does not have a value, the loca key instead will be used.
 2. If another language does not have translations for a given key, the value of the default language will be used.
 
 ### Keys

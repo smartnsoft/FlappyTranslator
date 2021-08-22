@@ -57,7 +57,11 @@ abstract class FileParser {
         .map(
           (row) => LocalizationTableRow(
             key: row.first,
-            defaultWord: row.sublist(startIndex).first,
+            // if there is not a default word, use key
+            defaultWord: row.sublist(startIndex).isNotEmpty &&
+                    row.sublist(startIndex).first.isNotEmpty
+                ? row.sublist(startIndex).first
+                : row.first,
             words: row.sublist(startIndex),
             raw: row,
           ),
