@@ -34,4 +34,10 @@ class DefaultSettings {
 
   /// The default value for whether a localeMaps getter should be exposed
   static const exposeLocaleMaps = false;
+
+  /// The default value for whether comments containing the translation should be included in the generated code
+  static const generateComments = false;
+
+  /// The default value for which languages to use in the generated comments. Defaults to all languages.
+  static const commentLanguages = <String>[];
 }

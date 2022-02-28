@@ -23,6 +23,8 @@ class FlappyTranslator {
     bool? exposeGetString,
     bool? exposeLocaStrings,
     bool? exposeLocaleMaps,
+    bool? generateComments,
+    List<String>? commentLanguages,
   }) {
     final file = File(inputFilePath);
     Validator.validateFile(file);
@@ -42,6 +44,8 @@ class FlappyTranslator {
     exposeGetString ??= DefaultSettings.exposeGetString;
     exposeLocaStrings ??= DefaultSettings.exposeLocaStrings;
     exposeLocaleMaps ??= DefaultSettings.exposeLocaleMaps;
+    generateComments ??= DefaultSettings.generateComments;
+    commentLanguages ??= DefaultSettings.commentLanguages;
 
     final codeGenerator = CodeGenerator(
       className: className,
@@ -64,6 +68,9 @@ class FlappyTranslator {
     final supportedLanguages = parser.supportedLanguages;
     Validator.validateSupportedLanguages(supportedLanguages);
     codeGenerator.setSupportedLanguages(supportedLanguages);
+    if(generateComments) {
+      codeGenerator.enableCommentGeneration(commentLanguages);
+    }
     FlappyLogger.logProgress('Locales $supportedLanguages determined.');
 
     final localizationsTable = parser.localizationsTable;
