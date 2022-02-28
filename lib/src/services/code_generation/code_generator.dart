@@ -12,12 +12,12 @@ class CodeGenerator {
   final String _quoteString;
   final bool replaceNoBreakSpaces;
   final _parametersRegex = RegExp(r'(\%[[0-9a-zA-Z]+]*\$(d|s))');
+  final List<String> _commentLanguages = [];
 
   late String _template;
   late List<Map<String, String>> _maps;
   late String _fields;
   late List<String> _supportedLanguages;
-  late List<String> _commentLanguages;
 
   /// Returns a string formatted according to default dart rules
   String get formattedString => DartFormatter().format(_template);
@@ -44,13 +44,12 @@ class CodeGenerator {
     _fields = '';
   }
 
-  void enableCommentGeneration(List<String> commentLanguages) {
+  void enableCommentGeneration([List<String> commentLanguages = const []]) {
     if (commentLanguages.isEmpty) {
-      _commentLanguages = _supportedLanguages;
+      _commentLanguages.addAll(_supportedLanguages);
     } else {
       // make sure to not use languages that are not supported
-      _commentLanguages =
-          _supportedLanguages.where((supportedLang) => commentLanguages.contains(supportedLang)).toList();
+      _commentLanguages.addAll(_supportedLanguages.where((supportedLang) => commentLanguages.contains(supportedLang)));
     }
   }
 
