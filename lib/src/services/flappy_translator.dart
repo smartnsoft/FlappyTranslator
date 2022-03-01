@@ -67,6 +67,7 @@ class FlappyTranslator {
     FlappyLogger.logProgress('Locales $supportedLanguages determined.');
 
     final localizationsTable = parser.localizationsTable;
+    Validator.validateLocalizationsTable(localizationsTable);
     FlappyLogger.logProgress('Parsing ${localizationsTable.length} key(s)...');
 
     for (final row in localizationsTable) {
