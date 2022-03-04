@@ -1,8 +1,8 @@
 name: pull_request
 on: pull_request
 jobs:
-  lint-unit-tests-android-web:
-    name: Lint + Unit Tests
+  lint-formatting-unit-tests:
+    name: CI Pipeline
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -19,8 +19,8 @@ jobs:
           flutter pub get
           cd ..
       - name: Lint
-        run: 
-          dart analyze
+        run: dart analyze
+      - name: Ensure correct formatting
+        run: dart format --set-exit-if-changed .
       - name: Unit tests
-        run:
-          dart test
+        run: dart test
