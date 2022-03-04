@@ -10,7 +10,7 @@ import '../../utils/flappy_logger.dart';
 abstract class Validator {
   /// Validates whether [file] is valid
   ///
-  /// If any error occurs, process is derminated
+  /// If any error occurs, process is terminated
   static void validateFile(File file) {
     // check that the file exists
     if (!file.existsSync()) {
@@ -27,7 +27,7 @@ abstract class Validator {
 
   /// Validates whether [supportedLanguages] are valid
   ///
-  /// If any error occurs, process is derminated
+  /// If any error occurs, process is terminated
   static void validateSupportedLanguages(List<String> supportedLanguages) {
     for (final supportedLanguage in supportedLanguages) {
       if (!supportedLanguage.isValidLocale) {
@@ -45,9 +45,19 @@ abstract class Validator {
     }
   }
 
+  /// Validates whether [localizationsTable] is valid
+  ///
+  /// If any error occurs, process is terminated
+  static void validateLocalizationsTable(
+      List<LocalizationTableRow> localizationsTable) {
+    if (localizationsTable.isEmpty) {
+      FlappyLogger.logError('No keys found.');
+    }
+  }
+
   /// Validates whether [row] is valid
   ///
-  /// If any error occurs, process is derminated
+  /// If any error occurs, process is terminated
   static void validateLocalizationTableRow(
     LocalizationTableRow row, {
     required int numberSupportedLanguages,

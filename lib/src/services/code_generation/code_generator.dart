@@ -110,8 +110,13 @@ class CodeGenerator {
     _fields += result;
 
     _maps[0][key] = defaultWord;
-    for (var wordIndex = 1; wordIndex < words.length; wordIndex++) {
-      _maps[wordIndex][key] = words[wordIndex].isEmpty ? defaultWord : words[wordIndex];
+    for (var wordIndex = 1;
+        wordIndex < _supportedLanguages.length;
+        wordIndex++) {
+      _maps[wordIndex][key] =
+          wordIndex < words.length && words[wordIndex].isNotEmpty
+              ? words[wordIndex]
+              : defaultWord;
     }
   }
 
