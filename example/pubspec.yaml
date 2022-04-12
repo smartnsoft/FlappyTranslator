@@ -31,6 +31,9 @@ flappy_translator:
   expose_get_string: false
   expose_loca_strings: false
   expose_locale_maps: false
+  generate_comments: false
+  comment_languages: []
+
 
 flutter:
   uses-material-design: true
