@@ -33,7 +33,9 @@ class CodeGenerator {
   }) : _quoteString = useSingleQuotes ? '\'' : '"' {
     // construct template
     _template = Template.begining +
-        (dependOnContext ? Template.middleDependContext : Template.middleDontDependContext) +
+        (dependOnContext
+            ? Template.middleDependContext
+            : Template.middleDontDependContext) +
         (exposeGetString ? Template.getString(dependOnContext) : '') +
         (exposeLocaStrings ? Template.locaStrings(dependOnContext) : '') +
         (exposeLocaleMaps ? Template.localeMaps(dependOnContext) : '') +
@@ -49,7 +51,8 @@ class CodeGenerator {
       _commentLanguages.addAll(_supportedLanguages);
     } else {
       // make sure to not use languages that are not supported
-      _commentLanguages.addAll(_supportedLanguages.where((supportedLang) => commentLanguages.contains(supportedLang)));
+      _commentLanguages.addAll(_supportedLanguages
+          .where((supportedLang) => commentLanguages.contains(supportedLang)));
     }
   }
 
@@ -59,7 +62,9 @@ class CodeGenerator {
     var supportedLocals = 'static final Set<Locale> supportedLocals = {\n';
     for (var lang in supportedLanguages) {
       final parts = lang.split('_');
-      supportedLocals += parts.length == 1 ? '''Locale('${parts[0]}')''' : '''Locale('${parts[0]}', '${parts[1]}')''';
+      supportedLocals += parts.length == 1
+          ? '''Locale('${parts[0]}')'''
+          : '''Locale('${parts[0]}', '${parts[1]}')''';
       supportedLocals += ',\n';
     }
     supportedLocals += '};';
@@ -79,7 +84,8 @@ class CodeGenerator {
 
   void addField(String key, String defaultWord, List<String> words) {
     var result = _supportedLanguages
-        .mapIndexedWhere((i, lang) => '/// * $lang: ${words[i]} \n', (_, lang) => _commentLanguages.contains(lang))
+        .mapIndexedWhere((i, lang) => '/// * $lang: ${words[i]} \n',
+            (_, lang) => _commentLanguages.contains(lang))
         .join('');
     final getTextString = '_getText($_quoteString$key$_quoteString)';
     final hasParameters = _parametersRegex.hasMatch(defaultWord);
@@ -88,10 +94,12 @@ class CodeGenerator {
       final matches = _parametersRegex.allMatches(defaultWord).toList();
       for (final match in matches) {
         final parameterType = match.group(2) == 'd' ? 'int' : 'String';
-        parameters += 'required $parameterType ${_getParameterNameFromPlaceholder(match.group(0)!)}, ';
+        parameters +=
+            'required $parameterType ${_getParameterNameFromPlaceholder(match.group(0)!)}, ';
       }
 
-      result += (!dependOnContext ? 'static ' : '') + 'String $key({$parameters}) =>';
+      result +=
+          (!dependOnContext ? 'static ' : '') + 'String $key({$parameters}) =>';
       result += getTextString;
 
       for (final match in matches) {
@@ -104,7 +112,8 @@ class CodeGenerator {
 
       result += ';\n\n';
     } else {
-      result += (!dependOnContext ? 'static ' : '') + 'String get $key => $getTextString;\n\n';
+      result += (!dependOnContext ? 'static ' : '') +
+          'String get $key => $getTextString;\n\n';
     }
 
     _fields += result;
@@ -123,13 +132,16 @@ class CodeGenerator {
   String _getParameterNameFromPlaceholder(String placeholder) {
     var givenName = placeholder.substring(1, placeholder.length - 2);
     if (int.tryParse(givenName[0]) != null) {
-      FlappyLogger.logWarning('Variable name $givenName begins with a number. Prepending var.');
+      FlappyLogger.logWarning(
+          'Variable name $givenName begins with a number. Prepending var.');
       givenName = 'var$givenName';
     } else if (constants.reservedWords.contains(givenName)) {
-      FlappyLogger.logWarning('Variable name $givenName is a reserved word in dart. Prepending var.');
+      FlappyLogger.logWarning(
+          'Variable name $givenName is a reserved word in dart. Prepending var.');
       givenName = 'var$givenName';
     } else if (constants.types.contains(givenName)) {
-      FlappyLogger.logWarning('Variable name $givenName is a type in dart. Prepending var.');
+      FlappyLogger.logWarning(
+          'Variable name $givenName is a type in dart. Prepending var.');
       givenName = 'var$givenName';
     }
     return givenName;

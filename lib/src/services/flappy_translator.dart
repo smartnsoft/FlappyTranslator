@@ -68,7 +68,7 @@ class FlappyTranslator {
     final supportedLanguages = parser.supportedLanguages;
     Validator.validateSupportedLanguages(supportedLanguages);
     codeGenerator.setSupportedLanguages(supportedLanguages);
-    if(generateComments) {
+    if (generateComments) {
       codeGenerator.enableCommentGeneration(commentLanguages);
     }
     FlappyLogger.logProgress('Locales $supportedLanguages determined.');

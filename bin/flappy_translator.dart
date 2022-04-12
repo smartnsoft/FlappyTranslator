@@ -30,7 +30,9 @@ void main() {
     exposeLocaStrings: settings[_YamlArguments.exposeLocaStrings],
     exposeLocaleMaps: settings[_YamlArguments.exposeLocaleMaps],
     generateComments: settings[_YamlArguments.generateComments],
-    commentLanguages: (settings[_YamlArguments.commentLanguages] as YamlList?)?.map<String>((node) => node.toString()).toList(),
+    commentLanguages: (settings[_YamlArguments.commentLanguages] as YamlList?)
+        ?.map<String>((node) => node.toString())
+        .toList(),
   );
 }
 

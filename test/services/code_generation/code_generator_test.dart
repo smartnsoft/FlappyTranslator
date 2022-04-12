@@ -139,8 +139,10 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
       replaceNoBreakSpaces: true,
     );
     codeGenerator.setSupportedLanguages(['en_US', 'de']);
-    codeGenerator.addField('test', 'Hello, World!', ['Hello, World!', 'Hallo, Welt!']);
-    codeGenerator.addField('test', 'Hello %name\$s!', ['Hello %name\$s!', 'Hallo %name\$s!']);
+    codeGenerator
+        .addField('test', 'Hello, World!', ['Hello, World!', 'Hallo, Welt!']);
+    codeGenerator.addField(
+        'test', 'Hello %name\$s!', ['Hello %name\$s!', 'Hallo %name\$s!']);
     codeGenerator.finalize();
 
     expect(
@@ -219,7 +221,9 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
     );
   });
 
-  test('When a variable name begining with a number is given, expect var is prepended', () {
+  test(
+      'When a variable name begining with a number is given, expect var is prepended',
+      () {
     final codeGenerator = CodeGenerator(
       className: 'I18n',
       dependOnContext: false,
@@ -456,11 +460,14 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
     );
   });
 
-  test('When comment generation is true, documentation style comments with translations are added', () {
+  test(
+      'When comment generation is true, documentation style comments with translations are added',
+      () {
     final codeGenerator = CodeGenerator();
     codeGenerator.setSupportedLanguages(['en', 'de', 'es']);
     codeGenerator.enableCommentGeneration();
-    codeGenerator.addField('test', 'Hello', ['Hello', 'Hello in german', 'Hello in spanish']);
+    codeGenerator.addField(
+        'test', 'Hello', ['Hello', 'Hello in german', 'Hello in spanish']);
     codeGenerator.finalize();
 
     expect(
@@ -544,11 +551,14 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
     );
   });
 
-  test('When when comment languages are supplied, only the selected languages are added to comments', () {
+  test(
+      'When when comment languages are supplied, only the selected languages are added to comments',
+      () {
     final codeGenerator = CodeGenerator();
     codeGenerator.setSupportedLanguages(['en', 'de', 'es']);
-    codeGenerator.enableCommentGeneration(['de','es']);
-    codeGenerator.addField('test', 'Hello', ['Hello', 'Hello in german', 'Hello in spanish']);
+    codeGenerator.enableCommentGeneration(['de', 'es']);
+    codeGenerator.addField(
+        'test', 'Hello', ['Hello', 'Hello in german', 'Hello in spanish']);
     codeGenerator.finalize();
 
     expect(
