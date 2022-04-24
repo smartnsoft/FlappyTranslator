@@ -49,6 +49,8 @@ flappy_translator:
   expose_get_string: false
   expose_loca_strings: false
   expose_locale_maps: false
+  generate_comments: false
+  comment_languages: []
 ```
 
 | Setting                 | Default | Description                                                                        |
@@ -65,6 +67,8 @@ flappy_translator:
 | expose_get_string       | false   | The default value for whether a getString method should be exposed.                |
 | expose_loca_strings     | false   | The default value for whether a locaStrings getter should be exposed.              |
 | expose_locale_maps      | false   | The default value for whether a localeMaps getter should be exposed.               |
+| generate_comments       | false   | Whether documentation comments should be used to display translations.             |
+| comment_languages       | []      | Languages that are displayed in the comments. Empty -> All languages are used.     |
 
 ### Run package
 

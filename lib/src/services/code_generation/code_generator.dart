@@ -3,6 +3,7 @@ import 'package:dart_style/dart_style.dart';
 import '../../configs/constants.dart' as constants;
 import '../../configs/default_settings.dart';
 import '../../utils/flappy_logger.dart';
+import '../../extensions/list_extensions.dart';
 import 'template.dart';
 
 /// A service which generates I18n class and delegate using string concatenation
@@ -11,6 +12,7 @@ class CodeGenerator {
   final String _quoteString;
   final bool replaceNoBreakSpaces;
   final _parametersRegex = RegExp(r'(\%[[0-9a-zA-Z]+]*\$(d|s))');
+  final List<String> _commentLanguages = [];
 
   late String _template;
   late List<Map<String, String>> _maps;
@@ -44,6 +46,16 @@ class CodeGenerator {
     _fields = '';
   }
 
+  void enableCommentGeneration([List<String> commentLanguages = const []]) {
+    if (commentLanguages.isEmpty) {
+      _commentLanguages.addAll(_supportedLanguages);
+    } else {
+      // make sure to not use languages that are not supported
+      _commentLanguages.addAll(_supportedLanguages
+          .where((supportedLang) => commentLanguages.contains(supportedLang)));
+    }
+  }
+
   void setSupportedLanguages(List<String> supportedLanguages) {
     _supportedLanguages = supportedLanguages;
 
@@ -71,7 +83,10 @@ class CodeGenerator {
   }
 
   void addField(String key, String defaultWord, List<String> words) {
-    var result = '';
+    var result = _supportedLanguages
+        .mapIndexedWhere((i, lang) => '/// * $lang: ${words[i]} \n',
+            (_, lang) => _commentLanguages.contains(lang))
+        .join('');
     final getTextString = '_getText($_quoteString$key$_quoteString)';
     final hasParameters = _parametersRegex.hasMatch(defaultWord);
     if (hasParameters) {
@@ -83,7 +98,7 @@ class CodeGenerator {
             'required $parameterType ${_getParameterNameFromPlaceholder(match.group(0)!)}, ';
       }
 
-      result =
+      result +=
           (!dependOnContext ? 'static ' : '') + 'String $key({$parameters}) =>';
       result += getTextString;
 
@@ -97,7 +112,7 @@ class CodeGenerator {
 
       result += ';\n\n';
     } else {
-      result = (!dependOnContext ? 'static ' : '') +
+      result += (!dependOnContext ? 'static ' : '') +
           'String get $key => $getTextString;\n\n';
     }
 

@@ -29,6 +29,10 @@ void main() {
     exposeGetString: settings[_YamlArguments.exposeGetString],
     exposeLocaStrings: settings[_YamlArguments.exposeLocaStrings],
     exposeLocaleMaps: settings[_YamlArguments.exposeLocaleMaps],
+    generateComments: settings[_YamlArguments.generateComments],
+    commentLanguages: (settings[_YamlArguments.commentLanguages] as YamlList?)
+        ?.map<String>((node) => node.toString())
+        .toList(),
   );
 }
 
@@ -52,6 +56,8 @@ class _YamlArguments {
   static const exposeGetString = 'expose_get_string';
   static const exposeLocaStrings = 'expose_loca_strings';
   static const exposeLocaleMaps = 'expose_locale_maps';
+  static const generateComments = 'generate_comments';
+  static const commentLanguages = 'comment_languages';
 }
 
 /// Returns configuration settings for flappy_translator from pubspec.yaml
