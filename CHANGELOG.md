@@ -1,3 +1,8 @@
+## [2.0.0-nullsafety.3] - 02/07/2022
+
+* Adds ability to generate comments with localization details.
+* When no value (or empty) is given for default language, then the key is used as localization value.
+
 ## [2.0.0-nullsafety.2] - 26/05/2021
 
 * Fixes an issue where certain analyzer warnings would be triggered in the generated code when using lint package.
