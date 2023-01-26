@@ -222,7 +222,7 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
   });
 
   test(
-      'When a variable name begining with a number is given, expect var is prepended',
+      'When a variable name beginning with a number is given, expect var is prepended',
       () {
     final codeGenerator = CodeGenerator(
       className: 'I18n',

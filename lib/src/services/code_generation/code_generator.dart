@@ -32,7 +32,7 @@ class CodeGenerator {
     bool exposeLocaleMaps = DefaultSettings.exposeLocaleMaps,
   }) : _quoteString = useSingleQuotes ? '\'' : '"' {
     // construct template
-    _template = Template.begining +
+    _template = Template.beginning +
         (dependOnContext
             ? Template.middleDependContext
             : Template.middleDontDependContext) +
