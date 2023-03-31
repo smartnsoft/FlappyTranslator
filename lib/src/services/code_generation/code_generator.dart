@@ -2,8 +2,8 @@ import 'package:dart_style/dart_style.dart';
 
 import '../../configs/constants.dart' as constants;
 import '../../configs/default_settings.dart';
-import '../../utils/flappy_logger.dart';
 import '../../extensions/list_extensions.dart';
+import '../../utils/flappy_logger.dart';
 import 'template.dart';
 
 /// A service which generates I18n class and delegate using string concatenation
@@ -32,7 +32,7 @@ class CodeGenerator {
     bool exposeLocaleMaps = DefaultSettings.exposeLocaleMaps,
   }) : _quoteString = useSingleQuotes ? '\'' : '"' {
     // construct template
-    _template = Template.begining +
+    _template = Template.beginning +
         (dependOnContext
             ? Template.middleDependContext
             : Template.middleDontDependContext) +
