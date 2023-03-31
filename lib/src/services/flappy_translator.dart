@@ -94,6 +94,6 @@ class FlappyTranslator {
     final path = outputDir.isEmpty ? 'i18n.dart' : '$outputDir/$fileName.dart';
     FileWriter().write(contents: formattedString, path: path);
 
-    FlappyLogger.logProgress('Localizations sucessfully generated!');
+    FlappyLogger.logProgress('Localizations successfully generated!');
   }
 }
