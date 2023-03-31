@@ -99,7 +99,7 @@ class CodeGenerator {
       }
 
       result +=
-          (!dependOnContext ? 'static ' : '') + 'String $key({$parameters}) =>';
+          '${!dependOnContext ? 'static ' : ''}String $key({$parameters}) =>';
       result += getTextString;
 
       for (final match in matches) {
@@ -112,8 +112,8 @@ class CodeGenerator {
 
       result += ';\n\n';
     } else {
-      result += (!dependOnContext ? 'static ' : '') +
-          'String get $key => $getTextString;\n\n';
+      result +=
+          '${!dependOnContext ? 'static ' : ''}String get $key => $getTextString;\n\n';
     }
 
     _fields += result;
