@@ -29,8 +29,6 @@ dev_dependencies:
   flappy_translator: 
 ```
 
-Note that *flappy_translator* requires dart sdk >= 2.12.
-
 ### Define Settings
 
 Settings for *flappy_translator* must set in your project's *pubspec.yaml* file. `input_file_path` is the only required parameter.
