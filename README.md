@@ -100,17 +100,19 @@ Firstly, add the I18nDelegate to your delegates:
 
 ```dart
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      localizationsDelegates: [
-        const I18nDelegate(),
+      localizationsDelegates: const [
+        I18nDelegate(),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: I18nDelegate.supportedLocals,
-      home: Home(),
+      home: const Home(),
     );
   }
 }
@@ -120,14 +122,17 @@ Then use the generated I18n class!
 
 ```dart
 class Home extends StatelessWidget {
+  const Home({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('flappy_translator'),
+        title: const Text('flappy_translator'),
       ),
       body: Center(
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text(I18n.of(context).plainText),
             Text(I18n.of(context).welcome(name: 'Dash')),
@@ -137,6 +142,7 @@ class Home extends StatelessWidget {
       ),
     );
   }
+}
 ```
 
 Please see [example](example/) for more information.

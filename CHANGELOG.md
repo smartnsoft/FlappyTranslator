@@ -1,3 +1,9 @@
+## [2.0.0] - 31/03/2023
+
+* First official 2.0.0 release as excel is now also officially released.
+* Ignore non_constant_identifier_names lint in generated code.
+* Fix typo in success message.
+
 ## [2.0.0-nullsafety.3] - 02/07/2022
 
 * Adds ability to generate comments with localization details.
