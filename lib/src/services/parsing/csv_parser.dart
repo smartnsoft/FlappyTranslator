@@ -21,6 +21,9 @@ class CSVParser extends FileParser {
   void parseFile() {
     final lines = file.readAsLinesSync();
     for (final line in lines) {
+      if (line.trim().isEmpty) {
+        continue;
+      }
       final lineElements = _csvConverter
           .convert(line, fieldDelimiter: fieldDelimiter)
           .first
