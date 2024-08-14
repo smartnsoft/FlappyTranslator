@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:csv/csv.dart';
 
 import 'file_parser.dart';
@@ -12,10 +10,10 @@ class CSVParser extends FileParser {
   final CsvToListConverter _csvConverter = CsvToListConverter();
 
   CSVParser({
-    required File file,
-    required int startIndex,
+    required super.file,
+    required super.startIndex,
     required this.fieldDelimiter,
-  }) : super(file: file, startIndex: startIndex);
+  });
 
   @override
   void parseFile() {

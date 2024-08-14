@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:excel/excel.dart';
 
 import 'file_parser.dart';
@@ -7,9 +5,9 @@ import 'file_parser.dart';
 /// An extension of [FileParser] for files of type xlsx
 class ExcelParser extends FileParser {
   ExcelParser({
-    required File file,
-    required int startIndex,
-  }) : super(file: file, startIndex: startIndex);
+    required super.file,
+    required super.startIndex,
+  });
 
   @override
   void parseFile() {
