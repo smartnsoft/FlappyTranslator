@@ -74,7 +74,7 @@ Make sure that your current working directory is the project root.
 
 ```sh
 flutter pub get
-flutter pub run flappy_translator
+dart run flappy_translator
 ```
 
 ### Update iOS Info.plist
