@@ -6,7 +6,7 @@ repository: https://github.com/smartnsoft/FlappyTranslator
 issue_tracker: https://github.com/smartnsoft/FlappyTranslator/issues
 
 environment:
-  sdk: '>=2.17.0 <3.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
   meta: ^1.8.0
