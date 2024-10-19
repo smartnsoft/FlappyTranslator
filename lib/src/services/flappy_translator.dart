@@ -1,13 +1,14 @@
 import 'dart:io';
 
+import 'package:arb_generator/src/services/file_writer/file_writer.dart';
+import 'package:arb_generator/src/services/parsing/csv_parser.dart';
+import 'package:arb_generator/src/services/validation/validator.dart';
+
 import '../configs/default_settings.dart';
-import '../extensions/file_extensions.dart';
 import '../utils/flappy_logger.dart';
 import 'code_generation/code_generator.dart';
-import 'file_writer/file_writer.dart';
-import 'parsing/csv_parser.dart';
 import 'parsing/excel_parser.dart';
-import 'validation/validator.dart';
+import 'validation/validator.dart' as internal_validator;
 
 class FlappyTranslator {
   void generate(
@@ -27,7 +28,7 @@ class FlappyTranslator {
     List<String>? commentLanguages,
   }) {
     final file = File(inputFilePath);
-    Validator.validateFile(file);
+    internal_validator.Validator.validateFile(file);
 
     // File is valid, state progress
     FlappyLogger.logProgress('Loading file $inputFilePath...');
