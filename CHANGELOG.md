@@ -1,3 +1,8 @@
+## [2.1.0] - 20/10/2024
+
+* Set Dart 3 as minimum constraint
+* Using csv parsing logic from arb_generator
+
 ## [2.0.0] - 31/03/2023
 
 * First official 2.0.0 release as excel is now also officially released.

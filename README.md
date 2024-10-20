@@ -4,8 +4,6 @@ A tool which automatically generates Flutter localization resources from CSV and
 
 This is especially useful as any team member can edit the CSV/Excel file, with the subsequent translations imported into the project via a terminal command. Basic variables (strings and integers) are supported, however neither genders nor plurals are planned to be supported. If you require such functionality, consider using [arb_generator](https://pub.dev/packages/arb_generator).
 
-Note that as of version 2.0.0, null safe code is generated. Please use version 1.5.0 for non-null safe projects.
-
 ## Getting Started
 
 In order to use the *flappy_translator* package, please provide your translations in a CSV or Excel file. For CSV files, delimiters `,` and `;` have been tested to work.
