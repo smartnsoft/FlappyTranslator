@@ -24,3 +24,7 @@ jobs:
         run: dart format --set-exit-if-changed .
       - name: Unit tests
         run: dart test
+      - name: Ensure flappy_translator works
+        run: |
+          cd example
+          dart run flappy_translator
