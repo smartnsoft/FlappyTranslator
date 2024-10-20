@@ -1,8 +1,7 @@
 import 'dart:io';
 
+import 'package:arb_generator/src/services/parsing/file_parser.dart';
 import 'package:excel/excel.dart';
-
-import 'file_parser.dart';
 
 /// An extension of [FileParser] for files of type xlsx
 class ExcelParser extends FileParser {

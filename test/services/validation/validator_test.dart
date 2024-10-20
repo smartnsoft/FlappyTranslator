@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flappy_translator/src/services/parsing/file_parser.dart';
 import 'package:flappy_translator/src/services/validation/validator.dart';
 import 'package:test/test.dart';
 
@@ -22,81 +21,37 @@ void main() {
     });
   });
 
-  group('validateSupportedLanguages', () {
-    test('locale is not valid', () {
-      Validator.validateSupportedLanguages(['a']);
+  group('', () {
+    test('CSV file with valid extension', () {
+      tempFileHandler('test.csv', (file) {
+        expect(file.extensionType, 'csv');
+        expect(file.hasValidExtension, true);
+        expect(file.hasCSVExtension, true);
+      });
     });
 
-    test('locale is not supported by default', () {
-      Validator.validateSupportedLanguages(['ga']);
-    });
-  });
-
-  group('validateLocalizationsTable', () {
-    test('localization table is empty', () {
-      Validator.validateLocalizationsTable([]);
-    });
-  });
-
-  group('validateLocalizationTableRow', () {
-    test('key is reserved word', () {
-      Validator.validateLocalizationTableRow(
-        LocalizationTableRow(
-          key: 'for',
-          defaultWord: 'a',
-          words: ['a'],
-          raw: ['for', 'a'],
-        ),
-        numberSupportedLanguages: 1,
-      );
+    test('CSV filepath in capitals', () {
+      tempFileHandler('TEST.CSV', (file) {
+        expect(file.extensionType, 'csv');
+        expect(file.hasValidExtension, true);
+        expect(file.hasCSVExtension, true);
+      });
     });
 
-    test('key is type', () {
-      Validator.validateLocalizationTableRow(
-        LocalizationTableRow(
-          key: 'int',
-          defaultWord: 'a',
-          words: ['a'],
-          raw: ['int', 'a'],
-        ),
-        numberSupportedLanguages: 1,
-      );
+    test('XLSX file with valid extension', () {
+      tempFileHandler('test.xlsx', (file) {
+        expect(file.extensionType, 'xlsx');
+        expect(file.hasValidExtension, true);
+        expect(file.hasCSVExtension, false);
+      });
     });
 
-    test('key is not valid variable name', () {
-      Validator.validateLocalizationTableRow(
-        LocalizationTableRow(
-          key: 'MyKey',
-          defaultWord: 'a',
-          words: ['a'],
-          raw: ['MyKey', 'a'],
-        ),
-        numberSupportedLanguages: 1,
-      );
-    });
-
-    test('key is not valid variable name', () {
-      Validator.validateLocalizationTableRow(
-        LocalizationTableRow(
-          key: 'MyKey',
-          defaultWord: 'a',
-          words: ['a', 'b'],
-          raw: ['MyKey', 'a', 'b'],
-        ),
-        numberSupportedLanguages: 1,
-      );
-    });
-
-    test('key is not valid variable name', () {
-      Validator.validateLocalizationTableRow(
-        LocalizationTableRow(
-          key: 'MyKey',
-          defaultWord: '',
-          words: ['', 'b'],
-          raw: ['MyKey', '', 'b'],
-        ),
-        numberSupportedLanguages: 2,
-      );
+    test('XLSX filepath in capitals', () {
+      tempFileHandler('TEST.XLSX', (file) {
+        expect(file.extensionType, 'xlsx');
+        expect(file.hasValidExtension, true);
+        expect(file.hasCSVExtension, false);
+      });
     });
   });
 }

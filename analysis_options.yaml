@@ -1,1 +1,6 @@
 include: package:lints/recommended.yaml
+
+analyzer:
+  errors:
+    # do not warn when importing implementations from arb_generator
+    implementation_imports: ignore

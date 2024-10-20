@@ -9,12 +9,11 @@ environment:
   sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
-  meta: ^1.8.0
-  csv: ^5.0.0
+  arb_generator: 0.0.4
   yaml: ^3.1.0
-  dart_style: ^2.0.1
-  excel: ^2.0.4
+  dart_style: ^2.3.0
+  excel: ^3.0.0 # currently cannot update to ^4.0.0 due to https://github.com/justkawal/excel/pull/368/
 
 dev_dependencies:
-  test: ^1.20.0
-  lints: ^2.0.1
+  test: ^1.24.0
+  lints: ^2.1.0
