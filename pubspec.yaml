@@ -12,7 +12,7 @@ dependencies:
   arb_generator: 0.0.4
   yaml: ^3.1.0
   dart_style: ^2.3.0
-  excel: ^4.0.0
+  excel: ^3.0.0 # currently cannot update to ^4.0.0 due to https://github.com/justkawal/excel/pull/368/
 
 dev_dependencies:
   test: ^1.24.0
