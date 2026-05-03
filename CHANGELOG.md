@@ -1,3 +1,7 @@
+## [2.2.0] - XX/XX/2026
+
+* Replace dart_style with `dart format` to help compatibility with newer Flutter versions.
+
 ## [2.1.0] - 20/10/2024
 
 * Set Dart 3 as minimum constraint

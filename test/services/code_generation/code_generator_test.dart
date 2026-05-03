@@ -10,7 +10,7 @@ void main() {
     );
 
     expect(
-      codeGenerator.formattedString,
+      codeGenerator.fileContents,
       '''
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: public_member_api_docs, prefer_single_quotes, avoid_escaping_inner_quotes, prefer_const_constructors, sort_constructors_first, always_specify_types, non_constant_identifier_names
@@ -72,7 +72,7 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
     codeGenerator.setSupportedLanguages(['en_US', 'de']);
 
     expect(
-      codeGenerator.formattedString,
+      codeGenerator.fileContents,
       '''
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: public_member_api_docs, prefer_single_quotes, avoid_escaping_inner_quotes, prefer_const_constructors, sort_constructors_first, always_specify_types, non_constant_identifier_names
@@ -146,7 +146,7 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
     codeGenerator.finalize();
 
     expect(
-      codeGenerator.formattedString,
+      codeGenerator.fileContents,
       '''
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: public_member_api_docs, prefer_single_quotes, avoid_escaping_inner_quotes, prefer_const_constructors, sort_constructors_first, always_specify_types, non_constant_identifier_names
@@ -235,7 +235,7 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
     codeGenerator.finalize();
 
     expect(
-      codeGenerator.formattedString,
+      codeGenerator.fileContents,
       '''
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: public_member_api_docs, prefer_single_quotes, avoid_escaping_inner_quotes, prefer_const_constructors, sort_constructors_first, always_specify_types, non_constant_identifier_names
@@ -314,7 +314,7 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
     codeGenerator.finalize();
 
     expect(
-      codeGenerator.formattedString,
+      codeGenerator.fileContents,
       '''
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: public_member_api_docs, prefer_single_quotes, avoid_escaping_inner_quotes, prefer_const_constructors, sort_constructors_first, always_specify_types, non_constant_identifier_names
@@ -393,7 +393,7 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
     codeGenerator.finalize();
 
     expect(
-      codeGenerator.formattedString,
+      codeGenerator.fileContents,
       '''
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: public_member_api_docs, prefer_single_quotes, avoid_escaping_inner_quotes, prefer_const_constructors, sort_constructors_first, always_specify_types, non_constant_identifier_names
@@ -471,7 +471,7 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
     codeGenerator.finalize();
 
     expect(
-      codeGenerator.formattedString,
+      codeGenerator.fileContents,
       '''
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: public_member_api_docs, prefer_single_quotes, avoid_escaping_inner_quotes, prefer_const_constructors, sort_constructors_first, always_specify_types, non_constant_identifier_names
@@ -562,7 +562,7 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
     codeGenerator.finalize();
 
     expect(
-      codeGenerator.formattedString,
+      codeGenerator.fileContents,
       '''
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: public_member_api_docs, prefer_single_quotes, avoid_escaping_inner_quotes, prefer_const_constructors, sort_constructors_first, always_specify_types, non_constant_identifier_names
