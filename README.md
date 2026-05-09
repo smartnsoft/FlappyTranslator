@@ -1,5 +1,95 @@
 # flappy_translator
 
+This package is discontinued and no longer maintained. No further updates, fixes or compatibility changes will be released.
+
+Please migrate to [`arb_generator`](https://pub.dev/packages/arb_generator) and Flutter's official localization tooling using `flutter_localizations` and `intl`.
+
+## Migration
+
+### ICU Placeholders
+
+Migrate variables to ICU message syntax:
+
+| Before | After |
+| - | - |
+| `Welcome %name$s` | `Welcome {name}` |
+
+### ARB Files Setup
+
+`arb_generator` converts CSV translations into ARB files compatible with Flutter localization tooling.
+
+Add the following package:
+
+- `dart pub add --dev arb_generator`
+
+Define `arb_generator` package settings in `pubspec.yaml`:
+
+```yaml
+arb_generator:
+  input_filepath: "assets_dev/test.csv"
+  output_directory: "lib/l10n"
+  filename_prepend: "app_"
+```
+
+See [arb_generator documentation](https://pub.dev/packages/arb_generator) for full example.
+
+### Flutter Localization Setup
+
+Flutter's localization tooling generates compile-time localization delegates from ARB files.
+
+Add the following packages:
+
+- `flutter pub add flutter_localizations --sdk=flutter`
+- `flutter pub add intl:any`
+
+Enable delegate generation:
+
+```yaml
+flutter:
+  generate: true
+```
+
+in `pubspec.yaml`.
+
+Add `l10n.yaml` file:
+
+```yaml
+arb-dir: lib/l10n
+template-arb-file: app_en.arb
+output-dir: lib/l10n
+output-localization-file: app_localizations.dart
+```
+
+See [Flutter documentation](https://docs.flutter.dev/ui/internationalization) for more information.
+
+### Generate Localization Delegates
+
+```sh
+dart run arb_generator
+flutter gen-l10n
+```
+
+### Update Delegate Usage
+
+Use the generated `AppLocalizations` API instead of the old `I18n` API:
+
+```dart
+import '../l10n/app_localizations.dart';
+
+Text(AppLocalizations.of(context)!.welcome('Dash')),
+```
+
+instead of
+
+```dart
+import 'i18n.dart';
+
+Text(I18n.of(context).welcome(name: 'Dash')),
+```
+
+<details>
+  <summary>View Original README</summary>
+
 A tool which automatically generates Flutter localization resources from CSV and Excel files.
 
 This is especially useful as any team member can edit the CSV/Excel file, with the subsequent translations imported into the project via a terminal command. Basic variables (strings and integers) are supported, however neither genders nor plurals are planned to be supported. If you require such functionality, consider using [arb_generator](https://pub.dev/packages/arb_generator).
@@ -182,3 +272,5 @@ String welcome({
 ```
 
 Note that if the variable's name starts with a number, the generated variable name will be `var<VAR NAME>`. So, for instance, `%1$d` would become `var1`.
+
+</details>

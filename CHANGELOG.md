@@ -1,6 +1,7 @@
-## [2.2.0] - XX/XX/2026
+## [2.2.0] - 09/05/2026
 
 * Replace dart_style with `dart format` to help compatibility with newer Flutter versions.
+* Discontinuation of package. Add migration steps to `arb_generator` & Flutter l10n tooling.
 
 ## [2.1.0] - 20/10/2024
 
