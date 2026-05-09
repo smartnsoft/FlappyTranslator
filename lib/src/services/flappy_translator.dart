@@ -88,12 +88,12 @@ class FlappyTranslator {
 
     codeGenerator.finalize();
 
-    // format the contents according to dart defaults
-    final formattedString = codeGenerator.formattedString;
-
     // write output file
     final path = outputDir.isEmpty ? 'i18n.dart' : '$outputDir/$fileName.dart';
-    FileWriter().write(contents: formattedString, path: path);
+    FileWriter().write(contents: codeGenerator.fileContents, path: path);
+
+    // format the contents according to dart defaults
+    Process.run('dart', ['format', path]);
 
     FlappyLogger.logProgress('Localizations successfully generated!');
   }

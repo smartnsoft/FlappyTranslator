@@ -6,12 +6,11 @@ repository: https://github.com/smartnsoft/FlappyTranslator
 issue_tracker: https://github.com/smartnsoft/FlappyTranslator/issues
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: ^3.0.0
 
 dependencies:
   arb_generator: 0.0.4
   yaml: ^3.1.0
-  dart_style: ^2.3.0
   excel: ^3.0.0 # currently cannot update to ^4.0.0 due to https://github.com/justkawal/excel/pull/368/
 
 dev_dependencies:

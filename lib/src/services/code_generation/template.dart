@@ -27,8 +27,7 @@ class #CLASS_NAME# {
   static #CLASS_NAME# of(BuildContext context) => 
     Localizations.of<#CLASS_NAME#>(context, #CLASS_NAME#)!;
 
-  String _getText(String key) =>
-    _localizedValues[key] ?? '** \$key not found';
+  String _getText(String key) => _localizedValues[key] ?? '** \$key not found';
 
   Locale get currentLocale => _locale;
 
@@ -43,8 +42,7 @@ class #CLASS_NAME# {
 
   static late Locale _locale;
 
-  static String _getText(String key) =>
-    _localizedValues[key] ?? '** \$key not found';
+  static String _getText(String key) => _localizedValues[key] ?? '** \$key not found';
 
   static Locale get currentLocale => _locale;
 
@@ -108,7 +106,6 @@ class #CLASS_NAME#Delegate extends LocalizationsDelegate<#CLASS_NAME#> {
   @override
   bool shouldReload(#CLASS_NAME#Delegate old) => false;
 }
-
 ''';
 }
 

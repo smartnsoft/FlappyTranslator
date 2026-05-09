@@ -1,5 +1,3 @@
-import 'package:dart_style/dart_style.dart';
-
 import '../../configs/constants.dart' as constants;
 import '../../configs/default_settings.dart';
 import '../../extensions/list_extensions.dart';
@@ -19,8 +17,8 @@ class CodeGenerator {
   late String _fields;
   late List<String> _supportedLanguages;
 
-  /// Returns a string formatted according to default dart rules
-  String get formattedString => DartFormatter().format(_template);
+  /// Returns the generated code as a non-formatted String
+  String get fileContents => _template;
 
   CodeGenerator({
     String className = DefaultSettings.className,

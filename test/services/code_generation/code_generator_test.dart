@@ -2,7 +2,7 @@ import 'package:flappy_translator/src/services/code_generation/code_generator.da
 import 'package:test/test.dart';
 
 void main() {
-  test('formattedString', () {
+  test('fileContents', () {
     final codeGenerator = CodeGenerator(
       className: 'I18n',
       dependOnContext: false,
@@ -10,7 +10,7 @@ void main() {
     );
 
     expect(
-      codeGenerator.formattedString,
+      codeGenerator.fileContents,
       '''
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: public_member_api_docs, prefer_single_quotes, avoid_escaping_inner_quotes, prefer_const_constructors, sort_constructors_first, always_specify_types, non_constant_identifier_names
@@ -34,8 +34,7 @@ class I18n {
 
   static late Locale _locale;
 
-  static String _getText(String key) =>
-      _localizedValues[key] ?? '** \$key not found';
+  static String _getText(String key) => _localizedValues[key] ?? '** \$key not found';
 
   static Locale get currentLocale => _locale;
 
@@ -63,7 +62,7 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
     );
   });
 
-  test('formattedString', () {
+  test('fileContents', () {
     final codeGenerator = CodeGenerator(
       className: 'I18n',
       dependOnContext: false,
@@ -72,7 +71,7 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
     codeGenerator.setSupportedLanguages(['en_US', 'de']);
 
     expect(
-      codeGenerator.formattedString,
+      codeGenerator.fileContents.normalized,
       '''
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: public_member_api_docs, prefer_single_quotes, avoid_escaping_inner_quotes, prefer_const_constructors, sort_constructors_first, always_specify_types, non_constant_identifier_names
@@ -96,8 +95,7 @@ class I18n {
 
   static late Locale _locale;
 
-  static String _getText(String key) =>
-      _localizedValues[key] ?? '** \$key not found';
+  static String _getText(String key) => _localizedValues[key] ?? '** \$key not found';
 
   static Locale get currentLocale => _locale;
 
@@ -127,7 +125,8 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
   @override
   bool shouldReload(I18nDelegate old) => false;
 }
-''',
+'''
+          .normalized,
     );
   });
 
@@ -146,7 +145,7 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
     codeGenerator.finalize();
 
     expect(
-      codeGenerator.formattedString,
+      codeGenerator.fileContents.normalized,
       '''
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: public_member_api_docs, prefer_single_quotes, avoid_escaping_inner_quotes, prefer_const_constructors, sort_constructors_first, always_specify_types, non_constant_identifier_names
@@ -217,7 +216,8 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
   @override
   bool shouldReload(I18nDelegate old) => false;
 }
-''',
+'''
+          .normalized,
     );
   });
 
@@ -235,7 +235,7 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
     codeGenerator.finalize();
 
     expect(
-      codeGenerator.formattedString,
+      codeGenerator.fileContents.normalized,
       '''
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: public_member_api_docs, prefer_single_quotes, avoid_escaping_inner_quotes, prefer_const_constructors, sort_constructors_first, always_specify_types, non_constant_identifier_names
@@ -298,7 +298,8 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
   @override
   bool shouldReload(I18nDelegate old) => false;
 }
-''',
+'''
+          .normalized,
     );
   });
 
@@ -314,7 +315,7 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
     codeGenerator.finalize();
 
     expect(
-      codeGenerator.formattedString,
+      codeGenerator.fileContents.normalized,
       '''
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: public_member_api_docs, prefer_single_quotes, avoid_escaping_inner_quotes, prefer_const_constructors, sort_constructors_first, always_specify_types, non_constant_identifier_names
@@ -377,7 +378,8 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
   @override
   bool shouldReload(I18nDelegate old) => false;
 }
-''',
+'''
+          .normalized,
     );
   });
 
@@ -393,7 +395,7 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
     codeGenerator.finalize();
 
     expect(
-      codeGenerator.formattedString,
+      codeGenerator.fileContents.normalized,
       '''
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: public_member_api_docs, prefer_single_quotes, avoid_escaping_inner_quotes, prefer_const_constructors, sort_constructors_first, always_specify_types, non_constant_identifier_names
@@ -456,7 +458,8 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
   @override
   bool shouldReload(I18nDelegate old) => false;
 }
-''',
+'''
+          .normalized,
     );
   });
 
@@ -471,7 +474,7 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
     codeGenerator.finalize();
 
     expect(
-      codeGenerator.formattedString,
+      codeGenerator.fileContents.normalized,
       '''
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: public_member_api_docs, prefer_single_quotes, avoid_escaping_inner_quotes, prefer_const_constructors, sort_constructors_first, always_specify_types, non_constant_identifier_names
@@ -547,7 +550,8 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
   @override
   bool shouldReload(I18nDelegate old) => false;
 }
-''',
+'''
+          .normalized,
     );
   });
 
@@ -562,7 +566,7 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
     codeGenerator.finalize();
 
     expect(
-      codeGenerator.formattedString,
+      codeGenerator.fileContents.normalized,
       '''
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: public_member_api_docs, prefer_single_quotes, avoid_escaping_inner_quotes, prefer_const_constructors, sort_constructors_first, always_specify_types, non_constant_identifier_names
@@ -637,7 +641,12 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
   @override
   bool shouldReload(I18nDelegate old) => false;
 }
-''',
+'''
+          .normalized,
     );
   });
+}
+
+extension on String {
+  String get normalized => replaceAll(RegExp(r'\s+'), '');
 }
